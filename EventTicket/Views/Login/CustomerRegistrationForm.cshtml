@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewBag.Title = "LoginForm";
+    Layout = "~/Views/Shared/LoginRegister.cshtml";
+}
+
+<br /><br /><br />
+<div class="loginForm">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                <input type="text" name="Name" class="form-control" placeholder="Enter Your Name (အမည်ထည့်ပါ)" required>
+            </div>
+        </div>
+        <br /><br />
+        <div class="col-md-12">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-mobile"></i></span>
+                <input type="text" name="Phone" class="form-control" placeholder="Enter Phone Number (ဖုန်းနံပတ်ထည့်ပါ)" required>
+            </div>
+        </div>
+        <br /><br />
+        <div class="col-md-12">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                <input type="email" name="Email" class="form-control" placeholder="Enter Email (အီးမေးလ်ထည့်ပါ [မပါလည်းရ])" required>
+            </div>
+        </div>
+        <br /><br />
+        <div class="col-md-12">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa  fa-unlock-alt"></i></span>
+                <input type="password" name="Password" class="form-control" placeholder="Enter Password (စကားဝှက်ထည့်ပါ)" required>
+            </div>
+        </div>
+        <br /><br />
+        <div class="col-md-12">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa  fa-unlock-alt"></i></span>
+                <input type="password" name="ConfirmPassword" class="form-control" placeholder="Comfirm Password (စကားဝှက်ထပ်ထည့်ပါ)" required>
+            </div>
+        </div>
+        <br /><br />
+        <div class="col-md-12">
+            <button class="btn btn-default">Cancel</button>
+            <button type="submit" class="btn btn-info pull-right">Register</button>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,80 @@
+﻿body{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.beautifulBg {
+  min-height: 100%;
+  background-image:url('http://www.demo.amitjakhu.com/login-form/images/bg.png');
+}
+
+.emphasizedText{color:#CD950C;}
+
+.normalText{color:#8B6508;}
+
+th {
+            color: green;
+   }
+
+.loginForm{																				
+  background:#EBECE4;
+  border-radius:5px;
+  border: 1px solid #FFFFF2;
+  margin:auto;
+  padding:20px;
+  max-width:500px;
+}
+
+.contentHeadBox{																				
+  background:#EBECE4;
+  border-radius:5px;
+  border: 1px solid #FFFFF2;
+  margin:auto;
+  padding:20px;
+  max-width:1500px;
+}
+
+.contentFormBox{																				
+  background:#EBECE4;
+  border-radius:5px;
+  border: 1px solid #FFFFF2;
+  margin:auto;
+  padding:20px;
+  max-width:700px;
+}
+
+.contentBodyBox {																				
+  background:/*rgba(0,101,102,0.8)*/#ECF1EF;
+  border-radius:5px;
+  border-color:antiquewhite;
+  margin:auto;
+  padding:12px;
+  max-width:1500px;
+  /*text-shadow: 2px 2px 2px #000000; color:white;*/
+}
+
+        .loader {
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: url('~/Image/load.gif') 50% 50% no-repeat rgb(249,249,249);
+        }
+
+@media screen and (max-width: 600px) {
+ .main-header .logo {
+    visibility: hidden;
+    display: none;
+    height: 0px;
+    line-height: 20px;
+    padding: 0px;
+  }
+ .pull-left image{
+     visibility: hidden;
+     display:none;
+ }
+ .contentHeadBox,.contentBodyBox{
+     padding:5px;
+ }
+}
+

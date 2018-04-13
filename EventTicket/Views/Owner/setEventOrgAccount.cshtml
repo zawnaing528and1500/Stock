@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "setEventOrgAccount";
+    Layout = "~/Views/Shared/Owner.cshtml";
+    Base b = new Base();
+}
+@using System.Data;
+@using EventTicket.App_Code;
+
+
+<br />
+@using (Html.BeginForm("ProcessForSetEventOrgAccount", "Owner"))
+{
+<div class="contentHeadBox">
+    <div class="row">
+        <div class="col-md-3">
+            <select name="EOrgID" class="form-control" required>
+                @{ 
+                    DataTable dt1 = b.getAllByQuery("select * from EOrg");
+                    foreach (DataRow row in dt1.Rows)
+                    {
+                        <option value="@Convert.ToInt32(row["ID"])">@row["Name"].ToString()</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="col-md-3"><input type="text" name="Username" placeholder="Enter Username" class="form-control" required/></div>
+        <div class="col-md-3"><input type="text" name="Password" placeholder="Enter Password" class="form-control" required/></div>
+        <div class="col-md-3"><center><input type="submit" class="btn btn-primary" value="SET ACCOUNT" /></center></div>
+    </div>
+</div>
+                    }
+<br />
+<div class="contentBodyBox">
+    <table id="displayTable" class="table table-dark table-hover">
+        <thead>
+            <tr><th>No</th><th>Organization Name</th><th>Username</th><th>Password</th></tr>
+        </thead>
+        <tbody>
+            @{
+                    int i = 1;
+                
+                    DataTable dt = b.getAllByQuery("select * from Login where AccessLevel=2");
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        int EventOrgID = Convert.ToInt32(row["AllID"]);
+                        string Username = row["Username"].ToString();
+                        string Password = row["Password"].ToString();
+                    <tr><td>@i</td><td><font class="emphasizedText">@b.getStringByQuery("select * from EOrg where ID=" + EventOrgID, "Name")</font></td><td><font class="normalText">@Username</font></td><td><font class="normalText">@Password</font></td></tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

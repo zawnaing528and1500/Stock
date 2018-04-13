@@ -1,0 +1,51 @@
+﻿
+@{
+    ViewBag.Title = "LoginForm";
+    Layout = "~/Views/Shared/LoginRegister.cshtml";
+}
+            <script>
+              $(document).ready(function () {
+                  var passedError = document.getElementById("serverError").textContent;
+                  if ( passedError != "") {
+                      document.getElementById("error").innerHTML = "<font color='red'>Username နှင့် Password မှားနေသည်</font>";
+                  }
+                  else {
+                      document.getElementById("error").innerHTML = "";
+                  }
+
+              });
+            </script>
+
+@using (Html.BeginForm("CheckUsernameAndPassword", "Login"))
+{
+<br /><br /><br />
+<p id="serverError" hidden>@Session["LoginSession"]</p>
+<div class="loginForm">
+    <div class="row">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                    <input type="text" name="Username" class="form-control" placeholder="Enter Username (အမည်ထည့်ပါ)" required>
+                </div>
+           </div>
+        <br /><br />
+            <div class="col-md-12">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa  fa-unlock-alt"></i></span>
+                    <input type="password" name="Password" class="form-control" placeholder="Enter Password (စကားဝှက်ထည့်ပါ)" required>
+                </div>
+            </div>
+
+        <br />
+             <div class="col-md-12">
+            <span id="error"></span>
+            </div>
+            <br />
+            <div class="col-md-12">
+
+                <button type="submit" class="btn btn-info pull-right">Log in</button>
+            </div>
+        </div>
+ </div>
+}
+
