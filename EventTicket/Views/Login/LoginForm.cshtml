@@ -7,7 +7,7 @@
               $(document).ready(function () {
                   var passedError = document.getElementById("serverError").textContent;
                   if ( passedError != "") {
-                      document.getElementById("error").innerHTML = "<font color='red'>Username နှင့် Password မှားနေသည်</font>";
+                      document.getElementById("error").innerHTML = "<font color='red' class='zg'>Username ႏွင့္ Password မွားေနသည္</font>";
                   }
                   else {
                       document.getElementById("error").innerHTML = "";
@@ -20,32 +20,35 @@
 {
 <br /><br /><br />
 <p id="serverError" hidden>@Session["LoginSession"]</p>
-<div class="loginForm">
-    <div class="row">
+<center>
+    @*<img src="~/Image/Logo/logo.png" style="background-color:rgba(192,192,192,0.3);border-radius:3px;"/>*@
+    <div class="loginForm">
+        <div class="row">
             <div class="col-md-12">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                    <input type="text" name="Username" class="form-control" placeholder="Enter Username (အမည်ထည့်ပါ)" required>
+                    <span class="zg"><input type="text" name="Username" class="form-control" placeholder="Enter Username (အမည္ထည့္ပါ)" required></span>
                 </div>
-           </div>
-        <br /><br />
+            </div>
+            <br /><br />
             <div class="col-md-12">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa  fa-unlock-alt"></i></span>
-                    <input type="password" name="Password" class="form-control" placeholder="Enter Password (စကားဝှက်ထည့်ပါ)" required>
-                </div>
+                    <span class="zg"><input type="password" name="Password" class="form-control" placeholder="Enter Password (စကားဝွက္ထည့္ပါ)" required></span>
+</div>
             </div>
 
-        <br />
-             <div class="col-md-12">
-            <span id="error"></span>
+            <br />
+            <div class="col-md-12">
+                <span id="error"></span>
             </div>
             <br />
             <div class="col-md-12">
-
+                <b><a href="~/PublicUser/Event">See All Events</a></b>
                 <button type="submit" class="btn btn-info pull-right">Log in</button>
             </div>
         </div>
- </div>
+    </div>
+</center>
 }
 

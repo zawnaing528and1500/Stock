@@ -1,31 +1,43 @@
-﻿
+﻿@using EventTicket.App_Code;
+@using System.Data;
 @{
     ViewBag.Title = "Manage";
     Layout = "~/Views/Shared/EOrg.cshtml";
+    Base b = new Base();
+    EncryptParameter e = new EncryptParameter();
+    int EOrgID = 1;//Convert.ToInt32(Session["CurrentUserID"]);
+    DataTable dt = b.getAllByQuery("select * from Event where EOrgID="+EOrgID);
+
+}
+@{
+    foreach (DataRow row in dt.Rows)
+    {
+        //take number of TotalTicket, Name for number of seat
+        int EID = Convert.ToInt32(row["ID"]);
+        string E_EID = e.Encrypt(EID.ToString(), "ETicket");
+        int TotalTicket = Convert.ToInt32(row["TotalTicket"]);
+        string Name = row["Name"].ToString();
+        
+        <div class="col-md-4">
+            <!-- Widget: user widget style 1 -->
+            <div class="widget-user-header bg-yellow">
+                <div class="widget-user-image">
+                    <img src="~/Image/MissTeenFINAL.jpg" style="width:100%;height:auto;">
+                </div>
+            </div>
+                <div class="box-footer no-padding">
+                    <ul class="nav nav-stacked">
+                        <li><a href="~/EOrg/SetRowDetail?E_EID=@E_EID">Manage Seat (ခုံစီမံ)</a></li>
+                        <li><a href="~/EOrg/SetSeatStatus?E_EID=@E_EID">Ticket (လက်မှတ်များ)<span class="pull-right badge bg-blue">@b.getCountByQuery("select * from Seat where EID="+EID) စောင်</span></a></li>
+                        <li><a href="~/EOrg/DeleteEvent?E_EID=@E_EID">Delete (ဖျက်ပစ်မည်)</a></li>
+                     </ul>
+                </div>
+            </div>
+
+    }
 }
 
-<div class="col-md-4">
-    <!-- Widget: user widget style 1 -->
-    <div class="box box-widget widget-user-2">
-        <!-- Add the bg color to the header using any of the bg-* classes -->
-        <div class="widget-user-header" style="background-color:#F6F9ED;">
-            <div class="widget-user-image">
-                <img class="img-circle" src="~/Image/MissGoldenLand.jpg" alt="User Avatar">
-            </div>
-            <!-- /.widget-user-image -->
-            <h3 class="widget-user-username">Miss Golden Land</h3><br />
-        </div>
-        <div class="box-footer no-padding">
-            <ul class="nav nav-stacked">
-                <li><a href="#">ခုံအားလုံးပြ<span class="pull-right badge bg-blue">200 ခုံ</span></a></li>
-                <li><a href="#">လက်မှတ်များ<span class="pull-right badge bg-blue">200 စောင်</span></a></li>
-                <li><a href="#">ခုံစီမည်</a></li>
-                <li><a href="#">ခုံစျေးသတ်မှတ်မည်</a></li>
-            </ul>
-        </div>
-    </div>
-    <!-- /.widget-user -->
-</div>
+
 
 
 

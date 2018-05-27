@@ -1,0 +1,59 @@
+﻿@using EventTicket.App_Code;
+@using System.Data;
+@{
+    ViewBag.Title = "AddSMSGate";
+    Layout = "~/Views/Shared/EOrg.cshtml";
+    Base b = new Base();
+    int EOrgID = 1;//Convert.ToInt32(Session["CurrentUserID"]);
+    DataTable dt = b.getAllByQuery("select * from SMSGate where EOrgID=" + EOrgID);
+}
+
+@using (Html.BeginForm("InsertSMSGate", "EOrg"))
+{
+    <div class="contentHeadBox">
+        <div class="row">
+            <div class="col-md-2">
+                <input type="email" class="form-control" name="Email" placeholder="Email" required />
+            </div>
+            <div class="col-md-2">
+                <input type="text" class="form-control" name="Password" placeholder="Password" required />
+            </div>
+            <div class="col-md-2">
+                <input type="number" class="form-control" name="Device" placeholder="Device" required />
+            </div>
+            <div class="col-md-2">
+                <input type="text" class="form-control" name="Phone" placeholder="Phone" required />
+            </div>
+            <div class="col-md-2">
+                <input type="submit" class="btn btn-primary" value="ADD" />
+            </div>
+        </div>
+    </div>
+}
+
+<br />
+<div class="contentBodyBox">
+    
+        @{
+            if (b.CheckByQuery("select * from SMSGate where EOrgID=" + EOrgID) == false)
+            {
+                <center><img src="~/Image/Icon/404.png" /></center>
+            }
+            else
+            {
+                int i = 1;
+                <table class="table table-bordered" style="background-color:#F6F9ED;">
+                    <tr><th>No</th><th>Email</th><th>Password</th><th>Device</th><th colspan="2">Phone</th></tr>
+                    @{ 
+                        foreach(DataRow row in dt.Rows)
+                        {
+                            <tr><td>@i</td><td>@row["Email"].ToString()</td><td>@row["Password"].ToString()</td><td>@Convert.ToInt32(row["Device"])</td><td>@row["Phone"].ToString()</td><td><a href="~/EOrg/DeleteSMSGate?SMSGateID=@row["ID"]"><img src="~/Image/Icon/delete.png" /></a></td></tr>
+                            i = i + 1;
+                        }
+                    }
+                </table>
+            }
+        }
+               
+</div>
+

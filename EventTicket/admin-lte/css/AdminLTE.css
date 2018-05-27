@@ -3017,10 +3017,11 @@ table.text-center th {
   border-top-right-radius: 3px;
   border-top-left-radius: 3px;
 }
-.widget-user .widget-user-username {
+.widget-user .widget-user-username 
+{
   margin-top: 0;
   margin-bottom: 5px;
-  font-size: 25px;
+  font-size: 19px;
   font-weight: 300;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
 }
@@ -3042,15 +3043,16 @@ table.text-center th {
   padding-top: 30px;
 }
 .widget-user-2 .widget-user-header {
-  padding: 20px;
-  border-top-right-radius: 3px;
-  border-top-left-radius: 3px;
 }
 .widget-user-2 .widget-user-username {
   margin-top: 5px;
   margin-bottom: 5px;
-  font-size: 25px;
-  font-weight: 300;
+  font-size: 19px;
+  font-weight: 200;
+  padding: 20px;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+  color:chocolate;
 }
 .widget-user-2 .widget-user-desc {
   margin-top: 0;

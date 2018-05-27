@@ -191,7 +191,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Code\Base.cs" />
+    <Content Include="App_Code\EncryptParameter.cs" />
+    <Compile Include="App_Code\DecryptParameter.cs" />
     <Compile Include="App_Code\LoginAuthorization.cs" />
+    <Compile Include="App_Code\MyWebRequest.cs" />
+    <Compile Include="App_Code\Row.cs" />
     <Compile Include="App_Code\Seat.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -202,6 +206,7 @@
     <Compile Include="Controllers\EOrgController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\OwnerController.cs" />
+    <Compile Include="Controllers\PublicUserController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -309,12 +314,17 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Image\404.png" />
-    <Content Include="Image\cancel.png" />
-    <Content Include="Image\delete.png" />
+    <Content Include="Image\CEO.JPG" />
+    <Content Include="Image\Icon\404.png" />
+    <Content Include="Image\Icon\cancel.png" />
     <Content Include="Image\edit.png" />
+    <Content Include="Image\Icon\delete.png" />
+    <Content Include="Image\Icon\RightArrow.png" />
     <Content Include="Image\load.gif" />
+    <Content Include="Image\Logo\logo.png" />
     <Content Include="Image\open.png" />
     <Content Include="Image\print.png" />
+    <Content Include="Image\Seat_Map\seat_map1.jpg" />
     <Content Include="Image\skin.png" />
     <Content Include="Image\zaw naing.jpg" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
@@ -364,7 +374,9 @@
     <Content Include="Scripts\tether.js" />
     <Content Include="Scripts\tether.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -372,7 +384,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
@@ -388,9 +399,20 @@
     <Content Include="Views\EOrg\CreateEvent.cshtml" />
     <Content Include="Views\EOrg\NotFound.cshtml" />
     <Content Include="Views\EOrg\Manage.cshtml" />
+    <Content Include="Views\EOrg\SetRowDetail.cshtml" />
+    <Content Include="Views\EOrg\SetSeatStatus.cshtml" />
+    <Content Include="Views\Shared\PublicUser.cshtml" />
+    <Content Include="Views\PublicUser\Event.cshtml" />
+    <Content Include="Views\PublicUser\AllTicket.cshtml" />
+    <Content Include="Views\Test\SendSeatInfo.cshtml" />
+    <Content Include="Views\EOrg\SendSeatInfo.cshtml" />
+    <Content Include="Views\EOrg\AddSMSGate.cshtml" />
+    <Content Include="Views\PublicUser\AboutCEO.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Image\Cover\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

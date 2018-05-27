@@ -10,6 +10,8 @@ namespace EventTicket.App_Code
 {
     public class Base
     {
+        string connectionString = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
+
         public void ChangeByQuery(string query)
         {
             string conString = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
@@ -24,6 +26,26 @@ namespace EventTicket.App_Code
             }
         }
 
+        public Boolean CheckByQuery(string query)
+        {
+            Boolean name = false;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        if (reader["ID"] != DBNull.Value)
+                        {
+                            name = true;
+                        }
+                    }
+                }
+            }
+            return name;
+        }
 
         public DataTable getAllByQuery(string query)
         {

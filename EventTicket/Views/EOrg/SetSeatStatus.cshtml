@@ -1,0 +1,195 @@
+﻿@using System.Data;
+@using EventTicket.App_Code;
+@{
+    ViewBag.Title = "SetSeatStatus";
+    Layout = "~/Views/Shared/EOrg.cshtml";
+    string path_and_query = HttpContext.Current.Request.Url.PathAndQuery;
+    Session["url"] = path_and_query;
+    int EID = ViewBag.EID;
+    Base b = new Base();
+    int Row = b.getIntByQuery("select top 1 * From Seat where EID=" + EID + " order by Row desc", "Row");
+    DataTable dt = b.getAllByQuery("select * from Seat where EID=" + EID +" and Status <> 'Sold' and Status <> 'Free'");
+    DataTable dtSold = b.getAllByQuery("select * from Seat where EID=" + EID + " and Status <> 'Sold' and Status <> 'Book'");
+    DataTable dtSeatOfBookSold = b.getAllByQuery("select * from Seat where Status='Book' or Status='Sold' order by ID desc");
+    DataTable dtNamePhone = b.getAllByQuery("select * from  CustomerTicket c inner join Seat s on s.ID = c.SeatID where s.Status='Book' or s.Status='Sold' order by s.ID desc");
+    //Get data table of SeatID of Book,Sold
+    //Get data table of Name and Phone of particular SeatID
+}
+<br />
+@using (Html.BeginForm("InsertSeatStatus", "EOrg"))
+{
+    <div class="contentHeadBox">
+        <div class="row">
+            <div class="col-md-2">
+                <select name="ID" class="form-control" required>
+                    <option value="">Book Seat(မှာခုံ)</option>
+                    @{
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            <option value="@Convert.ToInt32(row["ID"])"> @row["Name"].ToString()</option>
+                        }
+                    }
+                </select>
+            </div>
+           <div class="col-md-2">
+               <select name="Status" class="form-control" required>
+                   <option value="">Select Status</option>
+                   <option value="Free">Free</option>
+                   <option value="Sold">Sold</option>
+               </select>
+            </div>
+            <div class="col-md-3"><center><input type="submit" class="btn btn-primary" value="CANCEL/SOLD" /></center></div>
+        </div>
+    </div>
+                        }
+
+@using (Html.BeginForm("SellSeatManually", "EOrg"))
+{
+    <div class="contentHeadBox">
+        <div class="row">
+            <div class="col-md-2">
+                <select name="ID" class="form-control" required>
+                    <option value="">Seat(ခုံအမည်)</option>
+                    @{
+                        foreach (DataRow row in dtSold.Rows)
+                        {
+                            <option value="@Convert.ToInt32(row["ID"])"> @row["Name"].ToString()</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-md-2">
+                <input type="text" class="form-control" name="Name" placeholder="နာမည်" required />
+            </div>
+            <div class="col-md-2">
+                <input type="text" class="form-control" name="Phone" placeholder="ဖုန်း" required />
+            </div>
+            <div class="col-md-3"><center><input type="submit" class="btn btn-primary" value="SOLD" /></center></div>
+        </div>
+    </div>
+                        }
+
+
+<br />
+<div class="contentBodyBox">
+    <div class="row">
+        <div class="col-md-6" style="line-height:30px;">
+            @{
+                for (int i = 1; i <= Row; i++)
+                {
+                    //Get All Seat in the Row
+                    DataTable Seatdt = b.getAllByQuery("select * from Seat where EID=" + EID + " and Row=" + i);
+                    foreach (DataRow row in Seatdt.Rows)
+                    {
+                        string Name = row["Name"].ToString();
+                        string Status = row["Status"].ToString();
+
+                        <a href="#">
+                        <span id="@Name" class="@Status" onclick="ShowNamePhone('@Name')" >@Name</span>
+                        </a>
+
+                    }
+                        <br /><br />
+
+                }
+            }
+        </div>
+        <div class="col-md-3" style="line-height:30px;">
+            <center>
+                @{
+                    for (int i = 1; i <= Row; i++)
+                    {
+                        int Price = b.getIntByQuery("select * from Seat where EID=" + EID + " and Row=" + i, "Price");
+                        <b><font class="normalText">@b.getStringByQuery("select * from Row where EID="+EID+" and Row="+i,"StartingCharacter") Row<img src="~/Image/Icon/RightArrow.png" /> @Price</font></b> <span>Kyats</span>
+                        <br /><br />
+                    }
+                }
+            </center>
+        </div>
+        <center>
+            <div class="col-md-3" style="border:1px solid #CDB79E;padding:10px;max-width:150px;margin:15px">
+                <span class="Free">&nbsp;&nbsp;&nbsp;</span>&nbsp;Free&nbsp;-&nbsp;@b.getCountByQuery("select * from Seat where EID=" + EID + " and Status='Free'") Seats<br /><br />
+                <span class="Book">&nbsp;&nbsp;&nbsp;</span>&nbsp;Book&nbsp;-&nbsp;@b.getCountByQuery("select * from Seat where EID=" + EID + " and Status='Book'") Seats<br /><br />
+                <span class="Sold">&nbsp;&nbsp;&nbsp;</span>&nbsp;Sold&nbsp;-&nbsp;@b.getCountByQuery("select * from Seat where EID=" + EID + " and Status='Sold'") Seats<br /><br />
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total&nbsp;-&nbsp;@b.getCountByQuery("select * from Seat where EID=" + EID) Seats</span>
+            </div>
+        </center>
+    </div>
+                
+</div>
+<style>
+    .Free,.Book,.Sold {
+  -webkit-border-radius: 4;
+  -moz-border-radius: 4;
+  border-radius: 4px;
+  font-family: Georgia;
+  color: #ffffff;
+  font-size: 15px;
+  padding: 5px 5px 5px 5px;
+  text-decoration: none;
+  min-width: 30px;
+  max-width:50px;
+  text-align:center;
+  }
+    .Free{
+        background:lightgreen;
+    }
+    .Book{
+        background:lightblue;
+    }
+    .Sold{
+        background:#0c1b24;
+    }
+</style>
+<p id="seat" style="opacity:0;">
+    <!--Save (1) SeatID (2) Name, Phone Here-->
+    @{ 
+        foreach(DataRow row in dtSeatOfBookSold.Rows)
+        {
+            string Name = row["Name"].ToString();
+            Name = Name + ",";
+            @Name 
+        }
+    }
+</p>
+<p id="namePhone" style="opacity:0;">
+    @{
+        foreach (DataRow row in dtNamePhone.Rows)
+        {
+            string Name = row["Name"].ToString();
+            string Phone = row["Phone"].ToString();
+            string Bank = row["Bank"].ToString();
+            string Account = row["Account"].ToString();
+            string bine = "🎗️"+Name + "$🎗️" + Phone + "$🎗️" + Bank + "$🎗️" + Account;
+            bine = bine + ",";
+            @bine
+        }
+    }
+</p>
+<script>
+    var Seat= new Array();
+    var NamePhone=new Array();
+    $(document).ready(function () {
+        var seat = document.getElementById("seat").innerText;
+        Seat = seat.split(",");
+        Seat.splice((Seat.length) - 1, 1);
+
+        var namePhone = document.getElementById("namePhone").innerText;
+        NamePhone = namePhone.split(",");
+        NamePhone.splice((NamePhone.length) - 1, 1);
+    })
+    function ShowNamePhone(Name){
+        var index = Seat.indexOf(Name);
+        if (index > -1) {
+            var str = NamePhone[index];
+            str = str.replace('$', '\r\n');
+            str = str.replace('$', '\r\n');
+            str = str.replace('$', '\r\n');
+
+            alert(str);
+        }
+        return;
+    }
+</script>
+
+

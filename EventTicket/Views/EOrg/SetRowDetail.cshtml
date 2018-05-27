@@ -1,0 +1,58 @@
+﻿@using System.Data;
+@using EventTicket.App_Code;
+@{
+    ViewBag.Title = "SetRowDetail";
+    Layout = "~/Views/Shared/EOrg.cshtml";
+    string path_and_query = HttpContext.Current.Request.Url.PathAndQuery;
+    Session["url"] = path_and_query;
+    int EID = ViewBag.EID;
+    Base b = new Base();
+    DataTable dt = b.getAllByQuery("select * from Row where EID=" + EID);
+}
+<br />
+@using (Html.BeginForm("InsertRowDetail", "EOrg"))
+{
+    <div class="contentHeadBox">
+        <div class="row">
+            <div class="col-md-2">
+                <select name="Row" class="form-control" required>
+                    @{
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            <option value="@Convert.ToInt32(row["Row"])">Row @row["Row"].ToString()</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-md-2"><input type="number" name="NumberOfSeat" placeholder="Total Seat" class="form-control" required /></div>
+            <div class="col-md-2"><input type="text" name="StartingCharacter" placeholder="Start Name for Seat" class="form-control" required /></div>
+            <div class="col-md-2">
+            <input type="number" name="Price" placeholder="Row Price" class="form-control" required />
+            <input type="hidden" name="EID" value="@EID"/>
+            </div>
+            <div class="col-md-2"><center><input type="submit" class="btn btn-primary" value="SET SEAT" /></center></div>
+        </div>
+    </div>
+                        }
+
+<br />
+<div class="contentBodyBox">
+    <table id="displayTable" class="table table-dark table-hover">
+        <thead>
+            <tr><th>Row</th><th>Number of Seat</th><th>Starting Character</th><th>Price</th></tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (DataRow row in dt.Rows)
+                {
+                    int Row = Convert.ToInt32(row["Row"]);
+                    int NumberOfSeat = Convert.ToInt32(row["NumberOfSeat"]);
+                    string StartingCharacter = row["StartingCharacter"].ToString();
+                    int Price = Convert.ToInt32(row["Price"]);
+                    <tr><td><font class="normalText">@Row Row</font></td><td><font class="normalText">@NumberOfSeat Seat</font></td><td><font class="normalText">@StartingCharacter</font></td><td><font class="normalText">@Price</font></td></tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+

@@ -1,6 +1,9 @@
 ﻿body{
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+.zg{
+    font-family:Zawgyi-One;
+}
 .beautifulBg {
   min-height: 100%;
   background-image:url('http://www.demo.amitjakhu.com/login-form/images/bg.png');
@@ -18,7 +21,7 @@ th {
   background:#EBECE4;
   border-radius:5px;
   border: 1px solid #FFFFF2;
-  margin:auto;
+  margin:2px;
   padding:20px;
   max-width:500px;
 }
@@ -30,6 +33,14 @@ th {
   margin:auto;
   padding:20px;
   max-width:1500px;
+}
+.contentSeatBox{																				
+  background:#EBECE4;
+  border-radius:5px;
+  border: 1px solid #FFFFF2;
+  margin:auto;
+  padding:20px;
+  max-width:500px;
 }
 
 .contentFormBox{																				
