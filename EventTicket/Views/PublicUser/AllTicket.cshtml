@@ -11,6 +11,8 @@
     DataTable dt = b.getAllByQuery("select * from Seat where EID=" + EID + " and Status <> 'Sold' and Status <> 'Free'");
     DataTable dtSold = b.getAllByQuery("select * from Seat where EID=" + EID + " and Status <> 'Sold' and Status <> 'Book'");
     DataTable dtSeatOfFree = b.getAllByQuery("select * from Seat where Status='Free' order by ID desc");
+    string SeatMap = b.getStringByQuery("select * from Event where ID=" + EID, "SeatMap");
+
     //Get data table of SeatID of Book,Sold
     //Get data table of Name and Phone of particular SeatID
 }
@@ -27,7 +29,7 @@
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total&nbsp;-&nbsp;@b.getCountByQuery("select * from Seat where EID=" + EID) Seats</span>
              </div>
             <div class="col-md-4">
-                <a href="~/Image/Seat_Map/seat_map1.jpg" class="zg">Seat Map/ခုံအေနအထားၾကည့္မည္</a>
+                <a href="~/Image/Seat_Map/@SeatMap" class="zg">Seat Map/ခုံအေနအထားၾကည့္မည္</a>
             </div>
         </div>
     </div>
@@ -73,8 +75,8 @@
                 <div class="col-md-4">
                     <input type="hidden" id="HSelectedSeat" name="SelectedSeat" />
                     <input type="hidden" name="EventID" value="@EID" />
-                    <input type="text" name="Name" class="form-control" placeholder="နာမည္" required />
-                    <input type="text" name="Phone" class="form-control" placeholder="ဖုန္း" required />
+                    <input type="text" name="Name" class="form-control" placeholder="Name (နာမည္)" required />
+                    <input type="text" name="Phone" class="form-control" placeholder="Phone (ဖုန္း)" required />
                 </div>
                 <div class="col-md-4">
                     <select class="form-control" name="Bank" required>
@@ -84,7 +86,7 @@
                         <option value="cb">CB</option>
                         <option value="yoma">YOMA</option>
                     </select>
-                    <input type="text" minlength="16" maxlength="17" name="Account" class="form-control" placeholder="အေကာင့္နံပတ္" required />
+                    <input type="text" minlength="16" maxlength="17" name="Account" class="form-control" placeholder="Account No (အေကာင့္နံပတ္)" required />
                 </div>
                 <div class="col-md-4"><center><input type="submit" class="btn btn-primary" value="BOOK/မွာမည္" /></center></div>
             </div>

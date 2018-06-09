@@ -16,8 +16,14 @@ namespace EventTicket.Controllers
         {
             return View();
         }
+        public ActionResult AllEvent()
+        {
+            return View();
+        }
         public ActionResult Event()
         {
+            string ECategoryID = Request.QueryString["ECategoryID"];
+            ViewBag.ECID = Convert.ToInt32(ECategoryID);
             return View();
         }
 

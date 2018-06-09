@@ -7,7 +7,24 @@
 @using System.Data;
 @using EventTicket.App_Code;
 
+<script>
+  $( function() {
+    $( "#datepicker" ).datepicker();
+  } );
+</script>
 
+<br />
+@using (Html.BeginForm("ProcessForAddEventOrgAccount", "Owner"))
+{
+    <div class="contentHeadBox">
+        <div class="row">
+            <div class="col-md-3"><input type="text" name="EOrgName" placeholder="Enter Name" class="form-control" required /></div>
+            <div class="col-md-3"><input type="text" name="Email" placeholder="Enter Email" class="form-control" required /></div>
+            <div class="col-md-3"><input type="datetime" name="ExpiredDate" placeholder="Choose Expired Date" id="datepicker" class="form-control" required /></div>
+            <div class="col-md-3"><center><input type="submit" class="btn btn-primary" value="ADD" /></center></div>
+        </div>
+    </div>
+                        }
 <br />
 @using (Html.BeginForm("ProcessForSetEventOrgAccount", "Owner"))
 {
@@ -46,7 +63,9 @@
                         int EventOrgID = Convert.ToInt32(row["AllID"]);
                         string Username = row["Username"].ToString();
                         string Password = row["Password"].ToString();
+                  
                     <tr><td>@i</td><td><font class="emphasizedText">@b.getStringByQuery("select * from EOrg where ID=" + EventOrgID, "Name")</font></td><td><font class="normalText">@Username</font></td><td><font class="normalText">@Password</font></td></tr>
+                    i++;
                 }
             }
         </tbody>

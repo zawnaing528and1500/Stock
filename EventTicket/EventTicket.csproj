@@ -314,18 +314,23 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Image\404.png" />
+    <Content Include="Image\bg.PNG" />
     <Content Include="Image\CEO.JPG" />
     <Content Include="Image\Icon\404.png" />
     <Content Include="Image\Icon\cancel.png" />
     <Content Include="Image\edit.png" />
     <Content Include="Image\Icon\delete.png" />
+    <Content Include="Image\Icon\open.png" />
+    <Content Include="Image\Icon\Place.png" />
     <Content Include="Image\Icon\RightArrow.png" />
+    <Content Include="Image\Icon\time.png" />
     <Content Include="Image\load.gif" />
     <Content Include="Image\Logo\logo.png" />
     <Content Include="Image\open.png" />
     <Content Include="Image\print.png" />
     <Content Include="Image\Seat_Map\seat_map1.jpg" />
-    <Content Include="Image\skin.png" />
+    <Content Include="Image\skin.PNG" />
+    <Content Include="Image\skin1.png" />
     <Content Include="Image\zaw naing.jpg" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
@@ -409,6 +414,8 @@
     <Content Include="Views\EOrg\AddSMSGate.cshtml" />
     <Content Include="Views\PublicUser\AboutCEO.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Owner\addEventOrgAccount.cshtml" />
+    <Content Include="Views\PublicUser\AllEvent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

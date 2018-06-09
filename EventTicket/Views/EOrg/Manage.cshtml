@@ -5,24 +5,26 @@
     Layout = "~/Views/Shared/EOrg.cshtml";
     Base b = new Base();
     EncryptParameter e = new EncryptParameter();
-    int EOrgID = 1;//Convert.ToInt32(Session["CurrentUserID"]);
+    int EOrgID = Convert.ToInt32(Session["CurrentUserID"]);
     DataTable dt = b.getAllByQuery("select * from Event where EOrgID="+EOrgID);
 
 }
 @{
-    foreach (DataRow row in dt.Rows)
-    {
-        //take number of TotalTicket, Name for number of seat
-        int EID = Convert.ToInt32(row["ID"]);
-        string E_EID = e.Encrypt(EID.ToString(), "ETicket");
-        int TotalTicket = Convert.ToInt32(row["TotalTicket"]);
-        string Name = row["Name"].ToString();
-        
+        foreach (DataRow row in dt.Rows)
+        {
+            //take number of TotalTicket, Name for number of seat
+            int EID = Convert.ToInt32(row["ID"]);
+            string E_EID = e.Encrypt(EID.ToString(), "ETicket");
+            int TotalTicket = Convert.ToInt32(row["TotalTicket"]);
+            string Name = row["Name"].ToString();
+            string Cover = row["ImageName"].ToString();
+
+
         <div class="col-md-4">
             <!-- Widget: user widget style 1 -->
             <div class="widget-user-header bg-yellow">
                 <div class="widget-user-image">
-                    <img src="~/Image/MissTeenFINAL.jpg" style="width:100%;height:auto;">
+                    <img src="~/Image/Cover/@Cover" style="width:100%;height:auto;">
                 </div>
             </div>
                 <div class="box-footer no-padding">

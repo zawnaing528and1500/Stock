@@ -1,0 +1,20 @@
+﻿@using EventTicket.App_Code;
+@using System.Data;
+@{
+    ViewBag.Title = "AllEvent";
+    Layout = "~/Views/Shared/PublicUser.cshtml";
+    Base b = new Base();
+    DataTable dt = b.getAllByQuery("select * from Event");
+}
+
+<div class="contentHeadBox">
+    @{
+        foreach (DataRow row in dt.Rows)
+        {
+            int ECategoryID = Convert.ToInt32(row["ECategoryID"]);
+            string Category = b.getStringByQuery("select * from ECategory where ID=" + ECategoryID, "Name");
+            <a href="~/PublicUser/Event?ECategoryID=@ECategoryID"><img src="~/Image/open.png" />&nbsp;&nbsp;&nbsp;&nbsp;<b>@Category</b></a><br />
+        }
+    }
+</div>
+

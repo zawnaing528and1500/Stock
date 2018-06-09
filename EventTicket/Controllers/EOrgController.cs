@@ -26,9 +26,11 @@ namespace EventTicket.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddEventData(HttpPostedFileBase file)
+        public ActionResult AddEventData(HttpPostedFileBase file, HttpPostedFileBase fileMap)
         {
+            EOrgID = Convert.ToInt32(Session["CurrentUserID"]);
             string ImageName = "";
+            String ImageNameMap = "";
             if (file.ContentLength > 0)
             {
                 var fileName = System.IO.Path.GetFileName(file.FileName);
@@ -36,9 +38,17 @@ namespace EventTicket.Controllers
                 var path = System.IO.Path.Combine(Server.MapPath("~/Image/Cover"), fileName);
                 file.SaveAs(path);
             }
+            if (fileMap.ContentLength > 0)
+            {
+                var fileNameMap = System.IO.Path.GetFileName(fileMap.FileName);
+                ImageNameMap = fileNameMap;
+                var path = System.IO.Path.Combine(Server.MapPath("~/Image/Seat_Map"), fileNameMap);
+                fileMap.SaveAs(path);
+            }
             string Name = Request.Form["Name"];
             string Category = Request.Form["Category"];
             string Date = Request.Form["Date"];
+            string Time = Request.Form["Time"];
             string Place = Request.Form["Place"];
             string Email = Request.Form["Email"];
             string Phone = Request.Form["Phone"];
@@ -49,7 +59,7 @@ namespace EventTicket.Controllers
             //Get EOrgID. Set to 1 in unit testing
             int ECategoryID = Convert.ToInt32(Category);
             DateTime EDate = Convert.ToDateTime(Date);
-            d.ChangeByQuery("insert into Event(EOrgID,ECategoryID,Name,ImageName,Place,EDate,Email,Phone,TotalTicket,IsFree,Description,Row) values(" + EOrgID + "," + ECategoryID + ",'" + Name + "','" + ImageName + "','" + Place + "','" + EDate + "','" + Email + "','" + Phone + "','" + TotalTicket + "','" + IsFree + "','" + Description + "'," + Row + ")");
+            d.ChangeByQuery("insert into Event(EOrgID,ECategoryID,Name,ImageName,Place,EDate,Email,Phone,TotalTicket,IsFree,Description,Row,SeatMap,Time) values(" + EOrgID + "," + ECategoryID + ",'" + Name + "','" + ImageName + "','" + Place + "','" + EDate + "','" + Email + "','" + Phone + "','" + TotalTicket + "','" + IsFree + "','" + Description + "'," + Row + ",'"+ ImageNameMap + "','"+Time+"')");
             int EID = d.getIntByQuery("select top 1 * From Event where EOrgID=" + EOrgID + " order by ID desc", "ID");
             Row r = new Row();
             r.set(EID, Row);
@@ -64,6 +74,10 @@ namespace EventTicket.Controllers
             E_EID = E_EID.Replace(" ", "+");
             String EID = dp.Decrypt(E_EID, "ETicket");
             int ID = Convert.ToInt32(EID);
+            //Delete Cover and SeatMap
+            string Cover = d.getStringByQuery("select * from Event where ID=" + ID, "ImageName");
+            string SeatMap = d.getStringByQuery("select * from Event where ID=" + ID, "SeatMap");
+            DeleteCover(Cover);DeleteSeatMap(SeatMap);
             //(1) Delete Event, Row, Seat, CustomerTicket
             d.ChangeByQuery("delete from CustomerTicket where SeatID in(select ID from Seat where EID=" + ID + ")");
             d.ChangeByQuery("delete from Seat where EID=" + ID);
@@ -73,6 +87,7 @@ namespace EventTicket.Controllers
         }
         public ActionResult Manage()
         {
+            EOrgID = Convert.ToInt32(Session["CurrentUserID"]);
             //Check if there is event or not. Retrieve EOrgID from Session. 
             if (d.CheckByQuery("select * from Event where EOrgID=" + EOrgID) == false)
             {
@@ -144,12 +159,34 @@ namespace EventTicket.Controllers
             int ID = Convert.ToInt32(Request.Form["ID"]);
             string Name = Request.Form["Name"];
             string Phone = Request.Form["Phone"];
-            d.ChangeByQuery("insert into CustomerTicket values(N'" + Name + "',N'" + Phone + "'," + ID + ")");
+            d.ChangeByQuery("insert into CustomerTicket(Name,Phone,SeatID) values(N'" + Name + "',N'" + Phone + "'," + ID + ")");
             d.ChangeByQuery("update Seat set Status='Sold' where ID=" + ID);
             string url = Session["url"].ToString();
             Response.Redirect(url);
             return View();
         }
+        #endregion
+
+        #region Delete Cover and SeatMap
+        public void DeleteCover(string StrFilename)
+        {
+            string strPhysicalFolder = Server.MapPath("~/Image/Cover/");
+            string strFileFullPath = strPhysicalFolder + StrFilename;
+            if (System.IO.File.Exists(strFileFullPath))
+            {
+                System.IO.File.Delete(strFileFullPath);
+            }
+        }
+        public void DeleteSeatMap(string StrFilename)
+        {
+            string strPhysicalFolder = Server.MapPath("~/Image/Seat_Map/");
+            string strFileFullPath = strPhysicalFolder + StrFilename;
+            if (System.IO.File.Exists(strFileFullPath))
+            {
+                System.IO.File.Delete(strFileFullPath);
+            }
+        }
+
         #endregion
 
         //AddSMSGate, SendSeatInfo

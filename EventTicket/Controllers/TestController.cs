@@ -11,6 +11,8 @@ namespace EventTicket.Controllers
 {
     public class TestController : Controller
     {
+        public object IO { get; private set; }
+
         // GET: Test
         public ActionResult Index()
         {
@@ -31,5 +33,25 @@ namespace EventTicket.Controllers
             ViewData["status"] = myRequest.GetResponse();
             return View();
         }
+
+        public void DeleteFileFromFolder(string StrFilename)
+        {
+
+            string strPhysicalFolder = Server.MapPath("~/Image/Cover/");
+
+            string strFileFullPath = strPhysicalFolder + StrFilename;
+
+            if (System.IO.File.Exists(strFileFullPath))
+            {
+                System.IO.File.Delete(strFileFullPath);
+            }
+        }
+
+        public ActionResult DeleteImage()
+        {
+            DeleteFileFromFolder("IPMS Coventry  Warwickshire Show 2018.jpg");
+            return View();
+        }
+
     }
 }

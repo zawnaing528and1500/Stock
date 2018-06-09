@@ -87,7 +87,7 @@ body {
 }
 .content-wrapper {
   min-height: 100%;
-  background-image:url('/admin-lte/img/skin.png');/*url('http://www.demo.amitjakhu.com/login-form/images/bg.png');*/
+  background-image:url('/Image/bg.PNG');/*url('http://www.demo.amitjakhu.com/login-form/images/bg.png');*/
 }
 .main-footer {
   background: #fff;

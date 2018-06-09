@@ -3,31 +3,40 @@
 @{
     ViewBag.Title = "Manage";
     Layout = "~/Views/Shared/PublicUser.cshtml";
+    int ECategoryID = ViewBag.ECID;
     Base b = new Base();
     EncryptParameter e = new EncryptParameter();
-    DataTable dt = b.getAllByQuery("select * from Event");
+    DataTable dt = b.getAllByQuery("select * from Event where ECategoryID="+ECategoryID);
 
 }
 @{
-    foreach (DataRow row in dt.Rows)
-    {
-        //take number of TotalTicket, Name for number of seat
-        int EID = Convert.ToInt32(row["ID"]);
-        string E_EID = e.Encrypt(EID.ToString(), "ETicket");
-        int TotalTicket = Convert.ToInt32(row["TotalTicket"]);
-        string Name = row["Name"].ToString();
+            foreach (DataRow row in dt.Rows)
+            {
+                //take number of TotalTicket, Name for number of seat
+                int EID = Convert.ToInt32(row["ID"]);
+                string E_EID = e.Encrypt(EID.ToString(), "ETicket");
+                int TotalTicket = Convert.ToInt32(row["TotalTicket"]);
+                string Name = row["Name"].ToString();
+                string ImageName = row["ImageName"].ToString();
+                string Place = row["Place"].ToString();
+                string Date = row["EDate"].ToString();
+                string Time = row["Time"].ToString();
+                string DateTime = Date + " , " + Time;
 
-        <div class="col-md-4">
-            <!-- Widget: user widget style 1 -->
+
+            <div class="col-md-3" style="margin:6px;">
+                <!-- Widget: user widget style 1 -->
                 <!-- Add the bg color to the header using any of the bg-* classes -->
                 <div class="widget-user-header bg-yellow">
                     <div class="widget-user-image">
-                        <img src="~/Image/MissTeenFINAL.jpg" style="width:100%;height:auto;">
+                        <a href="~/Image/Cover/@ImageName"><img src="~/Image/Cover/@ImageName" style="width:100%;height:auto;"></a>
                     </div>
                 </div>
                 <div class="box-footer no-padding">
                     <ul class="nav nav-stacked">
-                        <li class="zg"><a href="~/PublicUser/AllTicket?E_EID=@E_EID">Tickets (လက္မွတ္မ်ား)<span class="pull-right badge bg-blue">@b.getCountByQuery("select * from Seat where EID=" + EID) ေစာင္</span></a></li>
+                        <li class="zg" style="background-color:#FDFCDC;border:1px solid #F5F5DC"><a href="~/PublicUser/AllTicket?E_EID=@E_EID">Tickets (လက္မွတ္မ်ား)<span class="pull-right badge bg-blue">@b.getCountByQuery("select * from Seat where EID=" + EID) ေစာင္</span></a></li>
+                        <li style="background-color:#FEFFEF;color:dimgray;"><a href=""><img src="~/Image/Icon/Time.png" width="32px" height="32px" />@DateTime</a></li>
+                        <li style="background-color:#FEFFEF;color:dimgray;"><a href="https://www.google.com/maps/dir/?api=1&origin=current+location&destination=@Place&dir_action=navigate"><img src="~/Image/Icon/Place.png" width="32px" height="32px" />@Place</a></li>
                     </ul>
                 </div>
             </div>
