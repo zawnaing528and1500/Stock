@@ -4,9 +4,19 @@
     ViewBag.Title = "Manage";
     Layout = "~/Views/Shared/PublicUser.cshtml";
     int ECategoryID = ViewBag.ECID;
+    DataTable dt;
     Base b = new Base();
     EncryptParameter e = new EncryptParameter();
-    DataTable dt = b.getAllByQuery("select * from Event where ECategoryID="+ECategoryID);
+    if(ViewBag.EOID == null)
+    {
+         dt = b.getAllByQuery("select * from Event where ECategoryID=" + ECategoryID);
+    }
+    else
+    {
+        int EOID = Convert.ToInt32(ViewBag.EOID);
+         dt = b.getAllByQuery("select * from Event where ECategoryID=" + ECategoryID+" and EOrgID="+EOID);
+    }
+
 
 }
 @{

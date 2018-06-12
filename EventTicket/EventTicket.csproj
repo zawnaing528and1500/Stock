@@ -316,6 +316,7 @@
     <Content Include="Image\404.png" />
     <Content Include="Image\bg.PNG" />
     <Content Include="Image\CEO.JPG" />
+    <Content Include="Image\Cover\404.png" />
     <Content Include="Image\Icon\404.png" />
     <Content Include="Image\Icon\cancel.png" />
     <Content Include="Image\edit.png" />
@@ -328,7 +329,7 @@
     <Content Include="Image\Logo\logo.png" />
     <Content Include="Image\open.png" />
     <Content Include="Image\print.png" />
-    <Content Include="Image\Seat_Map\seat_map1.jpg" />
+    <Content Include="Image\Seat_Map\404.png" />
     <Content Include="Image\skin.PNG" />
     <Content Include="Image\skin1.png" />
     <Content Include="Image\zaw naing.jpg" />
@@ -416,10 +417,10 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Owner\addEventOrgAccount.cshtml" />
     <Content Include="Views\PublicUser\AllEvent.cshtml" />
+    <Content Include="Views\PublicUser\SeeCinemaOrg.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Image\Cover\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

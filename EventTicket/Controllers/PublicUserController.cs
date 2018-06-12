@@ -20,10 +20,19 @@ namespace EventTicket.Controllers
         {
             return View();
         }
+        public ActionResult SeeCinemaOrg()
+        {
+            return View();
+        }
         public ActionResult Event()
         {
             string ECategoryID = Request.QueryString["ECategoryID"];
             ViewBag.ECID = Convert.ToInt32(ECategoryID);
+           
+            if(Request.QueryString["EOrgID"] != null)
+            {
+                ViewBag.EOID = Convert.ToInt32(Request.QueryString["EOrgID"]);
+            }
             return View();
         }
 

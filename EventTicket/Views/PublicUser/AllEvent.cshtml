@@ -4,9 +4,8 @@
     ViewBag.Title = "AllEvent";
     Layout = "~/Views/Shared/PublicUser.cshtml";
     Base b = new Base();
-    DataTable dt = b.getAllByQuery("select * from Event");
+    DataTable dt = b.getAllByQuery("select distinct ECategoryID from Event where ECategoryID !="+19);
 }
-
 <div class="contentHeadBox">
     @{
         foreach (DataRow row in dt.Rows)
@@ -16,5 +15,6 @@
             <a href="~/PublicUser/Event?ECategoryID=@ECategoryID"><img src="~/Image/open.png" />&nbsp;&nbsp;&nbsp;&nbsp;<b>@Category</b></a><br />
         }
     }
+    <a href="~/PublicUser/SeeCinemaOrg"><img src="~/Image/open.png" />&nbsp;&nbsp;&nbsp;&nbsp;<b>Cinema</b></a><br />
 </div>
 
