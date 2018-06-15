@@ -47,6 +47,7 @@
                         <li class="zg" style="background-color:#FDFCDC;border:1px solid #F5F5DC"><a href="~/PublicUser/AllTicket?E_EID=@E_EID">Tickets (လက္မွတ္မ်ား)<span class="pull-right badge bg-blue">@b.getCountByQuery("select * from Seat where EID=" + EID) ေစာင္</span></a></li>
                         <li style="background-color:#FEFFEF;color:dimgray;"><a href=""><img src="~/Image/Icon/Time.png" width="32px" height="32px" />@DateTime</a></li>
                         <li style="background-color:#FEFFEF;color:dimgray;"><a href="https://www.google.com/maps/dir/?api=1&origin=current+location&destination=@Place&dir_action=navigate"><img src="~/Image/Icon/Place.png" width="32px" height="32px" />@Place</a></li>
+                        <li style="background-color:#FEFFEF;color:dimgray;"><a href="#">Event Code - @EID</a></li>
                     </ul>
                 </div>
             </div>

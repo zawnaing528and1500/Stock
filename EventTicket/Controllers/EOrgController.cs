@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using EventTicket.App_Code;
 using System.Data;
+using System.Net;
+
 namespace EventTicket.Controllers
 {
     public class EOrgController : Controller
@@ -59,7 +61,7 @@ namespace EventTicket.Controllers
             //Get EOrgID. Set to 1 in unit testing
             int ECategoryID = Convert.ToInt32(Category);
             DateTime EDate = Convert.ToDateTime(Date);
-            d.ChangeByQuery("insert into Event(EOrgID,ECategoryID,Name,ImageName,Place,EDate,Email,Phone,TotalTicket,IsFree,Description,Row,SeatMap,Time) values(" + EOrgID + "," + ECategoryID + ",'" + Name + "','" + ImageName + "','" + Place + "','" + EDate + "','" + Email + "','" + Phone + "','" + TotalTicket + "','" + IsFree + "','" + Description + "'," + Row + ",'"+ ImageNameMap + "','"+Time+"')");
+            d.ChangeByQuery("insert into Event(EOrgID,ECategoryID,Name,ImageName,Place,EDate,Email,Phone,TotalTicket,IsFree,Description,Row,SeatMap,Time) values(" + EOrgID + "," + ECategoryID + ",N'" + Name + "','" + ImageName + "','" + Place + "','" + EDate + "','" + Email + "','" + Phone + "','" + TotalTicket + "','" + IsFree + "','" + Description + "'," + Row + ",'"+ ImageNameMap + "','"+Time+"')");
             int EID = d.getIntByQuery("select top 1 * From Event where EOrgID=" + EOrgID + " order by ID desc", "ID");
             Row r = new Row();
             r.set(EID, Row);
@@ -142,16 +144,29 @@ namespace EventTicket.Controllers
         }
         public ActionResult InsertSeatStatus()
         {
-            int ID = Convert.ToInt32(Request.Form["ID"]);
+            int ID = Convert.ToInt32(Request.Form["ID"]);//SeatID
+            String TicketID = ID.ToString();
+            string Name = d.getStringByQuery("select * from CustomerTicket where SeatID=" + ID,"Name");
+            string Phone = d.getStringByQuery("select * from CustomerTicket where SeatID=" + ID, "Phone");
+            string SeatName = d.getStringByQuery("select * from Seat where ID=" + ID, "Name");
+
             string Status = Request.Form["Status"];
             if (Status.Equals("Free"))
             {
                 //Delete Book Detail first. Then update seat status
                 d.ChangeByQuery("delete from CustomerTicket where SeatID=" + ID);
+                d.ChangeByQuery("update Seat set Status='" + Status + "' where ID=" + ID);
+
+                string url = Session["url"].ToString();
+                Response.Redirect(url);
             }
-            d.ChangeByQuery("update Seat set Status='" + Status + "' where ID=" + ID);
-            string url = Session["url"].ToString();
-            Response.Redirect(url);
+            else
+            {
+                d.ChangeByQuery("update Seat set Status='" + Status + "' where ID=" + ID);
+                SendSeatInfo(TicketID, Name, Phone, SeatName);
+            }
+
+
             return View();
         }
         public ActionResult SellSeatManually()
@@ -195,28 +210,31 @@ namespace EventTicket.Controllers
         {
             return View();
         }
-        public ActionResult SendSeatInfo()
+        public ActionResult SendSeatInfo(String TicketID, String Name, String Phone, String SeatName)
         {
-
-            if (d.CheckByQuery("select * from SMSGate where EOrgID=" + EOrgID) == true)
+            EOrgID = 3;// Convert.ToInt32(Session["CurrentUserID"]);
+            if (d.CheckByQuery("select * from SMSGateway where EOrgID=" + EOrgID) == true)
             {
-                DataTable dt = d.getAllByQuery("select * from SMSGate where EOrgID=" + EOrgID);
+                DataTable dt = d.getAllByQuery("select * from SMSGateway where EOrgID=" + EOrgID);
                 foreach (DataRow row in dt.Rows)
                 {
-                    string Email = row["Email"].ToString();
-                    string Password = row["Password"].ToString();
-                    int Device = Convert.ToInt32(row["Device"]);
-                    string Number = "09257706564";
-                    Number = "+95" + Number.Remove(0, 1);
-                    string Message = "Name:ေဇာ္နိုင္/Seat:A5";
-                    string all = "email=" + Email + "&password=" + Password + "&device=" + Device + "&number=" + Number + "&message=" + Message;
-                    MyWebRequest myRequest = new MyWebRequest("http://smsgateway.me/api/v3/messages/send", "POST", all);
-                    //show the response string on the console screen. 
+                    string IP = row["IP"].ToString();
+                    IP = IP.Replace(" ", string.Empty);
+
+                    string Number = Phone;
+                    string Message = "TicketID:"+TicketID+"/Name:"+Name+"/Seat:"+SeatName;
+
+                    string all = IP + "v1/sms/send/?phone=" + Number + "&message=" + Message;
+
+                    WebRequest request = WebRequest.Create(all);
                     try
                     {
-                        ViewData["status"] = myRequest.GetResponse();
+                        WebResponse response = request.GetResponse();
+                        ViewData["status"] = ((HttpWebResponse)response).StatusCode;
                         if (ViewData["status"].ToString() == "OK")
                         {
+                            string url = Session["url"].ToString();
+                            Response.Redirect(url);
                             break;
                         }
                     }
@@ -236,22 +254,24 @@ namespace EventTicket.Controllers
         }
         public ActionResult InsertSMSGate()
         {
-            string  Email = Request.Form["Email"];
-            string Password = Request.Form["Password"];
-            int Device = Convert.ToInt32(Request.Form["Device"]);
-            string Phone = Request.Form["Phone"];
-            d.ChangeByQuery("insert into SMSGate values("+EOrgID+",'"+Email+"','"+Password+"',"+Device+",'"+Phone+"')");
+            EOrgID = Convert.ToInt32(Session["CurrentUserID"]);
+            string  SMSGateway = Request.Form["SMSGateway"];
+            SMSGateway = SMSGateway.Replace(" ", string.Empty);
+            d.ChangeByQuery("insert into SMSGateway values('"+SMSGateway+"',"+EOrgID+")");
             return RedirectToAction("AddSMSGate");
         }
         public ActionResult DeleteSMSGate()
         {
+            EOrgID = Convert.ToInt32(Session["CurrentUserID"]);
             int ID = Convert.ToInt32(Request.QueryString["SMSGateID"]);
-            d.ChangeByQuery("delete from SMSGate where ID=" + ID + " and EOrgID=" + EOrgID);
+            d.ChangeByQuery("delete from SMSGateway where ID=" + ID + " and EOrgID=" + EOrgID);
             return RedirectToAction("AddSMSGate");
         }
         #endregion
 
+        #region SMSGateway
 
+        #endregion
 
 
 
