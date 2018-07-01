@@ -5,6 +5,8 @@
     Layout = "~/Views/Shared/EOrg.cshtml";
     Base b = new Base();
     DataTable dt = new DataTable();
+    int EOrgID = Convert.ToInt32(Session["CurrentUserID"]);
+    int ECategoryID = b.getIntByQuery("select * from EOrg where ID=" + EOrgID, "ECategoryID");
 }
 
 <style>
@@ -134,7 +136,7 @@
                     <select name="Category" class="form-control" required >
                         <option value="">Category (ကဏ္ဍ)</option>
                         @{ 
-                            dt = b.getAllByQuery("select * from ECategory");
+                            dt = b.getAllByQuery("select * from ECategory where ID="+ECategoryID);
                             foreach (DataRow rows in dt.Rows)
                             {
                                 <option value="@rows["ID"]">@rows["Name"]</option>
@@ -145,10 +147,24 @@
                 </div>
                 <div class="form-group"><label class="col-sm-4 control-label">Date</label><div class="col-sm-8"><input type="datetime" name="Date" id="datepicker" class="form-control" placeholder="Date (ရက်)" required/></div></div>
                 <div class="form-group"><label class="col-sm-4 control-label">Time</label><div class="col-sm-8"><input type="text" name="Time" class="form-control" placeholder="9:30AM to 5:00PM" required /></div></div>
-                <div class="form-group"><label class="col-sm-4 control-label">Place</label><div class="col-sm-8"><input id="pac-input" type="text" name="Place" class="form-control" placeholder="Event Place (ပွဲနေရာ)" required></div></div>
+                <div class="form-group"><label class="col-sm-4 control-label">Place</label><div class="col-sm-8"><input id="pac-input" type="text" name="Place" class="form-control" placeholder="Event Place (နေရာ)" required></div></div>
+                <div class="form-group"><label class="col-sm-4 control-label">Town</label>
+                <div class="col-sm-8">
+                    <select name="Town" class="form-control" required>
+                        <option value="">Town</option>
+                        @{
+                            dt = b.getAllByQuery("select * from Town");
+                            foreach (DataRow rows in dt.Rows)
+                            {
+                                <option value="@rows["Name"]">@rows["Name"]</option>
+                            }
+                        }
+                    </select>
+                </div>
+                </div>
             </div>
         </div>
-        <br /><br />
+        <br />
         <div class="col-sm-12">
             <div class="mapInCreateEvent" style="width: 600px; height: 500px; position: absolute;">
                 <div id="map"></div>
@@ -167,10 +183,21 @@
                 <div class="form-group"><label class="col-sm-4 control-label">Phone</label><div class="col-sm-8"><input type="text" name="Phone" class="form-control" placeholder="Phone (ဖုန်း)" required/></div></div>
                 <div class="form-group"><label class="col-sm-4 control-label">Free</label>
                 <div class="col-sm-8">
-                    <input type="radio" name="isFree" value="TRUE" checked> YES <br />
-                    <input type="radio" name="isFree" value="FALSE"> NO 
+                    <div class="form-group">
+                        <input type="radio" name="isFree" value="TRUE" checked> YES
+                        <input type="radio" name="isFree" value="FALSE"> NO
+                    </div>
+                    </div>
                 </div>
-                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Public</label>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <input type="radio" name="isPublic" value="TRUE" checked> YES
+                            <input type="radio" name="isPublic" value="FALSE"> NO
+                        </div>
+                    </div>
+                    </div>
                 <div class="form-group"><label class="col-sm-4 control-label">Number of Row</label><div class="col-sm-8"><input type="number" min="3" name="Row" class="form-control" placeholder="Row အရေအတွက်" required/></div></div>
                 <div class="form-group"><label class="col-sm-4 control-label">Cover</label><div class="col-sm-8"><input type="file" name="file" id="file" class="form-control" required /></div></div>
               <div class="form-group"><label class="col-sm-4 control-label">Seat Map</label><div class="col-sm-8"><input type="file" name="fileMap"  class="form-control" required/></div></div>
@@ -179,10 +206,10 @@
         <div class="contentFormBox">
             <div class="box-body">
                 <div class="col-sm-12">
-                    <textarea class="form-control" rows="6" name="Description" placeholder="Description (ပွဲ၊ဝန်ဆောင်မှုများအသေးစိတ်)" required></textarea>
+                    <textarea class="form-control" rows="6" name="Description" placeholder="Description (ဝန်ဆောင်မှုများအသေးစိတ်)" required></textarea>
                 </div>
             </div>
-            <center><input type="submit" class="btn btn-primary" value="ADD EVENT" /></center>
+            <center><input type="submit" class="btn btn-primary" value="CREATE" /></center>
             </div>
         </div>
 </div>

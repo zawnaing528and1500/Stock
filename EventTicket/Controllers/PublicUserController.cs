@@ -20,8 +20,24 @@ namespace EventTicket.Controllers
         {
             return View();
         }
+        public ActionResult SeeCinemaOrgByTown()
+        {
+            return View();
+        }
         public ActionResult SeeCinemaOrg()
         {
+            string Town = Request.QueryString["Town"];
+            ViewBag.Town = Town;
+            return View();
+        }
+        public ActionResult SeeCarGateByTown()
+        {
+            return View();
+        }
+        public ActionResult SeeCarGate()
+        {
+            string Town = Request.QueryString["Town"];
+            ViewBag.Town = Town;
             return View();
         }
         public ActionResult Event()

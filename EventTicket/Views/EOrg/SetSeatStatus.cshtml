@@ -11,7 +11,7 @@
     DataTable dt = b.getAllByQuery("select * from Seat where EID=" + EID +" and Status <> 'Sold' and Status <> 'Free'");
     DataTable dtSold = b.getAllByQuery("select * from Seat where EID=" + EID + " and Status <> 'Sold' and Status <> 'Book'");
     DataTable dtSeatOfBookSold = b.getAllByQuery("select * from Seat where Status='Book' or Status='Sold' order by ID desc");
-    DataTable dtNamePhone = b.getAllByQuery("select * from  CustomerTicket c inner join Seat s on s.ID = c.SeatID where s.Status='Book' or s.Status='Sold' order by s.ID desc");
+    DataTable dtNamePhone = b.getAllByQuery("select * from  CustomerTicket c inner join Seat s on s.ID = c.SeatID where s.EID= "+EID+" and (s.Status='Book' or s.Status='Sold') order by s.ID desc");
     //Get data table of SeatID of Book,Sold
     //Get data table of Name and Phone of particular SeatID
 }
@@ -49,7 +49,7 @@
         <div class="row">
             <div class="col-md-2">
                 <select name="ID" class="form-control" required>
-                    <option value="">Seat(ခုံအမည်)</option>
+                    <option value="">Seat(ခုံအမည္)</option>
                     @{
                         foreach (DataRow row in dtSold.Rows)
                         {
@@ -59,10 +59,10 @@
                 </select>
             </div>
             <div class="col-md-2">
-                <input type="text" class="form-control" name="Name" placeholder="နာမည်" required />
+                <input type="text" class="form-control" name="Name" placeholder="Name(နာမည္)" required />
             </div>
             <div class="col-md-2">
-                <input type="text" class="form-control" name="Phone" placeholder="ဖုန်း" required />
+                <input type="text" class="form-control" name="Phone" placeholder="Phone(ဖုန္း)" required />
             </div>
             <div class="col-md-3"><center><input type="submit" class="btn btn-primary" value="SOLD" /></center></div>
         </div>
@@ -81,11 +81,12 @@
                     DataTable Seatdt = b.getAllByQuery("select * from Seat where EID=" + EID + " and Row=" + i);
                     foreach (DataRow row in Seatdt.Rows)
                     {
+                        string TicketID = (Convert.ToInt32(row["ID"])).ToString();
                         string Name = row["Name"].ToString();
                         string Status = row["Status"].ToString();
 
                         <a href="#">
-                        <span id="@Name" class="@Status" onclick="ShowNamePhone('@Name')" >@Name</span>
+                        <span id="@Name" class="@Status" onclick="ShowNamePhone('@Name','@TicketID')" >@Name</span>
                         </a>
 
                     }
@@ -154,39 +155,104 @@
 </p>
 <p id="namePhone" style="opacity:0;">
     @{
+        Boolean Isfree = b.getBooleanByQuery("select * from Event where ID=" + EID, "IsFree");
         foreach (DataRow row in dtNamePhone.Rows)
         {
             string Name = row["Name"].ToString();
             string Phone = row["Phone"].ToString();
             string Bank = row["Bank"].ToString();
             string Account = row["Account"].ToString();
-            string bine = "🎗️"+Name + "$🎗️" + Phone + "$🎗️" + Bank + "$🎗️" + Account;
+            string bine = "🎗️" + Name + "$🎗️" + Phone;
+            if (Isfree == false)
+            {
+                bine = bine + "$🎗️" + Bank + "$🎗️" + Account;
+            }
             bine = bine + ",";
             @bine
         }
     }
 </p>
+<p id="phone" style="opacity:0">
+    @{
+        foreach (DataRow row in dtNamePhone.Rows)
+        {
+           string phone = row["Phone"].ToString() + ",";
+            @phone
+        }
+    }
+</p>
+<!--
+For Sending Message
+(1) Get Event Name
+(2) Get EDate
+(3) Get Time
+-->
+<p id="EventName" style="opacity:0;">
+    @b.getStringByQuery("select * from Event where ID=" + EID, "Name")
+</p>
+<p id="EDate" style="opacity:0;">
+    @Convert.ToDateTime(b.getDateByQuery("select * from Event where ID=" + EID, "EDate")).ToString("dd/MM/yyyy")
+    @b.getStringByQuery("select * from Event where ID=" + EID, "Time")
+
+</p>
 <script>
-    var Seat= new Array();
+    var Seat = new Array();
+    var Phone = new Array();
     var NamePhone=new Array();
     $(document).ready(function () {
         var seat = document.getElementById("seat").innerText;
         Seat = seat.split(",");
         Seat.splice((Seat.length) - 1, 1);
 
+        var phone = document.getElementById("phone").innerText;
+        Phone = phone.split(",");
+        Phone.splice((Phone.length) - 1, 1);
+
         var namePhone = document.getElementById("namePhone").innerText;
         NamePhone = namePhone.split(",");
         NamePhone.splice((NamePhone.length) - 1, 1);
     })
-    function ShowNamePhone(Name){
+    function ShowNamePhone(Name, TicketID) {
+        var EventName = document.getElementById("EventName").innerText;
+        var EDate = document.getElementById("EDate").innerText;
+        EDate = EDate.replace('/', '-');
+        EDate = EDate.replace('/', '-');
         var index = Seat.indexOf(Name);
         if (index > -1) {
             var str = NamePhone[index];
             str = str.replace('$', '\r\n');
             str = str.replace('$', '\r\n');
             str = str.replace('$', '\r\n');
+            str = "Send SMS?\r\n\r\n" + str;
+            var strsend = "";
+            strsend = strsend + "\r\n❇️-" + EventName;
+            strsend = strsend + "\r\n❇️-" + Name + "[" + TicketID + "]";
+            strsend = strsend + "\r\n❇️-" + EDate;
+            var r = confirm(str + "\r\n" + strsend);
 
-            alert(str);
+            var messagesent = "❇️";
+            messagesent = messagesent + EventName;
+            messagesent = messagesent + "/" + Name + "[" + TicketID + "]";
+            messagesent = messagesent + "/" + EDate;
+
+            if (r == true) {
+                var P = Phone[index];
+                var M = messagesent;
+                var url = "http://192.168.43.1:8080/v1/sms/send/?phone=" + P + "&message=" + M;
+                var xmlHttp = new XMLHttpRequest();
+                xmlHttp.open("GET", url, false);
+                xmlHttp.send(null);
+
+                if (xmlhttp.readyState != 4 && xmlhttp.status != 200) {
+                    var url = "http://127.0.0.1:8080/v1/sms/send/?phone=" + P + "&message=" + M;
+                    var nextxmlHttp = new XMLHttpRequest();
+                    nextxmlHttp.open("GET", url, false);
+                    nextxmlHttp.send(null);
+                }
+            }
+            else {
+            }
+
         }
         return;
     }

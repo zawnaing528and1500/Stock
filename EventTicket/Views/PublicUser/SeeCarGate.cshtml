@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/PublicUser.cshtml";
     string Town = ViewBag.Town;
     Base b = new Base();
-    DataTable dt = b.getAllByQuery("select distinct EOrgID from Event where ECategoryID =" + 19+" and Town='"+Town+ "' and IsPublic='True'");
+    DataTable dt = b.getAllByQuery("select distinct EOrgID from Event where ECategoryID =" + 24 + " and Town='" + Town + "'  and IsPublic='True'");
 }
 <div class="contentHeadBox">
     @{
@@ -13,7 +13,7 @@
         {
             int EOrgID = Convert.ToInt32(row["EOrgID"]);
             string Name = b.getStringByQuery("select * from EOrg where ID=" + EOrgID, "Name");
-            <a href="~/PublicUser/Event?EOrgID=@EOrgID&ECategoryID=19"><img src="~/Image/open.png" />&nbsp;&nbsp;&nbsp;&nbsp;<b>@Name</b></a><br />
+            <a href="~/PublicUser/Event?EOrgID=@EOrgID&ECategoryID=24"><img src="~/Image/open.png" />&nbsp;&nbsp;&nbsp;&nbsp;<b>@Name</b></a><br />
         }
     }
 </div>

@@ -9,29 +9,29 @@
     EncryptParameter e = new EncryptParameter();
     if(ViewBag.EOID == null)
     {
-         dt = b.getAllByQuery("select * from Event where ECategoryID=" + ECategoryID);
+         dt = b.getAllByQuery("select * from Event where ECategoryID=" + ECategoryID + " and IsPublic='True'");
     }
     else
     {
         int EOID = Convert.ToInt32(ViewBag.EOID);
-         dt = b.getAllByQuery("select * from Event where ECategoryID=" + ECategoryID+" and EOrgID="+EOID);
+         dt = b.getAllByQuery("select * from Event where ECategoryID=" + ECategoryID+" and EOrgID="+EOID+" and IsPublic='True'");
     }
 
 
 }
 @{
-            foreach (DataRow row in dt.Rows)
-            {
-                //take number of TotalTicket, Name for number of seat
-                int EID = Convert.ToInt32(row["ID"]);
-                string E_EID = e.Encrypt(EID.ToString(), "ETicket");
-                int TotalTicket = Convert.ToInt32(row["TotalTicket"]);
-                string Name = row["Name"].ToString();
-                string ImageName = row["ImageName"].ToString();
-                string Place = row["Place"].ToString();
-                string Date = row["EDate"].ToString();
-                string Time = row["Time"].ToString();
-                string DateTime = Date + " , " + Time;
+    foreach (DataRow row in dt.Rows)
+    {
+        //take number of TotalTicket, Name for number of seat
+        int EID = Convert.ToInt32(row["ID"]);
+        string E_EID = e.Encrypt(EID.ToString(), "ETicket");
+        int TotalTicket = Convert.ToInt32(row["TotalTicket"]);
+        string Name = row["Name"].ToString();
+        string ImageName = row["ImageName"].ToString();
+        string Place = row["Place"].ToString();
+        string Date = Convert.ToDateTime(row["EDate"]).ToString("dd/MM/yyyy");
+        string Time = row["Time"].ToString();
+        string DateTime = Date + " , " + Time;
 
 
             <div class="col-md-3" style="margin:6px;">

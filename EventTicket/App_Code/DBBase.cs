@@ -94,6 +94,34 @@ namespace EventTicket.App_Code
             return name;
         }
 
+        public DateTime getDateByQuery(string query, string Column)
+        {
+            DateTime name = DateTime.Now;
+            DataTable dt;
+            var connectionString = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    using (SqlDataAdapter sda = new SqlDataAdapter())
+                    {
+                        cmd.Connection = con;
+                        sda.SelectCommand = cmd;
+                        using (dt = new DataTable())
+                        {
+                            sda.Fill(dt);
+                        }
+                    }
+                }
+            }
+            foreach (DataRow row in dt.Rows)
+            {
+                name = Convert.ToDateTime(row[Column]);
+            }
+            return name;
+        }
+
         public int getIntByQuery(string query, string Column)
         {
             int name = 0;

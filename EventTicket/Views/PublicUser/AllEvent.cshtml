@@ -4,7 +4,7 @@
     ViewBag.Title = "AllEvent";
     Layout = "~/Views/Shared/PublicUser.cshtml";
     Base b = new Base();
-    DataTable dt = b.getAllByQuery("select distinct ECategoryID from Event where ECategoryID !="+19);
+    DataTable dt = b.getAllByQuery("select distinct ECategoryID from Event where ECategoryID !=19 and ECategoryID !=24 and IsPublic='True'");
 }
 <div class="contentHeadBox">
     @{
@@ -15,6 +15,7 @@
             <a href="~/PublicUser/Event?ECategoryID=@ECategoryID"><img src="~/Image/open.png" />&nbsp;&nbsp;&nbsp;&nbsp;<b>@Category</b></a><br />
         }
     }
-    <a href="~/PublicUser/SeeCinemaOrg"><img src="~/Image/open.png" />&nbsp;&nbsp;&nbsp;&nbsp;<b>Cinema</b></a><br />
+    <a href="~/PublicUser/SeeCinemaOrgByTown"><img src="~/Image/open.png" />&nbsp;&nbsp;&nbsp;&nbsp;<b>Cinema</b></a><br />
+    <a href="~/PublicUser/SeeCarGateByTown"><img src="~/Image/open.png" />&nbsp;&nbsp;&nbsp;&nbsp;<b>Car Gate</b></a><br />
 </div>
 

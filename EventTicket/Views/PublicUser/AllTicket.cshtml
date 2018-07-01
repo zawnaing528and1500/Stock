@@ -9,6 +9,7 @@
     Base b = new Base();
     int Row = b.getIntByQuery("select top 1 * From Seat where EID=" + EID + " order by Row desc", "Row");
     DataTable dt = b.getAllByQuery("select * from Seat where EID=" + EID + " and Status <> 'Sold' and Status <> 'Free'");
+    DataTable Eventdt = b.getAllByQuery("select * from Event where ID=" + EID);
     DataTable dtSold = b.getAllByQuery("select * from Seat where EID=" + EID + " and Status <> 'Sold' and Status <> 'Book'");
     DataTable dtSeatOfFree = b.getAllByQuery("select * from Seat where Status='Free' and EID="+EID+"order by ID desc");
     string SeatMap = b.getStringByQuery("select * from Event where ID=" + EID, "SeatMap");
@@ -79,14 +80,14 @@
                     <input type="text" name="Phone" class="form-control" placeholder="Phone (ဖုန္း)" required />
                 </div>
                 <div class="col-md-4">
-                    <select class="form-control" name="Bank" required>
+                    <select class="form-control" id="Bank" name="Bank" required>
                         <option value="">Select Bank</option>
                         <option value="kbz">KBZ</option>
                         <option value="aya">AYA</option>
                         <option value="cb">CB</option>
                         <option value="yoma">YOMA</option>
                     </select>
-                    <input type="text" minlength="16" maxlength="17" name="Account" class="form-control" placeholder="Account No (အေကာင့္နံပတ္)" required />
+                    <input type="text" minlength="16" maxlength="17" id="Account" name="Account" class="form-control" placeholder="Account No (အေကာင့္နံပတ္)" required />
                 </div>
                 <div class="col-md-4"><center><input type="submit" class="btn btn-primary" value="BOOK/မွာမည္" /></center></div>
             </div>
@@ -154,11 +155,29 @@
         }
     }
 </p>
+<p id="FreeOrNot" style="opacity:0">
+    @{ 
+        foreach (DataRow row in Eventdt.Rows)
+        {
+            string FreeOrNot = row["IsFree"].ToString();
+            @FreeOrNot
+        }
+    }
+
+</p>
 <script>
     var Seat= new Array();
     var Price = new Array();
     var SelectedSeat = new Array();
     $(document).ready(function () {
+
+        if (document.getElementById("FreeOrNot").innerText == "True") {
+            document.getElementById("Bank").selectedIndex = "2";
+            document.getElementById("Account").value = "111111111111111111111";
+            document.getElementById("Bank").style.visibility = "hidden";
+            document.getElementById("Account").style.visibility = "hidden";
+        }
+
         var seat = document.getElementById("seat").innerText;
         Seat = seat.split(",");
         Seat.splice((Seat.length) - 1, 1);

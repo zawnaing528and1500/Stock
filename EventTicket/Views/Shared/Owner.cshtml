@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@using System.Data;
+@using EventTicket.App_Code;
+@{
+    Base b = new Base();
+    DataTable dt = b.getAllByQuery("SELECT top 5 * from EventTicket.dbo.EOrg where CURRENT_TIMESTAMP > EOrg.ExpiredDate");
+    
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -37,45 +44,31 @@
                 </a>
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
-                        <li class="dropdown user user-menu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa  fa-user"></i>
-                                <span class="hidden-xs"><b>Profile</b></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li class="user-header">
-                                    <p>
-                                        Name : Zaw Naing<br />
-                                        Branch : Yangon<br />
-                                        Department :Computer Science
-
-                                    </p>
-                                </li>
-                                <li class="user-body">
-                                    <div class="row">
-                                        <div class="col-xs-4 text-center">
-                                            <a href="#"></a>
-                                        </div>
-                                        <div class="col-xs-4 text-center">
-                                            <a href="#"></a>
-                                        </div>
-                                        <div class="col-xs-4 text-center">
-                                            <a href="#"></a>
-                                        </div>
-                                    </div>
-                                    <!-- /.row -->
-                                </li>
-                                <!-- Menu Footer-->
-                                <li class="user-footer">
-                                    <div class="pull-left">
-                                        <a href="~/LeaveApply/profile" class="btn btn-default btn-flat">Profile</a>
-                                    </div>
-                                    <div class="pull-right">
-                                        <a href="~/Login/logout" class="btn btn-default btn-flat">Sign out</a>
-                                    </div>
-                                </li>
+                       <li class="dropdown notifications-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                          <i class="fa fa-bell-o"></i>
+                          <span class="label label-warning">@b.getCountByQuery("SELECT top 5 * from EventTicket.dbo.EOrg where CURRENT_TIMESTAMP > EOrg.ExpiredDate")</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li class="header">You have @b.getCountByQuery("SELECT top 5 * from EventTicket.dbo.EOrg where CURRENT_TIMESTAMP > EOrg.ExpiredDate") Expired Account</li>
+                          <li>
+                            <!-- inner menu: contains the actual data -->
+                            <ul class="menu">
+                                @{
+                                    foreach (DataRow row in dt.Rows)
+                                    {
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-warning text-yellow"></i>@row["Name"].ToString()
+                                            </a>
+                                        </li>
+                                    }
+                                }
                             </ul>
-                        </li>
+                          </li>
+                          <li class="footer"><a href="#">View all</a></li>
+                        </ul>
+                      </li>
                     </ul>
                 </div>
             </nav>
@@ -92,8 +85,8 @@
                 <!-- Sidebar Menu -->
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="header"><b>Zaw Naing</b></li>
-                    <li><a href="#"><i class="fa fa-home fa-fw" aria-hidden="true"></i><span>Dashboard</span></a></li>
-                    <li><a href="~/Owner/setEventOrgAccount"><i class="fa fa-institution" aria-hidden="true"></i><span>Event Organization</span></a></li>
+                    <li><a href="#"><i class="fa fa-dashboard" aria-hidden="true"></i><span>Dashboard</span></a></li>
+                    <li><a href="~/Owner/setEventOrgAccount"><i class="fa fa-institution" aria-hidden="true"></i><span>Organization</span></a></li>
 
 
                     <li><a href="~/Login/Logout"><i class="fa fa-power-off" aria-hidden="true"></i><span>Log Out</span></a></li>

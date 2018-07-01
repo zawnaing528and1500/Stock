@@ -19,7 +19,19 @@
     <div class="contentHeadBox">
         <div class="row">
             <div class="col-md-3"><input type="text" name="EOrgName" placeholder="Enter Name" class="form-control" required /></div>
-            <div class="col-md-3"><input type="text" name="Email" placeholder="Enter Email" class="form-control" required /></div>
+            <div class="col-md-3">
+                <select name="Category" class="form-control" required>
+                    <option value="">Category (ကဏ္ဍ)</option>
+                    @{
+                        DataTable dtCategory = b.getAllByQuery("select * from ECategory");
+                        foreach (DataRow rows in dtCategory.Rows)
+                        {
+                            <option value="@rows["ID"]">@rows["Name"]</option>
+                        }
+                    }
+                </select>
+
+            </div>
             <div class="col-md-3"><input type="datetime" name="ExpiredDate" placeholder="Choose Expired Date" id="datepicker" class="form-control" required /></div>
             <div class="col-md-3"><center><input type="submit" class="btn btn-primary" value="ADD" /></center></div>
         </div>
@@ -51,7 +63,7 @@
 <div class="contentBodyBox">
     <table id="displayTable" class="table table-dark table-hover">
         <thead>
-            <tr><th>No</th><th>Organization Name</th><th>Username</th><th>Password</th></tr>
+            <tr><th>No</th><th>Organization Name</th><th>Username</th><th>Password</th><th>Delete</th></tr>
         </thead>
         <tbody>
             @{
@@ -64,7 +76,7 @@
                         string Username = row["Username"].ToString();
                         string Password = row["Password"].ToString();
                   
-                    <tr><td>@i</td><td><font class="emphasizedText">@b.getStringByQuery("select * from EOrg where ID=" + EventOrgID, "Name")</font></td><td><font class="normalText">@Username</font></td><td><font class="normalText">@Password</font></td></tr>
+                    <tr><td>@i</td><td><font class="normalText">@b.getStringByQuery("select * from EOrg where ID=" + EventOrgID, "Name")</font></td><td><font class="normalText">@Username</font></td><td><font class="normalText">@Password</font></td><td><a href="~/Owner/DeleteAccount?EOrgID=@EventOrgID"><img src="~/Image/Icon/delete.png" /></a></td></tr>
                     i++;
                 }
             }

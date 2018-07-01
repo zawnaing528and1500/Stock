@@ -55,13 +55,16 @@ namespace EventTicket.Controllers
             string Email = Request.Form["Email"];
             string Phone = Request.Form["Phone"];
             string IsFree = Request.Form["isFree"];
+            string IsPublic = Request.Form["isPublic"];
+            string Town = Request.Form["Town"];
+
             int Row = Convert.ToInt16(Request["Row"]);
             int TotalTicket = 0;//Convert.ToInt32(Request.Form["TotalTicket"]);
             string Description = Request.Form["Description"];
             //Get EOrgID. Set to 1 in unit testing
             int ECategoryID = Convert.ToInt32(Category);
             DateTime EDate = Convert.ToDateTime(Date);
-            d.ChangeByQuery("insert into Event(EOrgID,ECategoryID,Name,ImageName,Place,EDate,Email,Phone,TotalTicket,IsFree,Description,Row,SeatMap,Time) values(" + EOrgID + "," + ECategoryID + ",N'" + Name + "','" + ImageName + "','" + Place + "','" + EDate + "','" + Email + "','" + Phone + "','" + TotalTicket + "','" + IsFree + "','" + Description + "'," + Row + ",'"+ ImageNameMap + "','"+Time+"')");
+            d.ChangeByQuery("insert into Event(EOrgID,ECategoryID,Name,ImageName,Place,EDate,Email,Phone,TotalTicket,IsFree,Description,Row,SeatMap,Time,Town,IsPublic) values(" + EOrgID + "," + ECategoryID + ",N'" + Name + "','" + ImageName + "','" + Place + "','" + EDate + "','" + Email + "','" + Phone + "','" + TotalTicket + "','" + IsFree + "','" + Description + "'," + Row + ",'"+ ImageNameMap + "','"+Time+"','"+Town+"','"+IsPublic+"')");
             int EID = d.getIntByQuery("select top 1 * From Event where EOrgID=" + EOrgID + " order by ID desc", "ID");
             Row r = new Row();
             r.set(EID, Row);
@@ -104,6 +107,7 @@ namespace EventTicket.Controllers
         }
         #endregion
 
+
         //SetRowDetail, InsertRowDetail, SetSeatStatus, InsertSeatStatus, SellSeatManually
         #region Seat
         public ActionResult SetRowDetail()
@@ -142,14 +146,20 @@ namespace EventTicket.Controllers
             ViewBag.EID = Convert.ToInt32(EID);
             return View();
         }
+
+
         public ActionResult InsertSeatStatus()
         {
             int ID = Convert.ToInt32(Request.Form["ID"]);//SeatID
             String TicketID = ID.ToString();
-            string Name = d.getStringByQuery("select * from CustomerTicket where SeatID=" + ID,"Name");
+            string User = d.getStringByQuery("select * from CustomerTicket where SeatID=" + ID,"Name");
             string Phone = d.getStringByQuery("select * from CustomerTicket where SeatID=" + ID, "Phone");
             string SeatName = d.getStringByQuery("select * from Seat where ID=" + ID, "Name");
-
+            int EID = d.getIntByQuery("select * from Seat where ID=" + ID, "EID");
+            string Name = d.getStringByQuery("select * from Event where ID=" + EID, "Name");
+            DateTime dbDate = d.getDateByQuery("select * from Event where ID=" + EID, "EDate");
+            string Date = dbDate.ToString("dd/MM/yyyy");
+            string Time = d.getStringByQuery("select * from Event where ID=" + EID, "Time");
             string Status = Request.Form["Status"];
             if (Status.Equals("Free"))
             {
@@ -162,13 +172,17 @@ namespace EventTicket.Controllers
             }
             else
             {
-                d.ChangeByQuery("update Seat set Status='" + Status + "' where ID=" + ID);
-                SendSeatInfo(TicketID, Name, Phone, SeatName);
+                //if (SendSeatInfo(TicketID, Name, User, Phone, SeatName, Date, Time) == "OK")
+                //{
+                    d.ChangeByQuery("update Seat set Status='" + Status + "' where ID=" + ID);
+                //}          
             }
-
-
+            string url1 = Session["url"].ToString();
+            Response.Redirect(url1);
             return View();
         }
+
+
         public ActionResult SellSeatManually()
         {
             int ID = Convert.ToInt32(Request.Form["ID"]);
@@ -181,6 +195,7 @@ namespace EventTicket.Controllers
             return View();
         }
         #endregion
+
 
         #region Delete Cover and SeatMap
         public void DeleteCover(string StrFilename)
@@ -204,25 +219,26 @@ namespace EventTicket.Controllers
 
         #endregion
 
-        //AddSMSGate, SendSeatInfo
+
+        //AddSMSGate, SendSeatInfo, Insert SMS Gate, Delete SMS Gate
         #region SMSGate
         public ActionResult AddSMSGate()
         {
             return View();
         }
-        public ActionResult SendSeatInfo(String TicketID, String Name, String Phone, String SeatName)
+
+        public string SendSeatInfo(String TicketID, String Name, String User, String Phone, String SeatName, String Date, String Time)
         {
-            EOrgID = 3;// Convert.ToInt32(Session["CurrentUserID"]);
-            if (d.CheckByQuery("select * from SMSGateway where EOrgID=" + EOrgID) == true)
-            {
-                DataTable dt = d.getAllByQuery("select * from SMSGateway where EOrgID=" + EOrgID);
+            string SMSStatus = "NotOK";
+                DataTable dt = d.getAllByQuery("select * from SMSGateway");
                 foreach (DataRow row in dt.Rows)
                 {
                     string IP = row["IP"].ToString();
                     IP = IP.Replace(" ", string.Empty);
+                     Date = Date.Replace("/", "-");
 
                     string Number = Phone;
-                    string Message = "TicketID:"+TicketID+"/Name:"+Name+"/Seat:"+SeatName;
+                    string Message = Name+"/"+SeatName + "["+TicketID+"]" + "/" + Date + " " + Time;
 
                     string all = IP + "v1/sms/send/?phone=" + Number + "&message=" + Message;
 
@@ -233,25 +249,19 @@ namespace EventTicket.Controllers
                         ViewData["status"] = ((HttpWebResponse)response).StatusCode;
                         if (ViewData["status"].ToString() == "OK")
                         {
-                            string url = Session["url"].ToString();
-                            Response.Redirect(url);
+                            SMSStatus = "OK";
                             break;
                         }
                     }
                     catch
                     {
-                        ViewData["status"] = "InvalidSMSGate";
                         continue;
                     }
                 }
 
-            }
-            else
-            {
-                ViewData["status"] = "NoSMSGate";
-            }
-            return View();
+            return SMSStatus;
         }
+
         public ActionResult InsertSMSGate()
         {
             EOrgID = Convert.ToInt32(Session["CurrentUserID"]);
@@ -268,12 +278,6 @@ namespace EventTicket.Controllers
             return RedirectToAction("AddSMSGate");
         }
         #endregion
-
-        #region SMSGateway
-
-        #endregion
-
-
 
     }
 }

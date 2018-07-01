@@ -353,6 +353,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="admin-lte\css\adminlte.min.css.map" />
     <Content Include="admin-lte\css\adminlte.css.map" />
+    <Content Include="Document\UserManual.pdf" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -411,13 +412,15 @@
     <Content Include="Views\PublicUser\Event.cshtml" />
     <Content Include="Views\PublicUser\AllTicket.cshtml" />
     <Content Include="Views\Test\SendSeatInfo.cshtml" />
-    <Content Include="Views\EOrg\SendSeatInfo.cshtml" />
     <Content Include="Views\EOrg\AddSMSGate.cshtml" />
     <Content Include="Views\PublicUser\AboutCEO.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Owner\addEventOrgAccount.cshtml" />
     <Content Include="Views\PublicUser\AllEvent.cshtml" />
     <Content Include="Views\PublicUser\SeeCinemaOrg.cshtml" />
+    <Content Include="Views\PublicUser\SeeCinemaOrgByTown.cshtml" />
+    <Content Include="Views\PublicUser\SeeCarGateByTown.cshtml" />
+    <Content Include="Views\PublicUser\SeeCarGate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
