@@ -1,0 +1,19 @@
+﻿@using EventTicket.App_Code;
+@using System.Data;
+@{
+    ViewBag.Title = "AllEvent";
+    Layout = "~/Views/Shared/PublicUser.cshtml";
+    Base b = new Base();
+    string Town = ViewBag.Town;
+    DataTable dt = b.getAllByQuery("select distinct EDate from Event where ECategoryID =" + 24 + " and IsPublic='True' and Town='"+Town+"'");
+}
+<div class="contentHeadBox">
+    @{
+        foreach (DataRow row in dt.Rows)
+        {
+            string EDate = row["EDate"].ToString();
+            <a href="~/PublicUser/SeeCarGate?Town=@Town?EDate=@EDate"><img src="~/Image/open.png" />&nbsp;&nbsp;&nbsp;&nbsp;<b>@Convert.ToDateTime(row["EDate"]).ToString("dd/MM/yyyy")</b></a><br />
+        }
+    }
+
+</div>

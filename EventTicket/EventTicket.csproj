@@ -320,6 +320,7 @@
     <Content Include="Image\Icon\404.png" />
     <Content Include="Image\Icon\cancel.png" />
     <Content Include="Image\edit.png" />
+    <Content Include="Image\Icon\checkin.png" />
     <Content Include="Image\Icon\delete.png" />
     <Content Include="Image\Icon\open.png" />
     <Content Include="Image\Icon\Place.png" />
@@ -421,6 +422,8 @@
     <Content Include="Views\PublicUser\SeeCinemaOrgByTown.cshtml" />
     <Content Include="Views\PublicUser\SeeCarGateByTown.cshtml" />
     <Content Include="Views\PublicUser\SeeCarGate.cshtml" />
+    <Content Include="Views\PublicUser\SeeCarGateDate.cshtml" />
+    <Content Include="Views\EOrg\CheckIn.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

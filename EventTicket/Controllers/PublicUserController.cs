@@ -34,10 +34,18 @@ namespace EventTicket.Controllers
         {
             return View();
         }
-        public ActionResult SeeCarGate()
+        public ActionResult SeeCarGateDate()
         {
             string Town = Request.QueryString["Town"];
             ViewBag.Town = Town;
+            return View();
+        }
+        public ActionResult SeeCarGate()
+        {
+            string Town = Request.QueryString["Town"];
+            string EDate = Request.QueryString["EDate"];
+            ViewBag.Town = Town;
+            ViewBag.EDate = EDate;
             return View();
         }
         public ActionResult Event()

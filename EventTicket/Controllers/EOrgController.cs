@@ -20,7 +20,7 @@ namespace EventTicket.Controllers
             return View();
         }
 
-        //CreateEvent, AddEventData, DeleteEvent, Manage, NotFound
+        //CreateEvent, AddEventData, DeleteEvent, Manage, NotFound, Reset Event
         #region Event
         public ActionResult CreateEvent()
         {
@@ -90,6 +90,17 @@ namespace EventTicket.Controllers
             d.ChangeByQuery("delete from Event where ID=" + ID);
             return RedirectToAction("Manage");
         }
+        public ActionResult ResetEvent()
+        {
+            string E_EID = Request.QueryString["E_EID"];
+            E_EID = E_EID.Replace(" ", "+");
+            String EID = dp.Decrypt(E_EID, "ETicket");
+            int ID = Convert.ToInt32(EID);
+            //Delete CustomerTicket, Clear Seat Status
+            d.ChangeByQuery("delete from CustomerTicket where SeatID in(select ID from Seat where EID=" + ID + ")");
+            d.ChangeByQuery("update Seat set Status='Free' where EID=" + ID);
+            return RedirectToAction("Manage");
+        }
         public ActionResult Manage()
         {
             EOrgID = Convert.ToInt32(Session["CurrentUserID"]);
@@ -146,8 +157,23 @@ namespace EventTicket.Controllers
             ViewBag.EID = Convert.ToInt32(EID);
             return View();
         }
-
-
+        public ActionResult CheckIn()
+        {
+            string E_EID = Request.QueryString["E_EID"];
+            E_EID = E_EID.Replace(" ", "+");
+            String EID = dp.Decrypt(E_EID, "ETicket");
+            ViewBag.EID = Convert.ToInt32(EID);
+            return View();
+        }
+        public ActionResult CheckArrive()
+        {
+            int ID = Convert.ToInt32(Request.Form["ID"]);//SeatID
+            string Status = Request.Form["Status"];
+                d.ChangeByQuery("update Seat set Status='" + Status + "' where ID=" + ID);
+                string url = Session["url"].ToString();
+                Response.Redirect(url);
+                return View();
+        }
         public ActionResult InsertSeatStatus()
         {
             int ID = Convert.ToInt32(Request.Form["ID"]);//SeatID

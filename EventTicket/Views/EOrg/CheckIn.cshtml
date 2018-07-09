@@ -7,73 +7,25 @@
     Session["url"] = path_and_query;
     int EID = ViewBag.EID;
     Base b = new Base();
-
-    EncryptParameter e = new EncryptParameter();
-    string E_EID = e.Encrypt(EID.ToString(), "ETicket");
-
     int Row = b.getIntByQuery("select top 1 * From Seat where EID=" + EID + " order by Row desc", "Row");
-    DataTable dt = b.getAllByQuery("select * from Seat where EID=" + EID +" and Status = 'Book'");
+    DataTable dt = b.getAllByQuery("select * from Seat where EID=" + EID + " and Status = 'Book'");
     DataTable dtSold = b.getAllByQuery("select * from Seat where EID=" + EID + " and Status = 'Free'");
     DataTable dtSeatOfBookSold = b.getAllByQuery("select * from Seat where Status='Book' or Status='Sold' order by ID desc");
-    DataTable dtNamePhone = b.getAllByQuery("select * from  CustomerTicket c inner join Seat s on s.ID = c.SeatID where s.EID= "+EID+" and (s.Status='Book' or s.Status='Sold') order by s.ID desc");
+    DataTable dtNamePhone = b.getAllByQuery("select * from  CustomerTicket c inner join Seat s on s.ID = c.SeatID where s.EID= " + EID + " and (s.Status='Book' or s.Status='Sold') order by s.ID desc");
     DataTable dtArriveAbsent = b.getAllByQuery("select * from Seat where EID=" + EID + " and Status = 'Sold'");
     //Get data table of SeatID of Book,Sold
     //Get data table of Name and Phone of particular SeatID
 }
-<div class="contentHeadBox">
-<div class="row">
-    <div class="col-md-4">
-        <span class="free">&nbsp;&nbsp;</span>&nbsp;Free&nbsp;-&nbsp;@b.getCountByQuery("select * from Seat where EID=" + EID + " and Status='Free'") Seats
-        <span class="book">&nbsp;&nbsp;</span>&nbsp;Book&nbsp;-&nbsp;@b.getCountByQuery("select * from Seat where EID=" + EID + " and Status='Book'") Seats
-    </div>
-    <div class="col-md-4">
-        <span class="sold">&nbsp;&nbsp;</span>&nbsp;Sold&nbsp;-&nbsp;@b.getCountByQuery("select * from Seat where EID=" + EID + " and Status='Sold'") Seats
-        <span class="present">&nbsp;&nbsp;</span>&nbsp;Arrive&nbsp;-&nbsp;@b.getCountByQuery("select * from Seat where EID=" + EID + " and Status='Present'") Seats
-   </div>
-    <div class="col-md-4">
-        <span class="absent">&nbsp;&nbsp;</span>&nbsp;Can't Come&nbsp;-&nbsp;@b.getCountByQuery("select * from Seat where EID=" + EID + " and Status='Absent'") Seats
-        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total&nbsp;-&nbsp;@b.getCountByQuery("select * from Seat where EID=" + EID) Seats</span>
-    </div>
-</div>
-    </div>
 <br />
-@using (Html.BeginForm("InsertSeatStatus", "EOrg"))
-{
-    <div class="contentHeadBox">
-        <div class="row">
-            <div class="col-md-3">
-                <select name="ID" class="form-control" required>
-                    <option value="">Book Seat(မှာခုံ)</option>
-                    @{
-                        foreach (DataRow row in dt.Rows)
-                        {
-                            <option value="@Convert.ToInt32(row["ID"])"> @row["Name"].ToString()</option>
-                        }
-                    }
-                </select>
-            </div>
-           <div class="col-md-3">
-               <select name="Status" class="form-control" required>
-                   <option value="">Select Status</option>
-                   <option value="Free">Free</option>
-                   <option value="Sold">Sold</option>
-               </select>
-            </div>
-            <div class="col-md-3"><center><input type="submit" class="btn btn-primary" value="CANCEL/SOLD" /></center></div>
-            <div class="col-md-3"><a href="~/EOrg/CheckIn?E_EID=@E_EID"><center><img src="~/Image/Icon/checkin.png" width="50px" /></center></a></div>
-        </div>
-    </div>
-                        }
-
-@using (Html.BeginForm("SellSeatManually", "EOrg"))
+@using (Html.BeginForm("CheckArrive", "EOrg"))
 {
     <div class="contentHeadBox">
         <div class="row">
             <div class="col-md-2">
                 <select name="ID" class="form-control" required>
-                    <option value="">Seat(ခုံအမည္)</option>
+                    <option value="">Sold Seat(ရောင်းခုံ)</option>
                     @{
-                        foreach (DataRow row in dtSold.Rows)
+                        foreach (DataRow row in dtArriveAbsent.Rows)
                         {
                             <option value="@Convert.ToInt32(row["ID"])"> @row["Name"].ToString()</option>
                         }
@@ -81,12 +33,13 @@
                 </select>
             </div>
             <div class="col-md-2">
-                <input type="text" class="form-control" name="Name" placeholder="Name(နာမည္)" required />
+                <select name="Status" class="form-control" required>
+                    <option value="">Select Status</option>
+                    <option value="Present">Arrive</option>
+                    <option value="Absent">Can't Come</option>
+                </select>
             </div>
-            <div class="col-md-2">
-                <input type="text" class="form-control" name="Phone" placeholder="Phone(ဖုန္း)" required />
-            </div>
-            <div class="col-md-3"><center><input type="submit" class="btn btn-primary" value="SOLD" /></center></div>
+            <div class="col-md-3"><center><input type="submit" class="btn btn-primary" value="ARRIVE/CAN'T COME" /></center></div>
         </div>
     </div>
                         }
@@ -107,11 +60,11 @@
                         string Status = row["Status"].ToString();
 
                         <a href="#">
-                        <span id="@Name" class="@Status" onclick="ShowNamePhone('@Name','@TicketID')" >@Name</span>
+                            <span id="@Name" class="@Status" onclick="ShowNamePhone('@Name','@TicketID')">@Name</span>
                         </a>
 
                     }
-                        <br /><br />
+                    <br /><br />
 
                 }
             }
@@ -122,7 +75,7 @@
                     for (int i = 1; i <= Row; i++)
                     {
                         int Price = b.getIntByQuery("select * from Seat where EID=" + EID + " and Row=" + i, "Price");
-                        <b><font class="normalText">@b.getStringByQuery("select * from Row where EID="+EID+" and Row="+i,"StartingCharacter") Row<img src="~/Image/Icon/RightArrow.png" /> @Price</font></b> <span>Kyats</span>
+                        <b><font class="normalText">@b.getStringByQuery("select * from Row where EID=" + EID + " and Row=" + i, "StartingCharacter") Row<img src="~/Image/Icon/RightArrow.png" /> @Price</font></b> <span>Kyats</span>
                         <br /><br />
                     }
                 }
@@ -137,58 +90,49 @@
             </div>
         </center>
     </div>
-                
+
 </div>
 <style>
-    .Free,.Book,.Sold, .Present, .Absent {
-  -webkit-border-radius: 4;
-  -moz-border-radius: 4;
-  border-radius: 4px;
-  font-family: Georgia;
-  color: #ffffff;
-  font-size: 15px;
-  padding: 5px 5px 5px 5px;
-  text-decoration: none;
-  min-width: 30px;
-  max-width:50px;
-  text-align:center;
-  }
-            .free, .book, .sold, .present, .absent {
+    .Free, .Book, .Sold, .Present, .Absent {
         -webkit-border-radius: 4;
         -moz-border-radius: 4;
+        border-radius: 4px;
         font-family: Georgia;
         color: #ffffff;
-        font-size: 10px;
-        padding: 2px 2px 2px 2px;
+        font-size: 15px;
+        padding: 5px 5px 5px 5px;
         text-decoration: none;
-        min-width: 20px;
+        min-width: 30px;
+        max-width: 50px;
         text-align: center;
     }
 
-    .Free, .free{
-        background:lightgreen;
+    .Free {
+        background: lightgreen;
     }
-    .Book, .book{
-        background:lightblue;
+
+    .Book {
+        background: lightblue;
     }
-    .Sold, .sold{
-        background:#0c1b24;
+
+    .Sold {
+        background: #0c1b24;
     }
-        .Present, .present {
+    .Present {
         background: blue;
     }
-    .Absent, .absent {
+    .Absent {
         background: red;
     }
 </style>
 <p id="seat" style="opacity:0;">
     <!--Save (1) SeatID (2) Name, Phone Here-->
-    @{ 
-        foreach(DataRow row in dtSeatOfBookSold.Rows)
+    @{
+        foreach (DataRow row in dtSeatOfBookSold.Rows)
         {
             string Name = row["Name"].ToString();
             Name = Name + ",";
-            @Name 
+            @Name
         }
     }
 </p>
@@ -215,7 +159,7 @@
     @{
         foreach (DataRow row in dtNamePhone.Rows)
         {
-           string phone = row["Phone"].ToString() + ",";
+            string phone = row["Phone"].ToString() + ",";
             @phone
         }
     }
@@ -262,36 +206,17 @@ For Sending Message
             str = str.replace('$', '\r\n');
             str = str.replace('$', '\r\n');
             str = str.replace('$', '\r\n');
-            str = "Send SMS?\r\n\r\n" + str;
+            str = "Client Info?\r\n\r\n" + str;
             var strsend = "";
             strsend = strsend + "\r\n❇️-" + EventName;
             strsend = strsend + "\r\n❇️-" + Name + "[" + TicketID + "]";
             strsend = strsend + "\r\n❇️-" + EDate;
-            var r = confirm(str + "\r\n" + strsend);
+            alert(str + "\r\n" + strsend);
 
             var messagesent = "🎟️";
             messagesent = messagesent + EventName;
             messagesent = messagesent + "/" + Name + "[" + TicketID + "]";
             messagesent = messagesent + "/" + EDate;
-
-            if (r == true) {
-                var P = Phone[index];
-                var M = messagesent;
-                var url = "http://192.168.43.1:8080/v1/sms/send/?phone=" + P + "&message=" + M;
-                var xmlHttp = new XMLHttpRequest();
-                xmlHttp.open("GET", url, false);
-                xmlHttp.send(null);
-
-                if (xmlhttp.readyState != 4 && xmlhttp.status != 200) {
-                    var url = "http://127.0.0.1:8080/v1/sms/send/?phone=" + P + "&message=" + M;
-                    var nextxmlHttp = new XMLHttpRequest();
-                    nextxmlHttp.open("GET", url, false);
-                    nextxmlHttp.send(null);
-                }
-            }
-            else {
-            }
-
         }
         return;
     }

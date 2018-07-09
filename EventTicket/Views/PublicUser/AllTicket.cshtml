@@ -8,9 +8,9 @@
     int EID = ViewBag.EID;
     Base b = new Base();
     int Row = b.getIntByQuery("select top 1 * From Seat where EID=" + EID + " order by Row desc", "Row");
-    DataTable dt = b.getAllByQuery("select * from Seat where EID=" + EID + " and Status <> 'Sold' and Status <> 'Free'");
+    DataTable dt = b.getAllByQuery("select * from Seat where EID=" + EID + " and Status = 'Book'");
     DataTable Eventdt = b.getAllByQuery("select * from Event where ID=" + EID);
-    DataTable dtSold = b.getAllByQuery("select * from Seat where EID=" + EID + " and Status <> 'Sold' and Status <> 'Book'");
+    DataTable dtSold = b.getAllByQuery("select * from Seat where EID=" + EID + " and Status = 'Free'");
     DataTable dtSeatOfFree = b.getAllByQuery("select * from Seat where Status='Free' and EID="+EID+"order by ID desc");
     string SeatMap = b.getStringByQuery("select * from Event where ID=" + EID, "SeatMap");
 
