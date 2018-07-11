@@ -1,0 +1,70 @@
+﻿@using EventTicket.App_Code;
+@using System.Data;
+@{
+    ViewBag.Title = "EditEvent";
+    Layout = "~/Views/Shared/EOrg.cshtml";
+    //(1)Get EID from Viewbag(2)Get Old Information, (3)Place them in Placeholder
+    Base b = new Base();
+    int EID = ViewBag.EID;
+    DataTable dt = b.getAllByQuery("select * from Event where ID=" +EID);
+}
+
+@using (Html.BeginForm("EditEventData", "EOrg"))
+{
+    foreach (DataRow row in dt.Rows)
+    {
+        //take number of TotalTicket, Name for number of seat
+        int ID = Convert.ToInt32(row["ID"]);
+        string Cover = row["ImageName"].ToString();
+        string Name = row["Name"].ToString();
+        string Email = row["Email"].ToString();
+        string Phone = row["Phone"].ToString();
+        string Date = Convert.ToDateTime(row["EDate"]).ToString("dd/MM/yyyy");
+        string Time = row["Time"].ToString();
+        string description = row["Description"].ToString();
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="contentFormBox">
+                    <div class="box-body">
+                        <img src="~/Image/Cover/@Cover" style="width:100%;height:auto;">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="contentFormBox">
+                    <div class="box-body">
+                        <div class="form-group"><label class="col-sm-4 control-label">Name</label><div class="col-sm-8"><input type="text" name="Name" class="form-control" value="@Name" required /></div></div>
+                        <div class="form-group"><label class="col-sm-4 control-label">Email</label><div class="col-sm-8"><input type="email" name="Email" class="form-control" value="@Email" required /></div></div>
+                        <div class="form-group"><label class="col-sm-4 control-label">Phone</label><div class="col-sm-8"><input type="text" name="Phone" class="form-control" value="@Phone" required /></div></div>
+                        <div class="form-group"><label class="col-sm-4 control-label">Date</label><div class="col-sm-8"><input type="datetime" name="Date" id="datepicker" class="form-control" value="@Date" required /></div></div>
+                        <div class="form-group"><label class="col-sm-4 control-label">Time</label><div class="col-sm-8"><input type="text" name="Time" class="form-control" value="@Time" required /></div></div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Public</label>
+                            <div class="col-sm-8">
+                                <div class="form-group">
+                                    <input type="radio" name="isPublic" value="TRUE" checked> YES
+                                    <input type="radio" name="isPublic" value="FALSE"> NO
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contentFormBox">
+                    <div class="box-body">
+                        <div class="col-sm-12">
+                            <textarea class="form-control" rows="7" name="Description" placeholder="" required>@description</textarea>
+                        </div>
+                    </div>
+                    <center><input type="hidden" name="EID" class="btn btn-primary" value="@ID" /><input type="submit" class="btn btn-primary" value="EDIT" /></center>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+<script>
+  $( function() {
+    $( "#datepicker" ).datepicker();
+  } );
+</script>

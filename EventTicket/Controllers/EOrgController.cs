@@ -20,7 +20,7 @@ namespace EventTicket.Controllers
             return View();
         }
 
-        //CreateEvent, AddEventData, DeleteEvent, Manage, NotFound, Reset Event
+        //CreateEvent, AddEventData, DeleteEvent, Manage, NotFound, Reset Event, Edit Event
         #region Event
         public ActionResult CreateEvent()
         {
@@ -99,6 +99,29 @@ namespace EventTicket.Controllers
             //Delete CustomerTicket, Clear Seat Status
             d.ChangeByQuery("delete from CustomerTicket where SeatID in(select ID from Seat where EID=" + ID + ")");
             d.ChangeByQuery("update Seat set Status='Free' where EID=" + ID);
+            return RedirectToAction("Manage");
+        }
+        public ActionResult EditEvent()
+        {
+            string E_EID = Request.QueryString["E_EID"];
+            E_EID = E_EID.Replace(" ", "+");
+            String EID = dp.Decrypt(E_EID, "ETicket");
+            int ID = Convert.ToInt32(EID);
+            //Put EID to viewbag and return to Edit form
+            ViewBag.EID = ID;
+            return View();
+        }
+        public ActionResult EditEventData()
+        {
+            int ID = Convert.ToInt32(Request.Form["EID"]);
+            string Name = Request.Form["Name"];
+            string Email = Request.Form["Email"];
+            string Phone = Request.Form["Phone"];
+            string Date = Request.Form["Date"];
+            string Time = Request.Form["Time"];
+            string IsPublic = Request.Form["isPublic"];
+            string Description = Request.Form["Description"];
+            d.ChangeByQuery("update Event set Name=N'"+Name+"', Email='"+Email+"', Phone='"+Phone+"', EDate='"+Date+"', Time='"+Time+"',IsPublic='"+IsPublic+"',Description=N'"+Description+"' where ID="+ID);
             return RedirectToAction("Manage");
         }
         public ActionResult Manage()

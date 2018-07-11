@@ -424,6 +424,7 @@
     <Content Include="Views\PublicUser\SeeCarGate.cshtml" />
     <Content Include="Views\PublicUser\SeeCarGateDate.cshtml" />
     <Content Include="Views\EOrg\CheckIn.cshtml" />
+    <Content Include="Views\EOrg\EditEvent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
