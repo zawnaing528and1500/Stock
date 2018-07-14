@@ -318,11 +318,13 @@
     <Content Include="Image\CEO.JPG" />
     <Content Include="Image\Cover\404.png" />
     <Content Include="Image\Icon\404.png" />
+    <Content Include="Image\Icon\banking.png" />
     <Content Include="Image\Icon\cancel.png" />
     <Content Include="Image\edit.png" />
     <Content Include="Image\Icon\checkin.png" />
     <Content Include="Image\Icon\delete.png" />
     <Content Include="Image\Icon\open.png" />
+    <Content Include="Image\Icon\payment.png" />
     <Content Include="Image\Icon\Place.png" />
     <Content Include="Image\Icon\RightArrow.png" />
     <Content Include="Image\Icon\time.png" />

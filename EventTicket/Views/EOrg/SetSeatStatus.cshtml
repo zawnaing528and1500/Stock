@@ -28,12 +28,12 @@
     </div>
     <div class="col-md-4">
         <span class="sold">&nbsp;&nbsp;</span>&nbsp;Sold&nbsp;-&nbsp;@b.getCountByQuery("select * from Seat where EID=" + EID + " and Status='Sold'") Seats
-        <span class="present">&nbsp;&nbsp;</span>&nbsp;Arrive&nbsp;-&nbsp;@b.getCountByQuery("select * from Seat where EID=" + EID + " and Status='Present'") Seats
-   </div>
-    <div class="col-md-4">
-        <span class="absent">&nbsp;&nbsp;</span>&nbsp;Can't Come&nbsp;-&nbsp;@b.getCountByQuery("select * from Seat where EID=" + EID + " and Status='Absent'") Seats
         <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total&nbsp;-&nbsp;@b.getCountByQuery("select * from Seat where EID=" + EID) Seats</span>
-    </div>
+ </div>
+    <div class="col-md-4">
+        <span class="present">&nbsp;&nbsp;</span>&nbsp;Arrive&nbsp;-&nbsp;@b.getCountByQuery("select * from Seat where EID=" + EID + " and Status='Present'") Seats
+        <span class="absent">&nbsp;&nbsp;</span>&nbsp;Can't Come&nbsp;-&nbsp;@b.getCountByQuery("select * from Seat where EID=" + EID + " and Status='Absent'") Seats
+ </div>
 </div>
     </div>
 <br />

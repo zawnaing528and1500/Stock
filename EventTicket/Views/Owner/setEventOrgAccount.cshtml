@@ -32,8 +32,20 @@
                 </select>
 
             </div>
-            <div class="col-md-3"><input type="datetime" name="ExpiredDate" placeholder="Choose Expired Date" id="datepicker" class="form-control" required /></div>
-            <div class="col-md-3"><center><input type="submit" class="btn btn-primary" value="ADD" /></center></div>
+            <div class="col-md-2">
+                <select name="TownID" class="form-control" required>
+                    <option value="">Town</option>
+                    @{
+                        DataTable dtTown = b.getAllByQuery("select * from Town");
+                        foreach (DataRow rows in dtTown.Rows)
+                        {
+                            <option value="@rows["ID"]">@rows["Name"]</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-md-2"><input type="datetime" name="ExpiredDate" placeholder="Choose Expired Date" id="datepicker" class="form-control" required /></div>
+            <div class="col-md-2"><center><input type="submit" class="btn btn-primary" value="ADD" /></center></div>
         </div>
     </div>
                         }

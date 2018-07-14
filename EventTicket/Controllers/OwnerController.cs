@@ -30,11 +30,12 @@ namespace EventTicket.Controllers
         }
         public ActionResult ProcessForAddEventOrgAccount()
         {
+            int TownID = Convert.ToInt32(Request.Form["TownID"]);
             string EOrgName = Request.Form["EOrgName"];
             int ECategoryID = Convert.ToInt32(Request.Form["Category"]);
             string ExpiredDate = Request.Form["ExpiredDate"];
             DateTime EDate = Convert.ToDateTime(ExpiredDate);
-            db.ChangeByQuery("insert into EOrg(Name, ExpiredDate, ECategoryID) values('"+EOrgName+"','"+ExpiredDate+"',"+ ECategoryID + ")");
+            db.ChangeByQuery("insert into EOrg(Name, ExpiredDate, ECategoryID, TownID) values('"+EOrgName+"','"+ExpiredDate+"',"+ ECategoryID + ","+TownID+")");
             int AllID = db.getIntByQuery("select * from EOrg where Name='"+EOrgName+"'","ID");
             db.ChangeByQuery("insert into Login(AllID,AccessLevel) values("+AllID+","+2+")");
             return RedirectToAction("setEventOrgAccount", "Owner");

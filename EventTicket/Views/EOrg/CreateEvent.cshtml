@@ -139,7 +139,7 @@
                             dt = b.getAllByQuery("select * from ECategory where ID="+ECategoryID);
                             foreach (DataRow rows in dt.Rows)
                             {
-                                <option value="@rows["ID"]">@rows["Name"]</option>
+                                <option value="@rows["ID"]" selected>@rows["Name"]</option>
                             }
                         }
                     </select>
@@ -151,13 +151,10 @@
                 <div class="form-group"><label class="col-sm-4 control-label">Town</label>
                 <div class="col-sm-8">
                     <select name="Town" class="form-control" required>
-                        <option value="">Town</option>
+                        <option value="">Town</option>   
                         @{
-                            dt = b.getAllByQuery("select * from Town");
-                            foreach (DataRow rows in dt.Rows)
-                            {
-                                <option value="@rows["Name"]">@rows["Name"]</option>
-                            }
+                            int TownID = b.getIntByQuery("select * from EOrg where ID=" + EOrgID, "TownID");
+                            <option value="@TownID" selected>@b.getStringByQuery("select * from Town where ID="+TownID,"Name")</option>
                         }
                     </select>
                 </div>
@@ -190,11 +187,11 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-4 control-label">Public</label>
+                    <label class="col-sm-4 control-label">Privacy</label>
                     <div class="col-sm-8">
                         <div class="form-group">
-                            <input type="radio" name="isPublic" value="TRUE" checked> YES
-                            <input type="radio" name="isPublic" value="FALSE"> NO
+                            <input type="radio" name="isPublic" value="TRUE" checked> Public
+                            <input type="radio" name="isPublic" value="FALSE"> Private
                         </div>
                     </div>
                     </div>
