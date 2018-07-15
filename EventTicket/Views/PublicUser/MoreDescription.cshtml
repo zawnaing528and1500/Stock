@@ -1,0 +1,55 @@
+﻿@using EventTicket.App_Code;
+@using System.Data;
+@{
+    ViewBag.Title = "EditEvent";
+    Layout = "~/Views/Shared/EOrg.cshtml";
+    //(1)Get EID from Viewbag
+    Base b = new Base();
+    int EID = ViewBag.EID;
+    DataTable dt = b.getAllByQuery("select * from Event where ID=" + EID);
+}
+
+@using (Html.BeginForm("EditEventData", "EOrg"))
+{
+    foreach (DataRow row in dt.Rows)
+    {
+        //take number of TotalTicket, Name for number of seat
+        int ID = Convert.ToInt32(row["ID"]);
+        string Cover = row["ImageName"].ToString();
+        string Name = row["Name"].ToString();
+        string Email = row["Email"].ToString();
+        string Phone = row["Phone"].ToString();
+        string Date = Convert.ToDateTime(row["EDate"]).ToString("dd/MM/yyyy");
+        string Time = row["Time"].ToString();
+        string description = row["Description"].ToString();
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="contentFormBox">
+                    <div class="box-body">
+                        <img src="~/Image/Cover/@Cover" style="width:100%;height:auto;">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="contentBodyBox">
+                    <div class="box-body">
+                        <div class="col-sm-12">
+                            <center><b>@Name</b></center>
+                            <br /><textarea class="form-control" style="min-height:400px;" name="Description" placeholder="" disabled>@description</textarea>
+                            <br /><img src="~/Image/Icon/time.png" width="32px"/>@Date , @Time
+                            <br /><a href="mailto:@Email?Subject=Hello%20again" target="_top"><img src="~/Image/Icon/mail.png" />@Email</a>
+                            <br /><a href="tel:@Phone"><img src="~/Image/Icon/phone.png" />&nbsp;@Phone</a>
+</div>
+                    </div>
+               </div>
+            </div>
+        </div>
+    }
+}
+
+<script>
+  $( function() {
+    $( "#datepicker" ).datepicker();
+  } );
+</script>

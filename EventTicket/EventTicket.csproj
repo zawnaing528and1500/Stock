@@ -323,8 +323,10 @@
     <Content Include="Image\edit.png" />
     <Content Include="Image\Icon\checkin.png" />
     <Content Include="Image\Icon\delete.png" />
+    <Content Include="Image\Icon\mail.png" />
     <Content Include="Image\Icon\open.png" />
     <Content Include="Image\Icon\payment.png" />
+    <Content Include="Image\Icon\phone.png" />
     <Content Include="Image\Icon\Place.png" />
     <Content Include="Image\Icon\RightArrow.png" />
     <Content Include="Image\Icon\time.png" />
@@ -427,6 +429,7 @@
     <Content Include="Views\PublicUser\SeeCarGateDate.cshtml" />
     <Content Include="Views\EOrg\CheckIn.cshtml" />
     <Content Include="Views\EOrg\EditEvent.cshtml" />
+    <Content Include="Views\PublicUser\MoreDescription.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

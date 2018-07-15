@@ -20,6 +20,14 @@ namespace EventTicket.Controllers
         {
             return View();
         }
+        public ActionResult MoreDescription()
+        {
+            string E_EID = Request.QueryString["E_EID"];
+            E_EID = E_EID.Replace(" ", "+");
+            String EID = dp.Decrypt(E_EID, "ETicket");
+            ViewBag.EID = Convert.ToInt32(EID);
+            return View();
+        }
         public ActionResult SeeCinemaOrgByTown()
         {
             return View();
