@@ -31,9 +31,10 @@
         <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total&nbsp;-&nbsp;@b.getCountByQuery("select * from Seat where EID=" + EID) Seats</span>
  </div>
     <div class="col-md-4">
-        <span class="present">&nbsp;&nbsp;</span>&nbsp;Arrive&nbsp;-&nbsp;@b.getCountByQuery("select * from Seat where EID=" + EID + " and Status='Present'") Seats
-        <span class="absent">&nbsp;&nbsp;</span>&nbsp;Can't Come&nbsp;-&nbsp;@b.getCountByQuery("select * from Seat where EID=" + EID + " and Status='Absent'") Seats
- </div>
+        <span class="present">&nbsp;&nbsp;</span>&nbsp;Arrive&nbsp;-&nbsp;@b.getCountByQuery("select * from Seat where EID=" + EID + " and Status='Present'")
+        <span class="absent">&nbsp;&nbsp;</span>&nbsp;Can't Come&nbsp;-&nbsp;@b.getCountByQuery("select * from Seat where EID=" + EID + " and Status='Absent'")
+        <img src="~/Image/Icon/cost.png" />&nbsp;@b.getIntTotalByQuery("select * from Seat where EID="+EID+" and Status='Sold'","Price") Kyats
+    </div>
 </div>
     </div>
 <br />
@@ -60,7 +61,7 @@
                </select>
             </div>
             <div class="col-md-3"><center><input type="submit" class="btn btn-primary" value="CANCEL/SOLD" /></center></div>
-            <div class="col-md-3"><a href="~/EOrg/CheckIn?E_EID=@E_EID"><center><img src="~/Image/Icon/checkin.png" width="50px" /></center></a></div>
+            <div class="col-md-3"><a href="~/EOrg/CheckIn?E_EID=@E_EID"><center><img class="button cta hvr-float-shadow" src="~/Image/Icon/checkin.png" width="50px" /></center></a></div>
         </div>
     </div>
                         }

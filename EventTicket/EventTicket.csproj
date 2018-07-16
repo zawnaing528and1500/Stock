@@ -297,6 +297,7 @@
     <Content Include="Content\dataTables.bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\hover.css" />
     <Content Include="Content\ionicons.min.css" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\select2.min.css" />
@@ -322,6 +323,7 @@
     <Content Include="Image\Icon\cancel.png" />
     <Content Include="Image\edit.png" />
     <Content Include="Image\Icon\checkin.png" />
+    <Content Include="Image\Icon\cost.png" />
     <Content Include="Image\Icon\delete.png" />
     <Content Include="Image\Icon\mail.png" />
     <Content Include="Image\Icon\open.png" />
@@ -430,6 +432,7 @@
     <Content Include="Views\EOrg\CheckIn.cshtml" />
     <Content Include="Views\EOrg\EditEvent.cshtml" />
     <Content Include="Views\PublicUser\MoreDescription.cshtml" />
+    <Content Include="Views\EOrg\PrintTicketInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

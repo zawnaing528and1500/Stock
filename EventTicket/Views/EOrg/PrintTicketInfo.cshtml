@@ -1,0 +1,66 @@
+﻿
+@using EventTicket.App_Code;
+@using System.Data;
+@{
+    ViewBag.Title = "Manage";
+    Layout = null;
+    int SeatID = ViewBag.SeatID;
+    int EID = ViewBag.EID;
+    Base b = new Base();
+    EncryptParameter e = new EncryptParameter();
+    int EOrgID = Convert.ToInt32(Session["CurrentUserID"]);
+    DataTable dt = b.getAllByQuery("select * from Event where EOrgID=" + EOrgID + " order by EDate Asc");
+    int TownID = b.getIntByQuery("select * from EOrg where ID="+EOrgID, "TownID");
+}
+<link rel="stylesheet" href='https://mmwebfonts.comquas.com/fonts/?font=zawgyi' />
+
+<br />
+<page>
+        <!--
+        Customer Info - Name, Phone 
+
+        Seat Info - Name, SeatName, TicketID, Date, Time
+
+        Organization Info - Name,Phone,Town,Email
+        -->
+    <center>
+        <table>
+            <tr><td colspan="2"><h3>Customer Info</h3></td></tr>
+            <tr><td>Name</td><td class="zg">:@b.getStringByQuery("select * from CustomerTicket where SeatID="+SeatID,"Name")</td></tr>
+            <tr><td>Phone</td><td>:@b.getStringByQuery("select * from CustomerTicket where SeatID=" + SeatID, "Phone")</td></tr>
+            <tr><td colspan="2"><h3><br />Seat Info Info</h3></td></tr>
+            <tr><td>Name</td><td>:@b.getStringByQuery("select * from Event where ID=" + EID, "Name")</td></tr>
+            <tr><td>Seat Name</td><td>:@b.getStringByQuery("select * from Seat where ID=" + SeatID, "Name")</td></tr>
+            <tr><td>TicketID</td><td>:@SeatID</td></tr>
+            <tr><td>Date</td><td>@Convert.ToDateTime(b.getDateByQuery("Select * from Event where ID="+EID,"EDate")).ToString("MM/dd/yyyy")</td></tr>
+            <tr><td>Time</td><td>:@b.getStringByQuery("select * from Event where ID=" + EID, "Time")</td></tr>
+            <tr><td colspan="2"><h3><br />Organization Info</h3></td></tr>
+            <tr><td>Name</td><td>:@b.getStringByQuery("select * from EOrg where ID=" + EOrgID, "Name")</td></tr>
+            <tr><td>Town</td><td>@b.getStringByQuery("select * from Town where ID="+TownID,"Name")</td></tr>
+            <tr><td>Phone</td><td>:@b.getStringByQuery("select * from Event where ID=" + EID, "Phone")</td></tr>
+            <tr><td>Email</td><td>:@b.getStringByQuery("select * from Event where ID=" + EID, "Email")</td></tr>
+        </table>
+    </center>
+</page>
+<style>
+    body {
+  background: rgb(204,204,204); 
+  font-size:18px;
+}
+page {
+  background: white;
+  display: block;
+  margin: 20px auto;
+  margin-bottom: 0.5cm;
+  box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+  max-width:350px;
+}
+.zg{
+    font-family:Zawgyi-One;
+}
+</style>
+
+
+
+
+

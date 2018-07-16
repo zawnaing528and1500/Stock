@@ -6,6 +6,7 @@
     string path_and_query = HttpContext.Current.Request.Url.PathAndQuery;
     Session["url"] = path_and_query;
     int EID = ViewBag.EID;
+    EncryptParameter e = new EncryptParameter();
     Base b = new Base();
     int Row = b.getIntByQuery("select top 1 * From Seat where EID=" + EID + " order by Row desc", "Row");
     DataTable dt = b.getAllByQuery("select * from Seat where EID=" + EID + " and Status = 'Book'");
@@ -56,11 +57,13 @@
                     foreach (DataRow row in Seatdt.Rows)
                     {
                         string TicketID = (Convert.ToInt32(row["ID"])).ToString();
+                        string E_TicketID = e.Encrypt(TicketID, "ETicket");
+                        string E_EID = e.Encrypt(EID.ToString(), "ETicket");
                         string Name = row["Name"].ToString();
                         string Status = row["Status"].ToString();
 
-                        <a href="#">
-                            <span id="@Name" class="@Status" onclick="ShowNamePhone('@Name','@TicketID')">@Name</span>
+                        <a href="~/EOrg/PrintTicketInfo?E_SeatID=@E_TicketID&E_EID=@E_EID">
+                            <span id="@Name" class="@Status">@Name</span>
                         </a>
 
                     }
@@ -178,48 +181,54 @@ For Sending Message
     @b.getStringByQuery("select * from Event where ID=" + EID, "Time")
 
 </p>
-<script>
-    var Seat = new Array();
-    var Phone = new Array();
-    var NamePhone=new Array();
-    $(document).ready(function () {
-        var seat = document.getElementById("seat").innerText;
-        Seat = seat.split(",");
-        Seat.splice((Seat.length) - 1, 1);
 
-        var phone = document.getElementById("phone").innerText;
-        Phone = phone.split(",");
-        Phone.splice((Phone.length) - 1, 1);
 
-        var namePhone = document.getElementById("namePhone").innerText;
-        NamePhone = namePhone.split(",");
-        NamePhone.splice((NamePhone.length) - 1, 1);
-    })
-    function ShowNamePhone(Name, TicketID) {
-        var EventName = document.getElementById("EventName").innerText;
-        var EDate = document.getElementById("EDate").innerText;
-        EDate = EDate.replace('/', '-');
-        EDate = EDate.replace('/', '-');
-        var index = Seat.indexOf(Name);
-        if (index > -1) {
-            var str = NamePhone[index];
-            str = str.replace('$', '\r\n');
-            str = str.replace('$', '\r\n');
-            str = str.replace('$', '\r\n');
-            str = "Client Info?\r\n\r\n" + str;
-            var strsend = "";
-            strsend = strsend + "\r\n❇️-" + EventName;
-            strsend = strsend + "\r\n❇️-" + Name + "[" + TicketID + "]";
-            strsend = strsend + "\r\n❇️-" + EDate;
-            alert(str + "\r\n" + strsend);
 
-            var messagesent = "🎟️";
-            messagesent = messagesent + EventName;
-            messagesent = messagesent + "/" + Name + "[" + TicketID + "]";
-            messagesent = messagesent + "/" + EDate;
+@*
+    -----------------------------------------------------------
+    Showing Seat Info
+        <script>
+        var Seat = new Array();
+        var Phone = new Array();
+        var NamePhone=new Array();
+        $(document).ready(function () {
+            var seat = document.getElementById("seat").innerText;
+            Seat = seat.split(",");
+            Seat.splice((Seat.length) - 1, 1);
+
+            var phone = document.getElementById("phone").innerText;
+            Phone = phone.split(",");
+            Phone.splice((Phone.length) - 1, 1);
+
+            var namePhone = document.getElementById("namePhone").innerText;
+            NamePhone = namePhone.split(",");
+            NamePhone.splice((NamePhone.length) - 1, 1);
+        })
+        function ShowNamePhone(Name, TicketID) {
+            var EventName = document.getElementById("EventName").innerText;
+            var EDate = document.getElementById("EDate").innerText;
+            EDate = EDate.replace('/', '-');
+            EDate = EDate.replace('/', '-');
+            var index = Seat.indexOf(Name);
+            if (index > -1) {
+                var str = NamePhone[index];
+                str = str.replace('$', '\r\n');
+                str = str.replace('$', '\r\n');
+                str = str.replace('$', '\r\n');
+                str = "Client Info?\r\n\r\n" + str;
+                var strsend = "";
+                strsend = strsend + "\r\n❇️-" + EventName;
+                strsend = strsend + "\r\n❇️-" + Name + "[" + TicketID + "]";
+                strsend = strsend + "\r\n❇️-" + EDate;
+                alert(str + "\r\n" + strsend);
+
+                var messagesent = "🎟️";
+                messagesent = messagesent + EventName;
+                messagesent = messagesent + "/" + Name + "[" + TicketID + "]";
+                messagesent = messagesent + "/" + EDate;
+            }
+            return;
         }
-        return;
-    }
-</script>
+    </script>*@
 
 

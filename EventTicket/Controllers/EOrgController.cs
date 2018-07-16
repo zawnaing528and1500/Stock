@@ -142,7 +142,7 @@ namespace EventTicket.Controllers
         #endregion
 
 
-        //SetRowDetail, InsertRowDetail, SetSeatStatus, InsertSeatStatus, SellSeatManually
+        //SetRowDetail, InsertRowDetail, SetSeatStatus, InsertSeatStatus, checkArrive, SellSeatManually, PrintTicketInfo
         #region Seat
         public ActionResult SetRowDetail()
         {
@@ -196,6 +196,29 @@ namespace EventTicket.Controllers
                 string url = Session["url"].ToString();
                 Response.Redirect(url);
                 return View();
+        }
+        public ActionResult PrintTicketInfo()
+        {
+            //Descript SeatID
+            string E_SeatID = Request.QueryString["E_SeatID"];
+            E_SeatID = E_SeatID.Replace(" ", "+");
+            String SeatID = dp.Decrypt(E_SeatID, "ETicket");
+            ViewBag.SeatID = Convert.ToInt32(SeatID);
+
+            //If SeatID is not sold, redirect to 404. That mean there is no customer
+            int ID = Convert.ToInt32(SeatID);
+            if(d.getStringByQuery("select * from Seat where ID="+ID,"Status") != "Sold")
+            {
+                return RedirectToAction("NotFound");
+            }
+
+            //Descript Event ID
+            string E_EID = Request.QueryString["E_EID"];
+            E_EID = E_EID.Replace(" ", "+");
+            String EID = dp.Decrypt(E_EID, "ETicket");
+            ViewBag.EID = Convert.ToInt32(EID);
+
+            return View();
         }
         public ActionResult InsertSeatStatus()
         {
