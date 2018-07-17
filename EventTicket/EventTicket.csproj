@@ -323,6 +323,7 @@
     <Content Include="Image\Icon\cancel.png" />
     <Content Include="Image\edit.png" />
     <Content Include="Image\Icon\checkin.png" />
+    <Content Include="Image\Icon\construction.png" />
     <Content Include="Image\Icon\cost.png" />
     <Content Include="Image\Icon\delete.png" />
     <Content Include="Image\Icon\mail.png" />
@@ -433,6 +434,9 @@
     <Content Include="Views\EOrg\EditEvent.cshtml" />
     <Content Include="Views\PublicUser\MoreDescription.cshtml" />
     <Content Include="Views\EOrg\PrintTicketInfo.cshtml" />
+    <Content Include="Views\PublicUser\ApplyEOrgAccount.cshtml" />
+    <Content Include="Views\PublicUser\Construction.cshtml" />
+    <Content Include="Views\Owner\SeeAppliedAccount.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

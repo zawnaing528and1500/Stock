@@ -1,6 +1,16 @@
 ﻿body{
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+    .lyrisBox{
+        max-width:600px;
+        margin: 2px;
+        padding: 10px;
+        background-color:#F5F5DC;
+        align-content:center;
+        font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        font-size:large;
+    }
+
 .zg{
     font-family:Zawgyi-One;
 }
@@ -9,7 +19,7 @@
   background-image:url('http://www.demo.amitjakhu.com/login-form/images/bg.png');
 }
 
-.emphasizedText{color:#CD950C;}
+.emphasizedText{color:darkblue;font-size:medium;line-height:32px;}
 
 .normalText{color:#8B6508;}
 

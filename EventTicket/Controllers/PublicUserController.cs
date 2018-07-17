@@ -16,6 +16,10 @@ namespace EventTicket.Controllers
         {
             return View();
         }
+        public ActionResult ApplyEOrgAccount()
+        {
+            return View();
+        }
         public ActionResult AllEvent()
         {
             return View();
@@ -118,6 +122,10 @@ namespace EventTicket.Controllers
         }
 
         public ActionResult AboutCEO()
+        {
+            return View();
+        }
+        public ActionResult Construction()
         {
             return View();
         }

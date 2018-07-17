@@ -56,8 +56,8 @@ namespace EventTicket.Controllers
             string Phone = Request.Form["Phone"];
             string IsFree = Request.Form["isFree"];
             string IsPublic = Request.Form["isPublic"];
-            string Town = Request.Form["Town"];
-
+            string TownID = Request.Form["Town"];
+            string Town = d.getStringByQuery("select * from Town where ID="+TownID, "Name");
             int Row = Convert.ToInt16(Request["Row"]);
             int TotalTicket = 0;//Convert.ToInt32(Request.Form["TotalTicket"]);
             string Description = Request.Form["Description"];

@@ -3,6 +3,7 @@
 @{
     Base b = new Base();
     DataTable dt = b.getAllByQuery("SELECT top 5 * from EventTicket.dbo.EOrg where CURRENT_TIMESTAMP > EOrg.ExpiredDate");
+    DataTable AppliedAccountdt = b.getAllByQuery("select top 5 * from AppliedAccount");
     
 }
 <!DOCTYPE html>
@@ -69,6 +70,34 @@
                           <li class="footer"><a href="#">View all</a></li>
                         </ul>
                       </li>
+
+                        <li class="dropdown tasks-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-flag-o"></i>
+                                <span class="label label-danger">@b.getCountByQuery("select * from AppliedAccount")</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="header">@b.getCountByQuery("select * from AppliedAccount") people Applied Account</li>
+                                <li>
+                                    <ul class="menu">
+                                        @{
+                                            foreach (DataRow row in AppliedAccountdt.Rows)
+                                            {
+                                                <li>
+                                                    <a href="#">
+                                                        <i class="fa fa-users text-aqua"></i>&nbsp;@row["Name"].ToString()
+                                                    </a>
+                                                </li>
+                                            }
+                                        }
+                                    </ul>
+                                </li>
+                                <li class="footer">
+                                    <a href="~/Owner/SeeAppliedAccount">View all account</a>
+                                </li>
+                            </ul>
+                        </li>
+
                     </ul>
                 </div>
             </nav>
@@ -86,9 +115,8 @@
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="header"><b>Zaw Naing</b></li>
                     <li><a href="#"><i class="fa fa-dashboard" aria-hidden="true"></i><span>Dashboard</span></a></li>
-                    <li><a href="~/Owner/setEventOrgAccount"><i class="fa fa-institution" aria-hidden="true"></i><span>Organization</span></a></li>
-
-
+                    <li><a href="~/Owner/setEventOrgAccount"><i class="fa fa-institution" aria-hidden="true"></i><span>Registered Account</span></a></li>
+                    <li><a href="~/Owner/SeeAppliedAccount"><i class="fa fa-user-plus" aria-hidden="true"></i><span>Applied Account</span></a></li>
                     <li><a href="~/Login/Logout"><i class="fa fa-power-off" aria-hidden="true"></i><span>Log Out</span></a></li>
                 </ul>
                 <!-- /.sidebar-menu -->
@@ -107,7 +135,7 @@
 
             </div>
             <!-- Default to the left -->
-            <strong>Copyright &copy; 2018 <a href="#">Event Ticket Co.Ltd</a>.</strong> All rights reserved.
+            <strong>Copyright &copy; 2018 <a href="#">MyanmarITStar Co.Ltd</a>.</strong> All rights reserved.
         </footer>
         <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-dark">

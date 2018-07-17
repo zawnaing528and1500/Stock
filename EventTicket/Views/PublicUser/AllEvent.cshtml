@@ -12,10 +12,10 @@
         {
             int ECategoryID = Convert.ToInt32(row["ECategoryID"]);
             string Category = b.getStringByQuery("select * from ECategory where ID=" + ECategoryID, "Name");
-            <a href="~/PublicUser/Event?ECategoryID=@ECategoryID"><img src="~/Image/open.png" />&nbsp;&nbsp;&nbsp;&nbsp;<b>@Category</b></a><br />
+            <a href="~/PublicUser/Event?ECategoryID=@ECategoryID" class="hvr-wobble-vertical"><img src="~/Image/open.png" />&nbsp;&nbsp;&nbsp;&nbsp;<b>@Category</b></a><br />
         }
     }
-    <a href="~/PublicUser/SeeCinemaOrgByTown"><img src="~/Image/open.png" />&nbsp;&nbsp;&nbsp;&nbsp;<b>Cinema</b></a><br />
-    <a href="~/PublicUser/SeeCarGateByTown"><img src="~/Image/open.png" />&nbsp;&nbsp;&nbsp;&nbsp;<b>Car Gate</b></a><br />
+    <a href="~/PublicUser/SeeCinemaOrgByTown" class="hvr-wobble-vertical"><img src="~/Image/open.png" />&nbsp;&nbsp;&nbsp;&nbsp;<b>Cinema</b></a><br />
+    <a href="~/PublicUser/SeeCarGateByTown" class="hvr-wobble-vertical"><img src="~/Image/open.png" />&nbsp;&nbsp;&nbsp;&nbsp;<b>Car Gate</b></a><br />
 </div>
 

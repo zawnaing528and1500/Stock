@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "SeeAppliedAccount";
+    Layout = "~/Views/Shared/Owner.cshtml";
+    Base b = new Base();
+}
+@using System.Data;
+@using EventTicket.App_Code;
+
+<div class="contentBodyBox">
+    <table id="displayTable" class="table table-dark table-hover">
+        <thead>
+            <tr><th>No</th><th>Organization Name</th><th>Town</th><th>Category</th><th>Email</th><th>Phone</th><th>Version</th><th>Account Type</th><th></th></tr>
+        </thead>
+        <tbody>
+            @{
+                int i = 1;
+
+                DataTable dt = b.getAllByQuery("select * from AppliedAccount");
+                foreach (DataRow row in dt.Rows)
+                {
+                    int ID = Convert.ToInt32(row["ID"]);
+                    string Name = row["Name"].ToString();
+                    int TownID = Convert.ToInt32(row["TownID"]);
+                    int ECategoryID = Convert.ToInt32(row["ECategoryID"]);
+                    string Email = row["Email"].ToString();
+                    string Phone = row["Phone"].ToString();
+                    string version = row["version"].ToString();
+                    string AccountType = row["AccountType"].ToString();
+                    <tr><td>@i</td><td>@Name</td><td>@b.getStringByQuery("select * from Town where ID="+TownID,"Name")</td><td>@b.getStringByQuery("select * from ECategory where ID=" + ECategoryID, "Name")</td><td>@Email</td><td>@AccountType</td><td>@Phone</td><td>@version</td><td><a href="~/Owner/AddAppliedAccount?Name=@Name&TownID=@TownID&Email=@Email&Version=@version&AccountType=@AccountType&ECategoryID=@ECategoryID&Phone=@Phone" class="label label-success">ADD</a>&nbsp;<a href="~/Owner/RemoveAppliedAccount?ID=@ID" class="label label-danger">X</a></td></tr>
+                    i++;
+                }
+            }
+        </tbody>
+    </table>
+</div>
