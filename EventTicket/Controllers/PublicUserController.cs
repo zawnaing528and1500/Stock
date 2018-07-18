@@ -106,7 +106,7 @@ namespace EventTicket.Controllers
                     }
                     d.ChangeByQuery("update Seat set Status='Book' where EID=" + EID + " and Name='" + selectedSeat[i] + "'");
                     int SeatID = d.getIntByQuery("select * from Seat where EID=" + EID + " and Name='" + selectedSeat[i] + "'", "ID");
-                    d.ChangeByQuery("insert into CustomerTicket values(N'" + Name + "',N'" + Phone + "'," + SeatID + ",N'"+Bank+"',N'"+Account+"')");
+                    d.ChangeByQuery("insert into CustomerTicket values(N'" + Name + "',N'" + Phone + "'," + SeatID + ",N'"+Bank+"',N'"+Account+"','"+ DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss tt")+"')");
                     i = i + 1;
                     passedInfo = "success";
                 }

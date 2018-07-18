@@ -24,6 +24,10 @@ namespace EventTicket.Controllers
         #region Event
         public ActionResult CreateEvent()
         {
+            if(Session["CurrentUserID"]== null)
+            {
+                Response.Redirect("~/Login/LoginForm");
+            }
             return View();
         }
 
@@ -260,7 +264,7 @@ namespace EventTicket.Controllers
             int ID = Convert.ToInt32(Request.Form["ID"]);
             string Name = Request.Form["Name"];
             string Phone = Request.Form["Phone"];
-            d.ChangeByQuery("insert into CustomerTicket(Name,Phone,SeatID) values(N'" + Name + "',N'" + Phone + "'," + ID + ")");
+            d.ChangeByQuery("insert into CustomerTicket(Name,Phone,SeatID,InsertedDate) values(N'" + Name + "',N'" + Phone + "'," + ID + ",'"+ DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss tt") + "')");
             d.ChangeByQuery("update Seat set Status='Sold' where ID=" + ID);
             string url = Session["url"].ToString();
             Response.Redirect(url);

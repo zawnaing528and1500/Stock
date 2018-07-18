@@ -11,6 +11,7 @@
     int EOrgID = Convert.ToInt32(Session["CurrentUserID"]);
     DataTable dt = b.getAllByQuery("select * from Event where EOrgID=" + EOrgID + " order by EDate Asc");
     int TownID = b.getIntByQuery("select * from EOrg where ID="+EOrgID, "TownID");
+    
 }
 <link rel="stylesheet" href='https://mmwebfonts.comquas.com/fonts/?font=zawgyi' />
 
@@ -28,6 +29,7 @@
             <tr><td colspan="2"><h3>Customer Info</h3></td></tr>
             <tr><td>Name</td><td class="zg">:@b.getStringByQuery("select * from CustomerTicket where SeatID="+SeatID,"Name")</td></tr>
             <tr><td>Phone</td><td>:@b.getStringByQuery("select * from CustomerTicket where SeatID=" + SeatID, "Phone")</td></tr>
+            <tr><td>Booking Time</td><td>:@b.getDateByQuery("select * from CustomerTicket where SeatID="+SeatID,"InsertedDate")</td></tr>
             <tr><td colspan="2"><h3><br />Seat Info Info</h3></td></tr>
             <tr><td>Name</td><td>:@b.getStringByQuery("select * from Event where ID=" + EID, "Name")</td></tr>
             <tr><td>Seat Name</td><td>:@b.getStringByQuery("select * from Seat where ID=" + SeatID, "Name")</td></tr>
