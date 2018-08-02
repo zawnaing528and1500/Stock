@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewBag.Title = "BookSeat";
+    Layout = "~/Views/Shared/PublicUser.cshtml";
+}
+<br />
+<center>
+    <div class="contentHeadBox">
+        <table class="table table-bordered" style="background-color:#F6F9ED;max-width:300px;">
+            <tr>
+                <td><b>From</b></td>
+                <td>@ViewBag.FromPhone</td>
+            </tr>
+            <tr>
+                <td><b>To</b></td>
+                <td>@ViewBag.ToPhone</td>
+            </tr>
+            <tr><td><b>Total Cost</b></td><td>@ViewBag.TotalCost Kyats</td></tr>
+            <tr><td>Booked Seat</td><td>@ViewBag.SeatList</td></tr>
+            <tr><td colspan="2"><center><a href="tel:@ViewBag.TransferBill"><input type="button" class="btn btn-primary" value="PAY" /></a></center></td></tr>
+        </table>
+    </div>
+</center>
+

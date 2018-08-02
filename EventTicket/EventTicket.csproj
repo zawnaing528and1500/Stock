@@ -363,6 +363,9 @@
     <Content Include="admin-lte\css\adminlte.min.css.map" />
     <Content Include="admin-lte\css\adminlte.css.map" />
     <Content Include="Document\UserManual.pdf" />
+    <Content Include="Document\product_feature.pdf" />
+    <Content Include="Document\pricing.pdf" />
+    <Content Include="Document\tutorial.pdf" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -438,6 +441,7 @@
     <Content Include="Views\PublicUser\ApplyEOrgAccount.cshtml" />
     <Content Include="Views\PublicUser\Construction.cshtml" />
     <Content Include="Views\Owner\SeeAppliedAccount.cshtml" />
+    <Content Include="Views\PublicUser\BookSeat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

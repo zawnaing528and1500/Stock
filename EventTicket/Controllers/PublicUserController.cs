@@ -83,13 +83,14 @@ namespace EventTicket.Controllers
 
         public ActionResult BookSeat()
         {
+            int TotalCost = 0;String TransferBill = "";string SeatList = "";
             string passedInfo = "success";
             int EID = Convert.ToInt32(Request.Form["EventID"]);
+            string EOrgPhone = d.getStringByQuery("select * from Event where ID=" + EID, "Phone");
             string SelectedSeat = Request.Form["SelectedSeat"];
             string Name = Request.Form["Name"];
             string Phone = Request.Form["Phone"];
-            string Bank = Request.Form["Bank"];
-            string Account = Request.Form["Account"];
+            string Operator = Request.Form["Operator"];
             string[] separater = { "," };
             string[] selectedSeat = SelectedSeat.Split(separater, StringSplitOptions.RemoveEmptyEntries);
             int i = 0;
@@ -106,7 +107,9 @@ namespace EventTicket.Controllers
                     }
                     d.ChangeByQuery("update Seat set Status='Book' where EID=" + EID + " and Name='" + selectedSeat[i] + "'");
                     int SeatID = d.getIntByQuery("select * from Seat where EID=" + EID + " and Name='" + selectedSeat[i] + "'", "ID");
-                    d.ChangeByQuery("insert into CustomerTicket values(N'" + Name + "',N'" + Phone + "'," + SeatID + ",N'"+Bank+"',N'"+Account+"','"+ DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss tt")+"')");
+                    d.ChangeByQuery("insert into CustomerTicket(Name, Phone, SeatID, InsertedDate) values(N'" + Name + "',N'" + Phone + "'," + SeatID + ",'"+ DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss tt")+"')");
+                    TotalCost = TotalCost + d.getIntByQuery("select * from Seat where ID=" + SeatID,"Price");
+                    SeatList = SeatList + selectedSeat[i]+"/";
                     i = i + 1;
                     passedInfo = "success";
                 }
@@ -115,10 +118,52 @@ namespace EventTicket.Controllers
             {
                 passedInfo = "noSeat";
             }
-            Session["passedInfo"] = passedInfo;
-            string url = Session["userurl"].ToString();
-            Response.Redirect(url);
-            return View();
+
+
+            //Get Phone 
+            //Get Operator 
+            //amount - Total Price
+            /*
+             MPT - *223*amount*number#
+             Ooredoo - *155*amount*number#
+             MEC - *110*amount*number#
+             */
+
+            //Check Operator for tranferring phone bill
+            if (passedInfo.Equals("success"))
+            {
+                if (Operator.Equals("mpt"))
+                {
+                    TransferBill = "*223*" + TotalCost + "*" + EOrgPhone + "#";
+                }
+                else if (Operator.Equals("ooredoo"))
+                {
+                    TransferBill = "*155*" + TotalCost + "*" + EOrgPhone + "#";
+                }
+                else if (Operator.Equals("mec"))
+                {
+                    TransferBill = "*110*" + TotalCost + "*" + EOrgPhone + "#";
+                }
+
+                Session["passedInfo"] = passedInfo;
+                string url = Session["userurl"].ToString();
+
+                ViewBag.TransferBill = TransferBill;
+                ViewBag.FromPhone = Phone;
+                ViewBag.ToPhone = EOrgPhone;
+                ViewBag.TotalCost = TotalCost;
+                ViewBag.SeatList = SeatList;
+                return View();
+            }
+       else
+            {
+                Session["passedInfo"] = passedInfo;
+                string url = Session["userurl"].ToString();
+                Response.Redirect(url);
+                return View();
+            }
+
+            
         }
 
         public ActionResult AboutCEO()

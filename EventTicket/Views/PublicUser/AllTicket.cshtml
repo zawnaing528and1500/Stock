@@ -73,24 +73,22 @@
     <div class="contentHeadBox">
         <div class="zg">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <input type="hidden" id="HSelectedSeat" name="SelectedSeat" />
                     <input type="hidden" name="EventID" value="@EID" />
                     <input type="text" name="Name" class="form-control" placeholder="Name (နာမည္)" required />
-                    <input type="text" name="Phone" class="form-control" placeholder="Phone (ဖုန္း)" required />
                 </div>
-                <div class="col-md-4">
-                    <select class="form-control" id="Bank" name="Bank" required>
-                        <option value="">Select Bank</option>
-                        <option value="kbz">KBZ</option>
-                        <option value="aya">AYA</option>
-                        <option value="cb">CB</option>
-                        <option value="yoma">YOMA</option>
-                    </select>
-                    <input type="text" minlength="16" maxlength="17" id="Account" name="Account" class="form-control" placeholder="Account No (အေကာင့္နံပတ္)" required />
+                <div class="col-md-3"><input type="text" name="Phone" class="form-control" placeholder="Phone (ဖုန္း)" required /></div>
+                    <div class="col-md-3">
+                        <select class="form-control" id="Operator" name="Operator" required>
+                            <option value="">Select Operator</option>
+                            <option value="mpt">MPT</option>
+                            <option value="ooredoo">Ooredoo</option>
+                            <option value="mec">MEC</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3"><center><input type="submit" class="btn btn-primary" value="BOOK/မွာမည္" /></center></div>
                 </div>
-                <div class="col-md-4"><center><input type="submit" class="btn btn-primary" value="BOOK/မွာမည္" /></center></div>
-            </div>
         </div>
     </div>
 }
