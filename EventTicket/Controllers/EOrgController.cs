@@ -355,5 +355,28 @@ namespace EventTicket.Controllers
         }
         #endregion
 
+        //SeeBookingList, SeeSoldList
+        #region SeatList
+        public ActionResult SeeBookingList()
+        {
+            //Descrypt Event ID
+            string E_EID = Request.QueryString["E_EID"];
+            E_EID = E_EID.Replace(" ", "+");
+            String EID = dp.Decrypt(E_EID, "ETicket");
+            ViewBag.EID = Convert.ToInt32(EID);
+            return View();
+        }
+
+        public ActionResult SeeSoldList()
+        {
+            //Descrypt Event ID
+            string E_EID = Request.QueryString["E_EID"];
+            E_EID = E_EID.Replace(" ", "+");
+            String EID = dp.Decrypt(E_EID, "ETicket");
+            ViewBag.EID = Convert.ToInt32(EID);
+            return View();
+        }
+        #endregion
+
     }
 }

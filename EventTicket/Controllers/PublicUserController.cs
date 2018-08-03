@@ -134,15 +134,15 @@ namespace EventTicket.Controllers
             {
                 if (Operator.Equals("mpt"))
                 {
-                    TransferBill = "*223*" + TotalCost + "*" + EOrgPhone + "#";
+                    TransferBill = "*223*" + TotalCost + "*" + EOrgPhone + "%23";
                 }
                 else if (Operator.Equals("ooredoo"))
                 {
-                    TransferBill = "*155*" + TotalCost + "*" + EOrgPhone + "#";
+                    TransferBill = "*155*" + TotalCost + "*" + EOrgPhone + "%23";
                 }
                 else if (Operator.Equals("mec"))
                 {
-                    TransferBill = "*110*" + TotalCost + "*" + EOrgPhone + "#";
+                    TransferBill = "*110*" + TotalCost + "*" + EOrgPhone + "%23";
                 }
 
                 Session["passedInfo"] = passedInfo;

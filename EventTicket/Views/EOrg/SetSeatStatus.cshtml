@@ -24,10 +24,10 @@
 <div class="row">
     <div class="col-md-4">
         <span class="free">&nbsp;&nbsp;</span>&nbsp;Free&nbsp;-&nbsp;@b.getCountByQuery("select * from Seat where EID=" + EID + " and Status='Free'") Seats
-        <span class="book">&nbsp;&nbsp;</span>&nbsp;Book&nbsp;-&nbsp;@b.getCountByQuery("select * from Seat where EID=" + EID + " and Status='Book'") Seats
+        <span class="book">&nbsp;&nbsp;</span>&nbsp;<a href="~/EOrg/SeeBookingList?E_EID=@E_EID">Book</a>&nbsp;-&nbsp;@b.getCountByQuery("select * from Seat where EID=" + EID + " and Status='Book'") Seats
     </div>
     <div class="col-md-4">
-        <span class="sold">&nbsp;&nbsp;</span>&nbsp;Sold&nbsp;-&nbsp;@b.getCountByQuery("select * from Seat where EID=" + EID + " and Status='Sold'") Seats
+        <span class="sold">&nbsp;&nbsp;</span>&nbsp;<a href="~/EOrg/SeeSoldList?E_EID=@E_EID">Sold</a>&nbsp;-&nbsp;@b.getCountByQuery("select * from Seat where EID=" + EID + " and Status='Sold'") Seats
         <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total&nbsp;-&nbsp;@b.getCountByQuery("select * from Seat where EID=" + EID) Seats</span>
  </div>
     <div class="col-md-4">

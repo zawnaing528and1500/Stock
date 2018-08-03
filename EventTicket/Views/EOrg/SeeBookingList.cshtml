@@ -1,0 +1,34 @@
+﻿
+@{
+    ViewBag.Title = "SeeBookingList";
+    Layout = "~/Views/Shared/EOrg.cshtml";
+    Base b = new Base();
+    int EID = ViewBag.EID;
+}
+@using System.Data;
+@using EventTicket.App_Code;
+
+<div class="contentBodyBox">
+<table id="displayTable" class="table table-dark table-hover">
+    <thead>
+        <tr><th>No</th><th>Seat</th><th>TicketID</th><th>Name</th><th>Phone</th><th>Date</th></tr>
+    </thead>
+    <tbody>
+        @{
+            int i = 1;
+
+            DataTable dt = b.getAllByQuery("select * from Seat where EID="+EID+" and Status='Book'");
+            foreach (DataRow row in dt.Rows)
+            {
+                int TicketID = Convert.ToInt32(row["ID"]);
+                string Seat = row["Name"].ToString();
+                string Date = Convert.ToDateTime(b.getDateByQuery("select * from CustomerTicket where SeatID="+TicketID,"InsertedDate")).ToString("dd/MM/yyyy");
+                String Name = b.getStringByQuery("select * from CustomerTicket where SeatID=" + TicketID, "Name");
+                String Phone = b.getStringByQuery("select * from CustomerTicket where SeatID=" + TicketID, "Phone");
+                <tr><td>@i</td><td><font class="normalText">@Seat</font></td><td><font class="normalText">@TicketID</font></td><td><font class="normalText">@Name</font></td><td><font class="normalText">@Phone</font></td><td><font class="normalText">@Date</font></td></tr>
+                i++;
+            }
+        }
+    </tbody>
+</table>
+</div>

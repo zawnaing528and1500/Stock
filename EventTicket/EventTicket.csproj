@@ -442,6 +442,8 @@
     <Content Include="Views\PublicUser\Construction.cshtml" />
     <Content Include="Views\Owner\SeeAppliedAccount.cshtml" />
     <Content Include="Views\PublicUser\BookSeat.cshtml" />
+    <Content Include="Views\EOrg\SeeBookingList.cshtml" />
+    <Content Include="Views\EOrg\SeeSoldList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
