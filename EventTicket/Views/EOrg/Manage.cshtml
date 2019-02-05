@@ -40,15 +40,14 @@
                         <li class="zg" style="background-color:#FDFCDC;border:1px solid #F5F5DC"><a href="#">@Name</a></li>
                         <li class="zg" style="background-color:#FDFCDC;border:1px solid #F5F5DC"><a href="#">@Date , @Time</a></li>
                         <li><a href="~/EOrg/SetRowDetail?E_EID=@E_EID">Manage Seat (ခုံစီမံ)</a></li>
-                        <li><a href="~/EOrg/SetSeatStatus?E_EID=@E_EID">Manage Ticket (လက်မှတ်များ)<span class="pull-right badge bg-blue">@b.getCountByQuery("select * from Seat where EID="+EID) စောင်</span><span class="pull-right badge bg-blue">@access</span></a></li>
-                        <li><a href="~/EOrg/EditEvent?E_EID=@E_EID">Edit Data (ပြင်မည်)</a></li>
-                        <li><a href="~/EOrg/ResetEvent?E_EID=@E_EID">Reset Data (ရှင်းလင်းမည်)</a></li>
-                         <li><a href="~/EOrg/DeleteEvent?E_EID=@E_EID">Delete Item (ဖျက်ပစ်မည်)</a></li>
+                        <li><a href="~/EOrg/SetSeatStatus?E_EID=@E_EID">Manage Ticket (လက္မွတ္မ်ား)<span class="pull-right badge bg-blue">@b.getCountByQuery("select * from Seat where EID="+EID) စောင်</span><span class="pull-right badge bg-blue">@access</span></a></li>
+                        <li><a href="~/EOrg/EditEvent?E_EID=@E_EID">Edit Data (ျပင္မည္)</a></li>
+                        <li><a href="~/EOrg/ResetEvent?E_EID=@E_EID">Reset Data (ရွင္းလင္းမည္)</a></li>
+                         <li><a href="~/EOrg/DeleteEvent?E_EID=@E_EID">Delete Item (ဖ်က္ပစ္မည္)</a></li>
                         <li style="background-color:#FEFFEF;color:dimgray;"><a href="#">Item Code - @EID (For Error Tracking Purpose)</a></li>
                      </ul>
                 </div>
             </div>
-            <br />
 
     }
 }
