@@ -86,6 +86,9 @@ namespace EventTicket.Controllers
             int TotalCost = 0;String TransferBill = "";string SeatList = "";
             string passedInfo = "success";
             int EID = Convert.ToInt32(Request.Form["EventID"]);
+            //Get EOrgID first via EID to retrieve its username
+            int EOrgID = d.getIntByQuery("select * from Event where ID="+EID,"EOrgID");
+            string Username = d.getStringByQuery("select * from Login where AllID="+EOrgID+" and AccessLevel=2","UserName");
             string EOrgPhone = d.getStringByQuery("select * from Event where ID=" + EID, "Phone");
             string SelectedSeat = Request.Form["SelectedSeat"];
             string Name = Request.Form["Name"];
@@ -148,6 +151,7 @@ namespace EventTicket.Controllers
                 Session["passedInfo"] = passedInfo;
                 string url = Session["userurl"].ToString();
 
+                ViewBag.Username = Username;
                 ViewBag.TransferBill = TransferBill;
                 ViewBag.FromPhone = Phone;
                 ViewBag.ToPhone = EOrgPhone;

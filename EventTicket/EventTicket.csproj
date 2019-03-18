@@ -334,6 +334,7 @@
     <Content Include="Image\Icon\RightArrow.png" />
     <Content Include="Image\Icon\sessionexpire.png" />
     <Content Include="Image\Icon\time.png" />
+    <Content Include="Image\KBZPay\jcgvcitymall.jpg" />
     <Content Include="Image\load.gif" />
     <Content Include="Image\Logo\logo.png" />
     <Content Include="Image\open.png" />
