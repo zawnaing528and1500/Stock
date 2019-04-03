@@ -1,0 +1,60 @@
+﻿@using EventTicket.App_Code;
+@using System.Data;
+@{
+    Base b = new Base();
+    ViewBag.Title = "CustomerForm";
+    Layout = "~/Views/Shared/Shop.cshtml";
+    int ShopID = Convert.ToInt32(Session["CurrentUserID"]);
+    DataTable dtSuccessNumber = new DataTable();
+    DataTable dtSuccessCustomerNumber = new DataTable();
+
+}
+
+    <div class="contentBodyBox">
+        <font color="#8B7D6B">ထီ​ေပါက္​​ေသာ သူမ်ားျဖစ္​သည္​</font><br /><br />
+        <div class="box-body">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th style="width: 10px">No</th>
+                        <th>ထိုးနံပါတ္</th>
+                        <th>​ေပါက္​နံပါတ္ နွင္​့ အ​ေသးစိတ္​​​</th>
+                    </tr>
+                    @{
+                        int i = 1;
+                        dtSuccessNumber = b.getAllByQuery("select * from Success");
+                        foreach (DataRow rows in dtSuccessNumber.Rows)
+                        {
+                            string SuccessNumber = rows["No"].ToString();
+                            dtSuccessCustomerNumber = b.getAllByQuery("select * from HteNumber where ShopID=" + ShopID + " and No LIKE N'" + SuccessNumber + "%' and MONTH(Date) < MONTH(GetDate())AND YEAR(Date) = YEAR(GetDate())");
+                            foreach (DataRow sucessRow in dtSuccessCustomerNumber.Rows)
+                            {
+                                string CustomerSuccessNumber = sucessRow["No"].ToString();
+                                string Amount = rows["Amount"].ToString();
+                                int CustomerID = Convert.ToInt32(sucessRow["CustomerID"]);
+                                String Name = b.getStringByQuery("select * from Customer where ID=" + CustomerID, "Name");
+                                String Phone = b.getStringByQuery("select * from Customer where ID=" + CustomerID, "Phone");
+                                String Address = b.getStringByQuery("select * from Customer where ID=" + CustomerID, "Address");
+
+
+                                <tr>
+                                    <td>@i</td>
+                                    <td>@CustomerSuccessNumber</td>
+                                    <td>@SuccessNumber (@Amount) <br />
+                                    @Name <br />
+                                    <a href="tel:@Phone"> @Phone </a><br />
+                                    @Address <br />
+                                    </td>   
+                                </tr>
+
+                                i++;
+                            }
+                        }
+                    }
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+

@@ -1,0 +1,56 @@
+﻿@using EventTicket.App_Code;
+@using System.Data;
+@{
+    Base b = new Base();
+    ViewBag.Title = "AddShopForm";
+    Layout = "~/Views/Shared/Owner.cshtml";
+}
+
+<h2>AddShopForm</h2>
+
+@using (Html.BeginForm("ProcessAddShopForm", "Owner"))
+{
+
+    <div class="contentHeadBox">
+        <div class="row">
+            <div class="col-md-4">
+                <input type="text" name="Name" placeholder="Enter Name" class="form-control" required />
+            </div>
+            <div class="col-md-4">
+                <input type="text" name="Phone" placeholder="Enter Phone" class="form-control" required />
+            </div>
+            <div class="col-md-4">
+                <input type="text" name="Address" placeholder="Enter Address" class="form-control" required />
+            </div>
+        </div>
+        <center><input type="submit" class="btn btn-primary" value="ADD" /></center>
+        </div>
+
+                        }
+
+
+
+<div class="contentBodyBox">
+    <table id="displayTable" class="table table-dark table-hover">
+        <thead>
+            <tr><th>No</th><th>Name</th><th>Phone Number</th><th>Address</th><th>Update</th><th>Delete</th></tr>
+        </thead>
+        <tbody>
+            @{
+                int i = 1;
+
+                DataTable dt = b.getAllByQuery("select * from Shop");
+                foreach (DataRow row in dt.Rows)
+                {
+                    int EventOrgID = Convert.ToInt32(row["AllID"]);
+                    string Username = row["Username"].ToString();
+                    string Password = row["Password"].ToString();
+
+                    <tr><td>@i</td><td><font class="normalText">@b.getStringByQuery("select * from EOrg where ID=" + EventOrgID, "Name")</font></td><td><font class="normalText">@Username</font></td><td><font class="normalText">@Password</font></td><td><a href="~/Owner/DeleteAccount?EOrgID=@EventOrgID"><img src="~/Image/Icon/delete.png" /></a></td></tr>
+                    i++;
+                }
+            }
+        </tbody>
+    </table>
+</div>
+

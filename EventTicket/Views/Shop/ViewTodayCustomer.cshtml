@@ -1,0 +1,46 @@
+﻿@using EventTicket.App_Code;
+@using System.Data;
+@{
+    Base b = new Base();
+    ViewBag.Title = "CustomerForm";
+    Layout = "~/Views/Shared/Shop.cshtml";
+    int ShopID = Convert.ToInt32(Session["CurrentUserID"]);
+    DataTable dtCustomer = new DataTable();
+}
+
+
+<table class="table table-bordered">
+    <tbody>
+        <tr>
+            <th style="width: 10px">No</th>
+            <th>ထီထိုးသူ​</th>
+            <th style="width: 40px">ထီနံပါတ္​</th>
+        </tr>
+        @{
+            int i = 1;
+            int j = 1;
+            dtCustomer = b.getAllByQuery("select * from Customer where ShopID=" + ShopID+" and Date='"+ DateTime.Now.ToString("MM.dd.yyyy")+"'");
+            foreach (DataRow rows in dtCustomer.Rows)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>
+                        @rows["Name"]
+                    </td>
+                    <td>
+                       @{ 
+
+                           DataTable dtHteNumber = b.getAllByQuery("select * from HteNumber where CustomerID="+ Convert.ToInt32(rows["ID"]));
+                           foreach (DataRow HteNumber in dtHteNumber.Rows)
+                           {
+                              @j @HteNumber["No"];j++;
+                               <br />
+                           }
+                           }
+                    </td>
+                </tr>
+                i++;
+            }
+        }
+    </tbody>
+</table>

@@ -14,7 +14,7 @@ namespace EventTicket.App_Code
         public Boolean checkUser(string username, string password)
         {
             Boolean isUser = false;
-            var connectionString = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
+            var connectionString = ConfigurationManager.ConnectionStrings["constrHte"].ConnectionString;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();

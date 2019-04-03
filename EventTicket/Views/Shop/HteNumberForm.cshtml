@@ -1,0 +1,75 @@
+﻿@using EventTicket.App_Code;
+@using System.Data;
+@{
+    Base b = new Base();
+    ViewBag.Title = "CustomerForm";
+    Layout = "~/Views/Shared/Shop.cshtml";
+    int ShopID = Convert.ToInt32(Session["CurrentUserID"]);
+    int CustomerID = Convert.ToInt32(Session["CustomerID"]);
+    DataTable dtHteNumber = new DataTable();
+
+}
+
+@using (Html.BeginForm("ProcessHteNumberForm", "Shop"))
+{
+    <div class="contentHeadBox">
+        <font color="#8B7D6B">ဝယ္​ယူသူ၏ ထီနံပါတ္​မ်ားထည္​့ပါ</font><br /><br />
+
+        <div class="row">
+            <div class="col-md-12">
+                <input type="text" name="No" placeholder="ထီနံပတ္ ထည့္ရန္" class="form-control" required />
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <table><tr>
+                        <td>
+                            <div class="col-sm-6">
+                                <input type="submit" class="btn btn-primary" value="ထပ္​ထည္​့" />
+                            </div>
+                        </td>
+                        <td>
+                            <div class="col-sm-6">
+                                <a href="@Url.Action("CustomerForm", "Shop")" class="btn btn-primary">​ေနာက္​သို့</a>
+                            </div>
+                        </td>
+                        </tr>
+                    </table>
+                    </div>
+                </div>
+        </div>
+
+        <div class="box-body">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th style="width: 10px">No</th>
+                        <th>ထီနံပတ္​</th>
+                        <th style="width: 40px"></th>
+                    </tr>
+                    @{
+                        int i = 1;
+                        dtHteNumber = b.getAllByQuery("select * from HteNumber where ShopID=" + ShopID + " and CustomerID=" + CustomerID);
+                        foreach (DataRow rows in dtHteNumber.Rows)
+                        {
+                            <tr>
+                                <td>@i</td>
+                                <td>
+                                    @rows["No"]
+                                </td>
+                                <td>
+                                    <a href="/Shop/DeleteHteNumber?ID=@rows["ID"]" class="label label-danger">X</a>
+                                </td>
+                            </tr>
+                            i++;
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+       
+    </div>
+
+}

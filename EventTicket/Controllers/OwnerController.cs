@@ -16,6 +16,18 @@ namespace EventTicket.Controllers
         {
             return View();
         }
+        public ActionResult AddShopForm()
+        {
+            return View();
+        }
+        public  ActionResult ProcessAddShopForm()
+        {
+            string Name = Request.Form["Name"];
+            string Phone = Request.Form["Phone"];
+            string Address = Request.Form["Address"];
+            db.ChangeByQuery("insert into Shop values('"+Name+"','"+Phone+"','"+Address+"','"+ DateTime.Now + "')");
+            return RedirectToAction("AddShopForm", "Owner");
+        }
         public ActionResult setEventOrgAccount()
         {
             return View();

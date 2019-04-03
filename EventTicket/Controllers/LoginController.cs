@@ -50,11 +50,11 @@ namespace EventTicket.Controllers
 
                 if (AccessLevel == 1)
                 {
-                    return RedirectToAction("setEventOrgAccount", "Owner");
+                    return RedirectToAction("CustomerForm", "Shop");//Changes_second parioty
                 }
                 else if (AccessLevel == 2)
                 {
-                    return RedirectToAction("CreateEvent", "EOrg");
+                    return RedirectToAction("CustomerForm", "Shop");//Most Important
                 }
                 else
                 {
