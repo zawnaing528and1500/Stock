@@ -13,32 +13,33 @@
 @using (Html.BeginForm("ProcessHteNumberForm", "Shop"))
 {
     <div class="contentHeadBox">
-        <font color="#8B7D6B">ဝယ္​ယူသူ၏ ထီနံပါတ္​မ်ားထည္​့ပါ</font><br /><br />
+        <font color="#8B7D6B" class="zg">ဝယ္​ယူသူ၏ ထီနံပါတ္​မ်ားထည္​့ပါ</font><br /><br />
 
         <div class="row">
             <div class="col-md-12">
-                <input type="text" name="No" placeholder="ထီနံပတ္ ထည့္ရန္" class="form-control" required />
+                <span class="zg"><input type="text" name="No" placeholder="ထီနံပတ္ ထည့္ရန္" class="form-control" required /></span>
             </div>
         </div>
         <br />
         <div class="row">
             <div class="col-md-12">
                 <div class="row">
-                    <table><tr>
-                        <td>
-                            <div class="col-sm-6">
-                                <input type="submit" class="btn btn-primary" value="ထပ္​ထည္​့" />
-                            </div>
-                        </td>
-                        <td>
-                            <div class="col-sm-6">
-                                <a href="@Url.Action("CustomerForm", "Shop")" class="btn btn-primary">​ေနာက္​သို့</a>
-                            </div>
-                        </td>
+                    <table>
+                        <tr>
+                            <td>
+                                <div class="col-sm-6">
+                                    <span class="zg"><input type="submit" class="btn btn-primary" value="ထပ္​ထည္​့" /></span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col-sm-6">
+                                    <span class="zg"> <a href="@Url.Action("CustomerForm", "Shop")" class="btn btn-primary">​ေနာက္​သို့</a></span>
+                                </div>
+                            </td>
                         </tr>
                     </table>
-                    </div>
                 </div>
+            </div>
         </div>
 
         <div class="box-body">
@@ -46,7 +47,7 @@
                 <tbody>
                     <tr>
                         <th style="width: 10px">No</th>
-                        <th>ထီနံပတ္​</th>
+                        <th> <span class="zg">ထီနံပတ္​</span></th>
                         <th style="width: 40px"></th>
                     </tr>
                     @{
@@ -57,7 +58,7 @@
                             <tr>
                                 <td>@i</td>
                                 <td>
-                                    @rows["No"]
+                                    <span class="zg"> @rows["No"] </span>
                                 </td>
                                 <td>
                                     <a href="/Shop/DeleteHteNumber?ID=@rows["ID"]" class="label label-danger">X</a>
@@ -69,7 +70,6 @@
                 </tbody>
             </table>
         </div>
-       
-    </div>
 
-}
+    </div>
+                        }

@@ -16,6 +16,8 @@ namespace EventTicket.Controllers
         {
             return View();
         }
+
+        #region Customer Form
         public ActionResult CustomerForm()
         {
             if (Session["CurrentUserID"] == null)
@@ -30,11 +32,14 @@ namespace EventTicket.Controllers
             string Phone = Request.Form["Phone"];
             string Address = Request.Form["Address"];
             int ShopID = Convert.ToInt32(Session["CurrentUserID"]);
-            db.ChangeByQuery("insert into Customer values("+ ShopID + ",N'" + Name + "',N'" + Phone + "',N'" + Address + "','" + DateTime.Now.ToString("MM.dd.yyyy") + "')");
-            int CustomerID = db.getIntByQuery("select * from Customer where ShopID="+ShopID+" and Name=N'"+Name+"' and Phone=N'"+Phone+"'","ID");
+            db.ChangeByQuery("insert into Customer values(" + ShopID + ",N'" + Name + "',N'" + Phone + "',N'" + Address + "','" + DateTime.Now.ToString("MM.dd.yyyy") + "')");
+            int CustomerID = db.getIntByQuery("select * from Customer where ShopID=" + ShopID + " and Name=N'" + Name + "' and Phone=N'" + Phone + "'", "ID");
             Session["CustomerID"] = CustomerID;
             return RedirectToAction("HteNumberForm", "Shop");
         }
+        #endregion
+
+        #region Hte Number Form
         public ActionResult HteNumberForm()
         {
             return View();
@@ -47,17 +52,10 @@ namespace EventTicket.Controllers
             db.ChangeByQuery("insert into HteNumber values(" + ShopID + "," + CustomerID + ",N'" + No + "','" + DateTime.Now.ToString("MM.dd.yyyy") + "')");
             return RedirectToAction("HteNumberForm", "Shop");
         }
-        public ActionResult DeleteHteNumber()
-        {
-            int ID = Convert.ToInt32(Request.QueryString["ID"]);
-            db.ChangeByQuery("delete from HteNumber where ID="+ID);
-            return RedirectToAction("HteNumberForm", "Shop");
-        }
-        public ActionResult ViewTodayCustomer()
-        {
-            return View();
-        }
+        #endregion
 
+        //Still Unused
+        #region Download Customer Monthly Hte Number
         public ActionResult ProcessCustomerHteNumber()
         {
             CustomerHteNumber();
@@ -67,7 +65,7 @@ namespace EventTicket.Controllers
         {
             string DownloadedDate = "";
             int ShopID = Convert.ToInt32(Session["CurrentUserID"]);
-            DataTable dt = db.getAllByQuery("select No,Date from HteNumber where ShopID="+ShopID+ " and MONTH(Date) = MONTH(GetDate())AND YEAR(Date) = YEAR(GetDate())");//your datatable
+            DataTable dt = db.getAllByQuery("select No,Date from HteNumber where ShopID=" + ShopID + " and MONTH(Date) = MONTH(GetDate())AND YEAR(Date) = YEAR(GetDate())");//your datatable
             string attachment = "attachment; filename=လကုန္​ထိုးထား​ေသာစာရင္​း.txt";
 
             Response.Buffer = true;
@@ -75,11 +73,11 @@ namespace EventTicket.Controllers
             Response.AddHeader("content-disposition", attachment);
             Response.ContentType = "text/plain";
 
-            string tab = "\t";string newline = "\r\n";
+            string tab = "\t"; string newline = "\r\n";
             Response.Write("စဥ္​" + tab);
             Response.Write("ထီနံပါတ္" + newline);
 
-            int i=1;
+            int i = 1;
             foreach (DataRow row in dt.Rows)
             {
                 tab = "\t";
@@ -93,7 +91,32 @@ namespace EventTicket.Controllers
             Response.Write(DownloadedDate);
             Response.End();
         }
+        #endregion
+
+
+        public ActionResult DeleteHteNumber()
+        {
+            int ID = Convert.ToInt32(Request.QueryString["ID"]);
+            db.ChangeByQuery("delete from HteNumber where ID="+ID);
+            return RedirectToAction("HteNumberForm", "Shop");
+        }
+        public ActionResult ViewTodayCustomer()
+        {
+            return View();
+        }
         public ActionResult CustomerSuccessNumber()
+        {
+            return View();
+        }
+        public ActionResult ViewMonthlyCustomerHteNumber()
+        {
+            return View();
+        }
+        public ActionResult ShowAggreement()
+        {
+            return View();
+        }
+        public ActionResult ShowSuccessNumber()
         {
             return View();
         }

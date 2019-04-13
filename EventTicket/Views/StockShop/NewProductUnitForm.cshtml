@@ -1,0 +1,85 @@
+﻿@using EventTicket.App_Code;
+@using System.Data;
+@{
+    ViewBag.Title = "NewProductPackingForm";
+    Layout = "~/Views/Shared/StockShop.cshtml";
+    DataTable todayStock = new DataTable();
+    StockBase db = new StockBase();
+    int ShopID = Convert.ToInt32(Session["CurrentUserID"]);
+}
+
+@using (Html.BeginForm("ProcessNewProductUnitForm", "StockShop"))
+{
+    <p class="zg">
+        <div class="contentHeadBox">
+            <font color="#8B7D6B" class="zg"><b>တစ္​ခုျခင္​း</b> ထည္​့ရန္​ ​ေအာက္​ပါတို႔ကို ျဖည္​့ပါ</font><br /><br />
+            <div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <span class="zg"><input type="text" name="Name" placeholder="ပစၥည္​းအမည္​ထည္​့ပါ " class="form-control" required /></span>
+                    </div>
+                    <div class="col-md-3">
+                        <span class="zg"><input type="number" name="Quantity" placeholder="ထည္​့မည္​့ အ​ေရအတြက္​​ထည္​့ပါ" class="form-control" required /></span>
+                    </div>
+                    <div class="col-md-3">
+                        <span class="zg"><input type="number" name="Minimium" placeholder="အနည္​းဆံုးအ​ေရအတြက္​ ထည္​့ပါ" class="form-control" required /></span>
+                    </div>
+                    <div class="col-md-3">
+                        <span class="zg"><input type="datetime" name="ExpiryDate" placeholder="သက္​တမ္​း ကုန္​ဆံုးရက္​ (မထည္​့လည္​းရ)" class="form-control" id="datepicker" /></span>
+                    </div>
+                </div>
+                <br />
+                <center> <span class="zg"><input type="submit" class="btn btn-primary" value="ထည္​့မည္" /></span></center>
+            </div>
+
+            <div class="box-body">
+                <font color="#8B7D6B" class="zg"><b>ယ​ေန႔</b> ထည္​့ထား​ေသာ ပစၥည္​းမ်ား ျဖစ္​သည္​​</font><br /><br />
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <th style="width: 10px" class="hidecell">No</th>
+                            <th> <span class="zg">အမည္​</span></th>
+                            <th><span class="zg">လက္​က်န္</span></th>
+                            <th><span class="zg">အနည္​းဆံုး</span></th>
+                            <th><span class="zg">ပံုစံ</span></th>
+
+                        </tr>
+                        @{
+                            int i = 1; string packing = "";
+                            todayStock = db.getAllByQuery("select * from Product where ShopID=" + ShopID + " and Date='" + DateTime.Now.ToString("MM.dd.yyyy") + "'  and Packing='False'");
+                            foreach (DataRow rows in todayStock.Rows)
+                            {
+                                if (Convert.ToBoolean(rows["Packing"]) == true)
+                                {
+                                    packing = "ပါကင္";
+                                }
+                                else
+                                {
+                                    packing = "တစ္​ခုျခင္​း";
+                                }
+
+                                <tr>
+                                    <td class="hidecell">@i</td>
+                                    <td>
+                                        <span class="zg"> @rows["Name"] </span>
+                                    </td>
+                                    <td><span class="zg"> @rows["Quantity"] </span></td>
+                                    <td><span class="zg"> @rows["Minimum"] </span></td>
+                                    <td><span class="zg"> @packing </span></td>
+                                    <td>
+                                        <a href="/StockShop/DeleteProductUnit?ID=@rows["ID"]" class="label label-danger">X</a>
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        }
+                    </tbody>
+                </table>
+                <br /><br />
+                <font color="#8B7D6B" class="zg"><font color="red">*</font><b>အနည္​းဆံုး</b> အ​ေရအတြက္​​ေရာက္​လ်ွင္​ ပစၥည္​းျပတ္​လတ္​​ေၾကာင္​း ​ေဖာ္​ျပမည္​</font>
+            </div>
+
+
+        </div>
+    </p>
+                            }

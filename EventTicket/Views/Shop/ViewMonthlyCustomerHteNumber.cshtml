@@ -19,7 +19,7 @@
             @{
                 int i = 1;
                 int j = 1;
-                dtCustomer = b.getAllByQuery("select * from Customer where ShopID=" + ShopID + " and Date='" + DateTime.Now.ToString("MM.dd.yyyy") + "'");
+                dtCustomer = b.getAllByQuery("select * from Customer where ShopID=" + ShopID + "and MONTH(Date) = MONTH(GetDate())AND YEAR(Date) = YEAR(GetDate())");
                 foreach (DataRow rows in dtCustomer.Rows)
                 {
                     <tr>

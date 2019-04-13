@@ -1,0 +1,23 @@
+﻿@using EventTicket.App_Code;
+@using System.Data;
+@{
+    Base b = new Base();
+    DataTable dtSuccessHteNumber = new DataTable();
+    dtSuccessHteNumber = b.getAllByQuery("select * from Success");
+    ViewBag.Title = "ShowSuccessNumber";
+    Layout = "~/Views/Shared/LoginRegister.cshtml";
+}
+
+<div class="contentBodyBox">
+    <br />
+<table class="table table-bordered">
+    <tr><th>ထီနံပါတ္​</th><th>ဆု</th></tr>
+    @{
+        foreach (DataRow rows in dtSuccessHteNumber.Rows)
+        {
+            <tr><td>@rows["No"]</td><td>@rows["Amount"]</td></tr>
+        }
+    }
+</table>
+</div>
+

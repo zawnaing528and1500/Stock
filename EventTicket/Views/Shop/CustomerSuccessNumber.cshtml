@@ -10,51 +10,54 @@
 
 }
 
-    <div class="contentBodyBox">
-        <font color="#8B7D6B">ထီ​ေပါက္​​ေသာ သူမ်ားျဖစ္​သည္​</font><br /><br />
-        <div class="box-body">
-            <table class="table table-bordered">
-                <tbody>
-                    <tr>
-                        <th style="width: 10px">No</th>
-                        <th>ထိုးနံပါတ္</th>
-                        <th>​ေပါက္​နံပါတ္ နွင္​့ အ​ေသးစိတ္​​​</th>
-                    </tr>
-                    @{
-                        int i = 1;
-                        dtSuccessNumber = b.getAllByQuery("select * from Success");
-                        foreach (DataRow rows in dtSuccessNumber.Rows)
+<div class="contentBodyBox">
+    <font color="#8B7D6B" class="zg">ထီ​ေပါက္​​ေသာ သူမ်ားျဖစ္​သည္​</font><br /><br />
+    <div class="box-body">
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <th style="width: 10px">No</th>
+                    <th><span class="zg">ထိုးနံပါတ္</span></th>
+                    <th><span class="zg">​ေပါက္​နံပါတ္ နွင္​့ အ​ေသးစိတ္​​​</span></th>
+                </tr>
+                @{
+                    int i = 1;
+                    dtSuccessNumber = b.getAllByQuery("select * from Success");
+                    foreach (DataRow rows in dtSuccessNumber.Rows)
+                    {
+                        string SuccessNumber = rows["No"].ToString();
+                        dtSuccessCustomerNumber = b.getAllByQuery("select * from HteNumber where ShopID=" + ShopID + " and No LIKE N'" + SuccessNumber + "%' and MONTH(Date) < MONTH(GetDate())AND YEAR(Date) = YEAR(GetDate())");
+                        foreach (DataRow sucessRow in dtSuccessCustomerNumber.Rows)
                         {
-                            string SuccessNumber = rows["No"].ToString();
-                            dtSuccessCustomerNumber = b.getAllByQuery("select * from HteNumber where ShopID=" + ShopID + " and No LIKE N'" + SuccessNumber + "%' and MONTH(Date) < MONTH(GetDate())AND YEAR(Date) = YEAR(GetDate())");
-                            foreach (DataRow sucessRow in dtSuccessCustomerNumber.Rows)
-                            {
-                                string CustomerSuccessNumber = sucessRow["No"].ToString();
-                                string Amount = rows["Amount"].ToString();
-                                int CustomerID = Convert.ToInt32(sucessRow["CustomerID"]);
-                                String Name = b.getStringByQuery("select * from Customer where ID=" + CustomerID, "Name");
-                                String Phone = b.getStringByQuery("select * from Customer where ID=" + CustomerID, "Phone");
-                                String Address = b.getStringByQuery("select * from Customer where ID=" + CustomerID, "Address");
+                            string CustomerSuccessNumber = sucessRow["No"].ToString();
+                            string Amount = rows["Amount"].ToString();
+                            int CustomerID = Convert.ToInt32(sucessRow["CustomerID"]);
+                            String Name = b.getStringByQuery("select * from Customer where ID=" + CustomerID, "Name");
+                            String Phone = b.getStringByQuery("select * from Customer where ID=" + CustomerID, "Phone");
+                            String Address = b.getStringByQuery("select * from Customer where ID=" + CustomerID, "Address");
 
 
-                                <tr>
-                                    <td>@i</td>
-                                    <td>@CustomerSuccessNumber</td>
-                                    <td>@SuccessNumber (@Amount) <br />
-                                    @Name <br />
-                                    <a href="tel:@Phone"> @Phone </a><br />
-                                    @Address <br />
-                                    </td>   
-                                </tr>
+                            <tr>
+                                <td>@i</td>
+                                <td><span class="zg">@CustomerSuccessNumber</span></td>
+                                <td>
+                                    <span class="zg">
+                                        @SuccessNumber (@Amount) <br />
+                                        @Name <br />
+                                        <a href="tel:@Phone"> @Phone </a><br />
+                                        @Address <br />
+                                    </span>
+                                </td>
+                            </tr>
 
-                                i++;
-                            }
+                            i++;
                         }
                     }
+                }
 
-                </tbody>
-            </table>
-        </div>
-
+            </tbody>
+        </table>
     </div>
+
+</div>
 

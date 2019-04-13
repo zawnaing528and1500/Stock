@@ -197,6 +197,9 @@
     <Compile Include="App_Code\MyWebRequest.cs" />
     <Compile Include="App_Code\Row.cs" />
     <Compile Include="App_Code\Seat.cs" />
+    <Content Include="App_Code\StockBase.cs" />
+    <Compile Include="App_Code\StockDBBase.cs" />
+    <Compile Include="App_Code\StockLoginAuthorization.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -208,6 +211,8 @@
     <Compile Include="Controllers\OwnerController.cs" />
     <Compile Include="Controllers\PublicUserController.cs" />
     <Compile Include="Controllers\ShopController.cs" />
+    <Compile Include="Controllers\StockLoginController.cs" />
+    <Compile Include="Controllers\StockShopController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -453,6 +458,15 @@
     <Content Include="Views\Shop\HteNumberForm.cshtml" />
     <Content Include="Views\Shop\ViewTodayCustomer.cshtml" />
     <Content Include="Views\Shop\CustomerSuccessNumber.cshtml" />
+    <Content Include="Views\Shop\ViewMonthlyCustomerHteNumber.cshtml" />
+    <Content Include="Views\Shop\ShowAggreement.cshtml" />
+    <Content Include="Views\Shop\ShowSuccessNumber.cshtml" />
+    <Content Include="Views\StockLogin\LoginForm.cshtml" />
+    <Content Include="Views\Shared\StockShop.cshtml" />
+    <Content Include="Views\StockShop\OutStockForm.cshtml" />
+    <Content Include="Views\StockShop\NewProductPackingForm.cshtml" />
+    <Content Include="Views\StockShop\NewProductUnitForm.cshtml" />
+    <Content Include="Views\StockShop\ReProductPackingForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
