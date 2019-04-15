@@ -1,4 +1,5 @@
-﻿@using EventTicket.App_Code;
+﻿
+@using EventTicket.App_Code;
 @using System.Data;
 @{
     ViewBag.Title = "NewProductPackingForm";
@@ -7,14 +8,14 @@
     DataTable product = new DataTable();
     StockBase db = new StockBase();
     int ShopID = Convert.ToInt32(Session["CurrentUserID"]);
-    product = db.getAllByQuery("select * from Product where ShopID="+ShopID+" and Packing='True' order by Name asc");
+    product = db.getAllByQuery("select * from Product where ShopID=" + ShopID + " and Packing='False' order by Name asc");
 }
 
-@using (Html.BeginForm("ProcessReProductPackingForm", "StockShop"))
+@using (Html.BeginForm("ProcessReProductUnitForm", "StockShop"))
 {
     <p class="zg">
         <div class="contentHeadBox">
-            <font color="#8B7D6B" class="zg"><b>ပါကင္​လိုက္​</b>ထပ္​ျဖည္​့ရန္​​​ ​ေအာက္​ပါတို႔ကို ျဖည္​့ပါ</font><br /><br />
+            <font color="#8B7D6B" class="zg"><b>တစ္​ခုျခင္​း​</b>ထပ္​ျဖည္​့ရန္​​​ ​ေအာက္​ပါတို႔ကို ျဖည္​့ပါ</font><br /><br />
             <div>
                 <div class="row">
                     <div class="col-md-4">
@@ -30,13 +31,13 @@
                                     }
                                 </select>
                             </span>
-                            </div>
                         </div>
+                    </div>
                     <div class="col-md-4">
                         <span class="zg"><input type="number" name="Quantity" placeholder="ထပ္​ျဖည္​့မည္​့ အ​ေရအတြက္​​" class="form-control" required /></span>
                     </div>
                     <div class="col-md-4">
-                        <span class="zg"><input type="datetime" name="ExpiryDate" placeholder="သက္​တမ္​း ကုန္​ဆံုးရက္​ (မထည္​့လည္​းရ)" class="form-control" id="datepicker"/></span>
+                        <span class="zg"><input type="datetime" name="ExpiryDate" placeholder="သက္​တမ္​း ကုန္​ဆံုးရက္​ (မထည္​့လည္​းရ)" class="form-control" id="datepicker" /></span>
                     </div>
                 </div>
                 <br />
@@ -57,7 +58,7 @@
                         </tr>
                         @{
                             int i = 1; string packing = "";
-                            todayStock = db.getAllByQuery("select * from Product where ShopID=" + ShopID + " and Date='" + DateTime.Now.ToString("MM.dd.yyyy") + "'  and Packing='True'");
+                            todayStock = db.getAllByQuery("select * from Product where ShopID=" + ShopID + " and Date='" + DateTime.Now.ToString("MM.dd.yyyy") + "'  and Packing='False'");
                             foreach (DataRow rows in todayStock.Rows)
                             {
                                 if (Convert.ToBoolean(rows["Packing"]) == true)
@@ -86,7 +87,6 @@
                 <br /><br />
                 <font color="#8B7D6B" class="zg"><font color="red">*</font><b>အနည္​းဆံုး</b>အ​ေရအတြက္​​ေရာက္​လ်ွင္​ ပစၥည္​းျပတ္​လတ္​​ေၾကာင္​း ​ေဖာ္​ျပမည္​</font>
             </div>
-
 
         </div>
     </p>

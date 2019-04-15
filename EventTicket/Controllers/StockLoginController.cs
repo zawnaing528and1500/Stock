@@ -47,7 +47,7 @@ namespace EventTicket.Controllers
                 }
                 else if (AccessLevel == 2)
                 {
-                    return RedirectToAction("OutStockForm", "StockShop");//Most Important
+                    return RedirectToAction("OutProductPackingForm", "StockShop");//Most Important
                 }
                 else
                 {

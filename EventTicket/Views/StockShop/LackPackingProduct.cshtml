@@ -1,0 +1,54 @@
+﻿@using EventTicket.App_Code;
+@using System.Data;
+@{
+    ViewBag.Title = "NewProductPackingForm";
+    Layout = "~/Views/Shared/StockShop.cshtml";
+    DataTable todayStock = new DataTable();
+    DataTable product = new DataTable();
+    StockBase db = new StockBase();
+    int ShopID = Convert.ToInt32(Session["CurrentUserID"]);
+}
+<div class="contentHeadBox">
+    <div class="box-body">
+    <font color="#8B7D6B" class="zg"><b>ျပတ္​လတ္​​</b> ေန​ေသာ (ပါကင္)​ ပစၥည္​းမ်ားျဖစ္​သည္​။</font><br /><br />
+    <table class="table table-bordered">
+        <tbody>
+            <tr>
+                <th style="width: 10px" class="hidecell">No</th>
+                <th> <span class="zg">အမည္​</span></th>
+                <th><span class="zg">လက္​က်န္</span></th>
+                <th class="hidecell"><span class="zg">အနည္​းဆံုး</span></th>
+                <th><span class="zg">ပံုစံ</span></th>
+
+            </tr>
+            @{
+                int i = 1; string packing = "";
+                todayStock = db.getAllByQuery("select * from Product where ShopID=" + ShopID + " and Quantity<= Minimum and Packing='True'");
+                foreach (DataRow rows in todayStock.Rows)
+                {
+                    if (Convert.ToBoolean(rows["Packing"]) == true)
+                    {
+                        packing = "ပါကင္";
+                    }
+                    else
+                    {
+                        packing = "တစ္​ခုျခင္​း";
+                    }
+
+                    <tr>
+                        <td class="hidecell">@i</td>
+                        <td>
+                            <span class="zg"> @rows["Name"] </span>
+                        </td>
+                        <td><span class="zg"> @rows["Quantity"] </span></td>
+                        <td class="hidecell"><span class="zg"> @rows["Minimum"] </span></td>
+                        <td><span class="zg"> @packing </span></td>
+                    </tr>
+                    i++;
+                }
+            }
+        </tbody>
+    </table>
+    </div>
+
+</div>

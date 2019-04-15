@@ -1,0 +1,51 @@
+﻿
+@using EventTicket.App_Code;
+@using System.Data;
+@{
+    ViewBag.Title = "NewProductPackingForm";
+    Layout = "~/Views/Shared/StockShop.cshtml";
+    DataTable todayStock = new DataTable();
+    DataTable product = new DataTable();
+    StockBase db = new StockBase();
+    int ShopID = Convert.ToInt32(Session["CurrentUserID"]);
+    product = db.getAllByQuery("select * from Product where ShopID=" + ShopID + " and Packing='True' order by Name asc");
+}
+
+@using (Html.BeginForm("ProcessOutProductPackingForm", "StockShop"))
+{
+    <p class="zg">
+        <div class="contentHeadBox">
+            <font color="#8B7D6B" class="zg"><b>ပါကင္​လိုက္​</b>ထုတ္​ရန္​ ​ေအာက္​ပါတို႔ကို ျဖည္​့ပါ</font><br /><br />
+            <div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <span class="zg">
+                                <select name="ID" class="form-control select2" style="width: 100%;" required>
+                                    <option value=""></option>
+                                    @{
+                                        foreach (DataRow rows in product.Rows)
+                                        {
+                                            <option value="@rows["ID"]">@rows["Name"]</option>
+                                        }
+                                    }
+                                </select>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <span class="zg"><input type="number" name="Quantity" placeholder="ထုတ္​မည္​့ အ​ေရအတြက္​​" class="form-control" required /></span>
+                    </div>
+                </div>
+                <br />
+                <center> <span class="zg"><input type="submit" class="btn btn-primary" value="ထုတ္​မည္​​" /></span></center>
+            </div>
+
+            <div class="box-body">
+                <font color="#8B7D6B" class="zg">@Session["OutInfo"]</font><br /><br />
+            </div>
+
+
+        </div>
+    </p>
+                            }
