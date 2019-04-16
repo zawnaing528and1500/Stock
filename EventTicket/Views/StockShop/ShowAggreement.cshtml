@@ -1,6 +1,11 @@
 ﻿
 
+@using EventTicket.App_Code;
+@using System.Data;
 @{
+
+    int ID = Convert.ToInt32(Session["CurrentUserID"]);
+    StockBase db = new StockBase();
     ViewBag.Title = "ShowAggreement";
     Layout = "~/Views/Shared/StockShop.cshtml";
 }
@@ -8,5 +13,18 @@
 <div class="contentBodyBox">
     <font color="#8B7D6B" class="zg">​ေအာက္​ပါအခ်က္​တို႔ကို သင္​ သ​ေဘာတူရပါမည္​</font><br /><br />
     <i class="fa fa-check-square-o" aria-hidden="true"></i><span class="zg"> သင္​့အ​ေကာင္​့ သက္​တမ္​းျပည္​့လ်ွင္​ Login ဝင္​၍ ရ​ေတာ့မည္​ မဟုတ္​ပါ။</span>
-
+    <br />
+    <i class="fa fa-check-square-o" aria-hidden="true"></i><span class="zg"> သင္​့အ​ေကာင္​့၏ အခ်က္​အလက္​မွာ ​ေအာက္​ပါအတိုင္​း ျဖစ္​ပါသည္​။</span>
+    <br /><br />
+    <table class="table table-bordered">
+        <tr>
+            <td><b>Phone</b></td><td><span class="zg">@db.getStringByQuery("select * from Shop where ID=" + ID, "Phone")</span></td>
+        </tr>
+        <tr>
+            <td><b>Address</b></td><td><span class="zg">@db.getStringByQuery("select * from Shop where ID=" + ID, "Address")</span></td>
+        </tr>
+        <tr>
+            <td><b>Expiry Date</b></td><td><span class="zg">@db.getStringByQuery("select * from Login where AllID=" + ID, "ExpiryDate")</span></td>
+        </tr>
+    </table>
 </div>

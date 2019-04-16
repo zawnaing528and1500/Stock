@@ -25,7 +25,7 @@
                 </tr>
                 @{
                     int i = 1;
-                    todayStock = db.getAllByQuery("select * from Product where ShopID=" + ShopID + " and Packing='False'");
+                    todayStock = db.getAllByQuery("select * from Product where ShopID=" + ShopID + " and Packing='False' order by Name asc");
                     foreach (DataRow rows in todayStock.Rows)
                     {
                         <tr>

@@ -211,6 +211,7 @@
     <Compile Include="Controllers\OwnerController.cs" />
     <Compile Include="Controllers\PublicUserController.cs" />
     <Compile Include="Controllers\ShopController.cs" />
+    <Compile Include="Controllers\StockCentralController.cs" />
     <Compile Include="Controllers\StockLoginController.cs" />
     <Compile Include="Controllers\StockShopController.cs" />
     <Compile Include="Controllers\TestController.cs" />
@@ -474,6 +475,8 @@
     <Content Include="Views\StockShop\ShowAggreement.cshtml" />
     <Content Include="Views\StockShop\AllPackingProduct.cshtml" />
     <Content Include="Views\StockShop\AllUnitProduct.cshtml" />
+    <Content Include="Views\Shared\StockCentral.cshtml" />
+    <Content Include="Views\StockCentral\ShowBranch.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
