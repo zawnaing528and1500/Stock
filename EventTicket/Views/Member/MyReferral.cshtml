@@ -1,0 +1,29 @@
+﻿@using EventTicket.App_Code;
+@using System.Data;
+@{
+    int i = 1;
+    Base b = new Base();
+    Node n = new Node();
+    int MemberID = Convert.ToInt32(Session["CurrentUserID"]);
+    DataTable Member = b.getAllByQuery("select * from Member where ID in(select Child from Tree where Parent="+MemberID+")");
+    ViewBag.Title = "ViewAllMembers";
+    Layout = "~/Views/Shared/Member.cshtml";
+}
+<div class="contentBodyBox">
+    @*<font color="#8B7D6B" class="zg">The following are all registered members.</font><br /><br />*@
+    <table id="displayTable" class="table table-bordered">
+        <thead><tr><th><span class="zg">No</span></th><th><span class="zg">Name</span>​</th><th><span class="zg">Phone</span></th><th>Level 1,2,3</th><th>FB</th></tr></thead>
+        <tbody>
+            @{
+                foreach (DataRow rows in Member.Rows)
+                {
+                    int ID = Convert.ToInt32(rows["ID"]);
+                    <tr><td><span class="zg">@i</span></td><td><font class="normalText"><span class="zg">@rows["Name"]</span></font></td><td><font class="normalText"><span class="zg">@rows["Phone"]</span></font></td><td>@n.GetTotalNode(ID, 0) | @n.GetTotalNode(ID, 1) , @n.GetTotalNode(ID, 2) , @n.GetTotalNode(ID, 3)</td><td><a href="@rows["FBLink"]">Click</a></td></tr>
+                    i++;
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+

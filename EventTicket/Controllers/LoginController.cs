@@ -16,6 +16,14 @@ namespace EventTicket.Controllers
         {
             return View();
         }
+
+        #region Registration Section
+        public ActionResult RegistrationForm()
+        {
+            return View();
+        }
+        #endregion
+
         public ActionResult LoginForm()
         {
             return View();

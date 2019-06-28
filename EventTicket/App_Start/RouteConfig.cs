@@ -16,7 +16,7 @@ namespace EventTicket
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Login", action = "LoginForm", id = UrlParameter.Optional }
+                defaults: new { controller = "Account", action = "LoginForm", id = UrlParameter.Optional }
             );
         }
     }

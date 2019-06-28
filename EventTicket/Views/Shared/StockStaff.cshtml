@@ -1,7 +1,10 @@
-﻿@using System.Data;
+﻿
+
+@using System.Data;
 @using EventTicket.App_Code;
 @{
     Base b = new Base();
+
 }
 <!DOCTYPE html>
 <html>
@@ -47,20 +50,18 @@
         <aside class="main-sidebar">
             <section class="sidebar">
                 @*<div class="user-panel">
-                    <div class="pull-left image">
-                        <img src="~/Image/Logo/logo1.png" class="img-circle">
-                    </div>
-                </div>*@
+                        <div class="pull-left image">
+                            <img src="~/Image/Logo/logo1.png" class="img-circle">
+                        </div>
+                    </div>*@
                 <!-- /.search form -->
                 <!-- Sidebar Menu -->
                 <ul class="sidebar-menu" data-widget="tree">
-                    <li class="header"><b><span class="zg">ျမန္​မာအိုင္​တီစတား ကုမၸဏီ လီမိတက္</span>​</b></li>
-                    <li><a href="~/Shop/CustomerForm"><i class="fa fa-user-plus" aria-hidden="true"></i><span class="zg">ထီထိုး​သူထည္​့ရန္​</span></a></li>
-                    <li><a href="~/Shop/ViewTodayCustomer"><i class="fa fa-book" aria-hidden="true"></i><span class="zg">ယ​ေန႔စာရင္​း</span></a></li>
-                    <li><a href="~/Shop/ViewMonthlyCustomerHteNumber"><i class="fa fa-sticky-note-o" aria-hidden="true"></i><span class="zg">စာရင္​းခ်ဳပ္​</span></a></li>
-                    <li><a href="~/Shop/CustomerSuccessNumber"><i class="fa fa-users" aria-hidden="true"></i><span class="zg">ထီ​ေပါက္​သူ​</span></a></li>
-                    <li><a href="~/Shop/ShowAggreement"><i class="fa fa-question-circle" aria-hidden="true"></i><span class="zg">သ​ေဘာတူညီမႈ​</span></a></li>
-                    <li><a href="~/Login/Logout"><i class="fa fa-power-off" aria-hidden="true"></i><span>Log Out</span></a></li>
+                    <li class="header"><b><span class="zg">ျမန္​မာအိုင္​တီစတား ကုမၸဏီ လီမိတက္</span>​</b><br />Stock Control Application</li>
+                    <li><a href="~/StockStaff/AddNewCustomerForm"><i class="fa fa-plus-square-o" aria-hidden="true"></i><span class="zg">Customerအသစ္​</span></a></li>
+                    @*<li><a href="~/StockStaff/ShowCustomer"><i class="fa fa-plus-square-o" aria-hidden="true"></i><span class="zg">မိမိCustomerမ်ား</span></a></li>*@
+                    <li><a href="~/StockStaff/ShowAggreement"><i class="fa fa-question-circle" aria-hidden="true"></i><span class="zg">သ​ေဘာတူညီမႈ​</span></a></li>
+                    <li><a href="~/StockLogin/Logout"><i class="fa fa-power-off" aria-hidden="true"></i><span>Log Out</span></a></li>
                 </ul>
                 <!-- /.sidebar-menu -->
             </section>
@@ -149,3 +150,10 @@
     </div>
 </body>
 </html>
+
+<script>
+    //Date picker
+    $('#datepicker').datepicker({
+        autoclose: true
+    })
+</script>

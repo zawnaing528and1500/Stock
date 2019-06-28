@@ -1,0 +1,66 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>RegistrationForm</title>
+    <link rel="stylesheet" href="~/Content/LoginRegister.css">
+</head>
+<body>
+    @using (Html.BeginForm("ProcessRegistrationForm", "Account"))
+    {
+        <div class="main">
+            <div class="container">
+                <form method="POST" class="appointment-form" id="appointment-form">
+                    <!-- <h2>Member Registeration</h2>-->
+                    <center><img src="~/Image/logo.png"></center>
+                    <div class="form-group-1">
+                        <input type="text" name="Name" id="name" placeholder="Your Name" required />
+                        <input type="text" name="Phone" id="phone" placeholder="Your Phone Number" required />
+                        <input type="text" name="Address" id="addess" placeholder="Your Address" required />
+                        <input type="email" name="Email" id="email" placeholder="Your Email" required />
+                        <input type="text" name="Username" id="username" placeholder="Username" required />
+                        <input type="password" name="Password" id="password" placeholder="Password" maxlength="10" onkeyup="CheckPassword()" required />
+                        <span><p id="password-message"></p></span>
+                        <input type="password" id="confirmPassword" placeholder="Confirm Password" maxlength="10" onkeyup="CheckConfirmPassword()" required />
+                        <span><p id="confirmPassword-message"></p></span>
+                    </div>
+                    <div class="form-submit">
+                        <center> <input type="submit" name="submit" id="submit" class="submit" value="REGISTER" /></center>
+                    </div>
+                    <a href="~/Account/LoginForm">Already a member? LOGIN</a>
+                </form>
+            </div>
+        </div>
+    }
+
+</body>
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+<script>
+function CheckPassword(){
+     var strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!#\$%\^&\*])(?=.{8,})");
+     var mediumRegex = new RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
+	var value = document.getElementById("password").value;
+	if(strongRegex.test(value)) {
+						document.getElementById("password-message").innerHTML = "<font color='green'>password is strong</font>";
+                    } else if(mediumRegex.test(value)) {
+						document.getElementById("password-message").innerHTML = "<font color='orange'>password is medium</font>";
+                    } else {
+						document.getElementById("password-message").innerHTML = "<font color='red'>password is weak</font>";
+                    }
+}
+function CheckConfirmPassword(){
+var password = document.getElementById("password").value;
+var confirmPassword = document.getElementById("confirmPassword").value;
+if(password == confirmPassword){
+document.getElementById("confirmPassword-message").innerHTML = "<font color='green'>password is matched</font>";
+}
+else{
+document.getElementById("confirmPassword-message").innerHTML = "<font color='red'>password isn't matched</font>";
+}
+}
+</script>

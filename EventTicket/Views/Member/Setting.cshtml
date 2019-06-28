@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "Setting";
+    Layout = "~/Views/Shared/Member.cshtml";
+}
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script>
+              $(document).ready(function () {
+                  var passedError = document.getElementById("serverMessage").textContent;
+                  if (passedError == "Success") {
+                      alert("Request for Active is made successfully");
+                  }
+                  else if (passedError == "AlreadyRequest") {
+                      alert("You have Already Requested");
+                  }
+              });
+</script>
+<p id="serverMessage" hidden>@Session["Message"]</p>
+<div>
+    <div class="box-body">
+        <a class="btn btn-app" href="~/Member/RequestActive">
+            <i class="fa fa-repeat"></i>Request Active
+        </a>
+        <a class="btn btn-app">
+            <i class="fa fa-edit"></i> Edit info
+        </a>
+    </div>
+</div>
+

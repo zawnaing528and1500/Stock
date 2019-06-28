@@ -10,7 +10,7 @@ namespace EventTicket.App_Code
 {
     public class DBBase
     {
-        string connectionString = ConfigurationManager.ConnectionStrings["constrHte"].ConnectionString;
+        string connectionString = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
         DataTable dt;
 
         public Boolean CheckByQuery(string query)
@@ -98,7 +98,7 @@ namespace EventTicket.App_Code
         {
             DateTime name = DateTime.Now;
             DataTable dt;
-            var connectionString = ConfigurationManager.ConnectionStrings["constrHte"].ConnectionString;
+            var connectionString = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {

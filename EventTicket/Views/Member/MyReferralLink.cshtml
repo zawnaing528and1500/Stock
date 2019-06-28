@@ -1,0 +1,31 @@
+﻿
+@using System.Data;
+@using EventTicket.App_Code;
+@{
+    ViewBag.Title = "DM Group - Onine Home Jobs Program";
+    Layout = "~/Views/Shared/Member.cshtml";
+    Base b = new Base();
+    int MemberID = Convert.ToInt32(Session["CurrentUserID"]);
+    int ReferralCode = b.getIntByQuery("select * from Member where ID="+MemberID, "ReferralCode");
+}
+
+<div class="col-md-6">
+    <div class="box box-warning">
+        <div class="box-header with-border">
+            <h3 class="box-title">My Referral Link</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+            </div>
+            <!-- /.box-tools -->
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <a href="http://13.251.219.174/Account/RegisterForm?ReferredCode=@ReferralCode"> http://13.251.219.174/Account/RegisterForm?ReferredCode=@ReferralCode </a>
+        </div>
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+</div>
+

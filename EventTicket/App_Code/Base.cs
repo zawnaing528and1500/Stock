@@ -10,11 +10,11 @@ namespace EventTicket.App_Code
 {
     public class Base
     {
-        string connectionString = ConfigurationManager.ConnectionStrings["constrHte"].ConnectionString;
+        string connectionString = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
 
         public void ChangeByQuery(string query)
         {
-            string conString = ConfigurationManager.ConnectionStrings["constrHte"].ConnectionString;
+            string conString = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
             using (SqlConnection con = new SqlConnection(conString))
             {
                 using (SqlCommand cmd = new SqlCommand(query, con))
@@ -49,7 +49,7 @@ namespace EventTicket.App_Code
 
         public DataTable getAllByQuery(string query)
         {
-            var connectionString = ConfigurationManager.ConnectionStrings["constrHte"].ConnectionString;
+            var connectionString = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -74,7 +74,7 @@ namespace EventTicket.App_Code
         {
             string name = "";
             DataTable dt;
-            var connectionString = ConfigurationManager.ConnectionStrings["constrHte"].ConnectionString;
+            var connectionString = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -102,7 +102,7 @@ namespace EventTicket.App_Code
         {
             DateTime name=DateTime.Now;
             DataTable dt;
-            var connectionString = ConfigurationManager.ConnectionStrings["constrHte"].ConnectionString;
+            var connectionString = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -131,7 +131,7 @@ namespace EventTicket.App_Code
         {
             int name = 0;
             DataTable dt;
-            var connectionString = ConfigurationManager.ConnectionStrings["constrHte"].ConnectionString;
+            var connectionString = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -159,7 +159,7 @@ namespace EventTicket.App_Code
         {
             Boolean name = false;
             DataTable dt;
-            var connectionString = ConfigurationManager.ConnectionStrings["constrHte"].ConnectionString;
+            var connectionString = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -188,7 +188,7 @@ namespace EventTicket.App_Code
         {
             int name = 0;
             DataTable dt;
-            var connectionString = ConfigurationManager.ConnectionStrings["constrHte"].ConnectionString;
+            var connectionString = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -216,7 +216,7 @@ namespace EventTicket.App_Code
         {
             decimal name = 0;
             DataTable dt;
-            var connectionString = ConfigurationManager.ConnectionStrings["constrHte"].ConnectionString;
+            var connectionString = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -244,7 +244,7 @@ namespace EventTicket.App_Code
         {
             int name = 0;
             DataTable dt;
-            var connectionString = ConfigurationManager.ConnectionStrings["constrHte"].ConnectionString;
+            var connectionString = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {

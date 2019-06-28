@@ -1,0 +1,53 @@
+﻿@using EventTicket.App_Code;
+@using System.Data;
+@{
+    Base b = new Base();
+    Node n = new Node();
+    int ActiveCount = 0;int InactiveCount = 0;
+    int MemberID = Convert.ToInt32(Session["CurrentUserID"]);
+    Array MemberList = n.GetTotalNodeList(MemberID, 0);
+    Layout = "~/Views/Shared/Member.cshtml";
+    foreach (int j in MemberList)
+    {
+        Boolean isActive = b.getBooleanByQuery("select * from Member where ID=" + j, "Active");
+        if (isActive)
+        {
+            ActiveCount++;
+        }
+        else
+        {
+            InactiveCount++;
+        }
+    }
+}
+
+<div class="row">
+    <!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-green">
+            <div class="inner">
+                <h3>@ActiveCount<sup style="font-size: 20px"></sup></h3>
+                <p><span class="zg">Active</span></p>
+            </div>
+            <div class="icon">
+                <i class="fa fa-bar-chart"></i>
+            </div>
+            <a href="" class="small-box-footer"><span class="zg">More Info</span> <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-red">
+            <div class="inner">
+                <h3>@InactiveCount</h3>
+                <p>InActive</p>
+            </div>
+            <div class="icon">
+                <i class="fa fa-pie-chart"></i>
+            </div>
+            <a href="" class="small-box-footer">More info<i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+</div>
+

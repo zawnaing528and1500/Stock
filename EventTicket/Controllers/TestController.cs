@@ -94,6 +94,54 @@ namespace EventTicket.Controllers
             Response.Flush();
             Response.End();
         }
+        public void GetTotalChildren()
+        {
+            Tree t = new Tree();
+            if (t.CheckRootIsChilden(7))
+            {
+                Array Child = t.GetTotalNode(7);
 
+                foreach (int i in Child)
+                {
+                    Debug.WriteLine("{0} ", i);
+                }
+            }
+            else
+            {
+                Debug.WriteLine("Root has no children");
+            }
+        }
+        public void GetLevel2Children()
+        {
+            TreeLevel2 t = new TreeLevel2();
+            if (t.CheckRootIsChilden(7))
+            {
+                Array Child = t.GetLevel2(7);
+                foreach (int i in Child)
+                {
+                    Debug.WriteLine("{0} ", i);
+                }
+            }
+            else
+            {
+                Debug.WriteLine("Root has no children");
+            }
+        }
+        public void GetLevel3Children()
+        {
+            TreeLevel3 t = new TreeLevel3();
+            if (t.CheckRootIsChilden(7))
+            {
+                Array Child = t.GetLevel3(7);
+                foreach (int i in Child)
+                {
+                    Debug.WriteLine("{0} ", i);
+                }
+            }
+            else
+            {
+                Debug.WriteLine("Root has no children");
+            }
+        }
     }
 }

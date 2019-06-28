@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "DM Group - Onine Home Jobs Program";
+    Layout = "~/Views/Shared/Account.cshtml";
+}
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script>
+              $(document).ready(function () {
+                  var passedError = document.getElementById("serverMessage").textContent;
+                  if (passedError == "successful") {
+                      alert("Registration is successful. Log in now.");
+                  }
+              });
+</script>
+@using (Html.BeginForm("ProcessLoginForm", "Account"))
+{
+<p id="serverMessage" hidden>@Session["RegisterSession"]</p>
+<div class="limiter">
+    <div class="container-login100" style="background-image: url('../Image/bg2.jpg');">
+        <div class="wrap-login100 p-t-190 p-b-30">
+            <form class="login100-form validate-form">
+                <div class="wrap-input100 validate-input m-b-10" data-validate="Username is required">
+                    <input class="input100" type="text" name="Username" placeholder="Username">
+                    <span class="focus-input100"></span>
+                    <span class="symbol-input100">
+                        <i class="fa fa-user"></i>
+                    </span>
+                </div><br>
+                <div class="wrap-input100 validate-input m-b-10" data-validate="Password is required">
+                    <input class="input100" type="password" name="Password" placeholder="Password">
+                    <span class="focus-input100"></span>
+                    <span class="symbol-input100">
+                        <i class="fa fa-lock"></i>
+                    </span>
+                </div><br>
+                <div class="container-login100-form-btn p-t-10">
+                    <button class="login100-form-btn">
+                        LOGIN
+                    </button>
+                </div><br>
+                <div class="text-center w-full p-t-25 p-b-230">
+                    <a href="~/Account/RegisterForm?ReferredCode=1111" class="txt1">
+                        Create new account
+                    </a>
+                </div><br>
+                @*<div class="text-center w-full">
+                    <a class="txt1" href="#">
+                        Create new account
+                        <i class="fa fa-long-arrow-right"></i>
+                    </a>
+                </div>*@
+            </form>
+        </div>
+    </div>
+</div>
+}

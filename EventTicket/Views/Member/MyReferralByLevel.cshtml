@@ -1,0 +1,37 @@
+﻿@using EventTicket.App_Code;
+@using System.Data;
+@{
+    int i = 1;string Status = "";string Color = "";
+    Base b = new Base();
+    Node n = new Node();
+    int MemberID = Convert.ToInt32(Session["CurrentUserID"]);
+    ViewBag.Title = "DM Group - Onine Home Jobs Program";
+    int Level = Convert.ToInt32(ViewBag.Level);
+    Array MemberList = n.GetTotalNodeList(MemberID, Level);
+    Layout = "~/Views/Shared/Member.cshtml";
+}
+<div class="contentBodyBox">
+    @*<font color="#8B7D6B" class="zg">The following are all registered members.</font><br /><br />*@
+    <table id="displayTable" class="table table-bordered">
+        <thead><tr><th><span class="zg">No</span></th><th><span class="zg">Name</span>​</th><th><span class="zg">Phone</span></th><th>Level 1,2,3</th><th>FB</th><th>Status</th></tr></thead>
+        <tbody>
+            @{
+                foreach (int j in MemberList)
+                {
+                    Boolean isActive = b.getBooleanByQuery("select * from Member where ID=" + j, "Active");
+                    if (isActive)
+                    {
+                        Status = "Active";Color = "green";
+                    }
+                    else
+                    {
+                        Status = "Inactive";Color = "orange";
+                    }
+                    <tr><td><span class="zg">@j</span></td><td><font class="normalText"><span class="zg">@b.getStringByQuery("select * from Member where ID="+j,"Name")</span></font></td><td><font class="normalText"><span class="zg">@b.getStringByQuery("select * from Member where ID=" + j, "Phone")</span></font></td><td>@n.GetTotalNode(j, 0) | @n.GetTotalNode(j, 1) , @n.GetTotalNode(j, 2) , @n.GetTotalNode(j, 3)</td><td><a href="@b.getStringByQuery("select * from Member where ID="+j,"FBLink")">Click</a></td><td><font color="@Color">@Status</font></td></tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+

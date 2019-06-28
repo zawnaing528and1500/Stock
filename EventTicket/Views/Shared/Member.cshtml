@@ -1,20 +1,32 @@
-﻿@using System.Data;
+﻿
+@using System.Data;
 @using EventTicket.App_Code;
 @{
-    Base b = new Base();
+    Base b = new Base();string ActiveClass = "",ActiveText="";
+    int MemberID = Convert.ToInt32(Session["CurrentUserID"]);
+    Boolean Active = b.getBooleanByQuery("select * from Member where ID="+MemberID, "Active");
+    if (Active)
+    {
+        ActiveClass = "fa fa-circle text-success";
+        ActiveText = "Active";
+    }
+    else {
+        ActiveClass = "fa fa-circle text-danger";
+        ActiveText = "Inactive";
+    }
 }
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Event Ticket</title>
+    <title>DM Group - Onine Home Jobs Program</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="~/Content/bootstrap.min.css">
     <link rel="stylesheet" href="~/Content/font-awesome.min.css">
     <link rel="stylesheet" href="~/Content/ionicons.min.css">
     <link rel="stylesheet" href="~/admin-lte/css/AdminLTE.css">
-    <link rel="stylesheet" href="~/admin-lte/css/skins/skin-purple-light.css">
+    <link rel="stylesheet" href="~/admin-lte/css/skins/skin-green.min.css">
     <link rel="stylesheet" href="~/Content/jquery-ui.css">
     <link rel="stylesheet" href="~/Content/select2.min.css">
     <link rel="stylesheet" href="~/Content/Site.css">
@@ -29,13 +41,13 @@
     <script src="~/Scripts/jquery.dataTables.min.js"></script>
     <script src="~/Scripts/Site.js"></script>
 </head>
-<body class="hold-transition skin-purple-light sidebar-mini">
+<body class="hold-transition skin-green sidebar-mini">
     <div class="loader"></div>
     <div class="wrapper">
         <header class="main-header">
             <a href="#" class="logo">
-                <span class="logo-mini"><b>M</b>Star</span>
-                <span class="logo-lg"><b>Myanmar IT Star</b></span>
+                <span class="logo-mini"><b>D</b>M</span>
+                <span class="logo-lg"><b>DM Group</b></span>
             </a>
             <nav class="navbar navbar-static-top" role="navigation">
                 <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
@@ -46,21 +58,39 @@
         </header>
         <aside class="main-sidebar">
             <section class="sidebar">
-                @*<div class="user-panel">
+                <div class="user-panel">
                     <div class="pull-left image">
-                        <img src="~/Image/Logo/logo1.png" class="img-circle">
+                        <img src="~/Image/user1-128x128.jpg" class="img-circle" alt="User Image">
                     </div>
-                </div>*@
+                    <div class="pull-left info">
+                        <p>@b.getStringByQuery("select * from Member where ID="+MemberID,"Name")</p>
+                        <!-- Status -->
+                        <a href="#"><i class="@ActiveClass"></i> @ActiveText</a>
+                    </div>
+                </div>
                 <!-- /.search form -->
                 <!-- Sidebar Menu -->
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="header"><b><span class="zg">ျမန္​မာအိုင္​တီစတား ကုမၸဏီ လီမိတက္</span>​</b></li>
-                    <li><a href="~/Shop/CustomerForm"><i class="fa fa-user-plus" aria-hidden="true"></i><span class="zg">ထီထိုး​သူထည္​့ရန္​</span></a></li>
-                    <li><a href="~/Shop/ViewTodayCustomer"><i class="fa fa-book" aria-hidden="true"></i><span class="zg">ယ​ေန႔စာရင္​း</span></a></li>
-                    <li><a href="~/Shop/ViewMonthlyCustomerHteNumber"><i class="fa fa-sticky-note-o" aria-hidden="true"></i><span class="zg">စာရင္​းခ်ဳပ္​</span></a></li>
-                    <li><a href="~/Shop/CustomerSuccessNumber"><i class="fa fa-users" aria-hidden="true"></i><span class="zg">ထီ​ေပါက္​သူ​</span></a></li>
-                    <li><a href="~/Shop/ShowAggreement"><i class="fa fa-question-circle" aria-hidden="true"></i><span class="zg">သ​ေဘာတူညီမႈ​</span></a></li>
-                    <li><a href="~/Login/Logout"><i class="fa fa-power-off" aria-hidden="true"></i><span>Log Out</span></a></li>
+                    <li><a href="~/Member/Dashboard"><i class="fa fa-dashboard" aria-hidden="true"></i><span class="zg">Dashboard</span></a></li>
+                    <li><a href="http://2captcha.com"><i class="fa fa-file-text" aria-hidden="true"></i><span class="zg">Type Captcha</span></a></li>
+
+                    <li><a href="~/Member/MyReferralLink"><i class="fa fa-link" aria-hidden="true"></i><span class="zg">My Referral Link</span></a></li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-users"></i> <span class="zg">Referred Person</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="~/Member/MyReferralByLevel?Level=1"><i class="fa fa-circle-o"></i><span class="zg">Level 1​</span></a></li>
+                            <li><a href="~/Member/MyReferralByLevel?Level=2"><i class="fa fa-circle-o"></i><span class="zg">Level 2</span></a></li>
+                            <li><a href="~/Member/MyReferralByLevel?Level=3"><i class="fa fa-circle-o"></i><span class="zg">Level 3​</span></a></li>
+                        </ul>
+                    </li>
+                    <li><a href="~/Member/Setting"><i class="fa fa-cog" aria-hidden="true"></i><span class="zg">Setting</span></a></li>
+                    <li><a href="~/Account/Logout"><i class="fa fa-power-off" aria-hidden="true"></i><span>Log Out</span></a></li>
                 </ul>
                 <!-- /.sidebar-menu -->
             </section>
