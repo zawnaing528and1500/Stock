@@ -1,0 +1,85 @@
+﻿
+@using EventTicket.App_Code;
+@using System.Data;
+@{
+    ViewBag.Title = "Myanmar IT Star Company Limited";
+    Layout = "~/Views/Shared/Member.cshtml";
+    int MemberID = Convert.ToInt32(Session["CurrentUserID"]);
+    Base b = new Base();
+    DataTable TransferHistory = new DataTable(); string Task = "";
+    int Type = Convert.ToInt32(ViewBag.Type);
+}
+
+@using (Html.BeginForm("ProcessTransferHistory", "Member"))
+{
+    <p class="zg">
+        <div class="contentFormBox">
+            <div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input type="text" name="FromDate" class="form-control" id="datepicker"value="@ViewBag.FromDate" required>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="text" name="ToDate" class="form-control" id="Todatepicker"value="@ViewBag.ToDate" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <center> <span class="zg"><input type="submit" class="btn btn-primary" value="SUBMIT" /></span></center>
+                                <input type="hidden" name="Type" value="@Type" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <th><span class="zg">ID</span></th>
+                            <th><span class="zg">Task</span></th>
+                        </tr>
+                        @{
+                            if (Type == 1)
+                            {
+                                TransferHistory = b.getAllByQuery("select * from TransferHistory where SenderID=" + MemberID + " and Date>='" + ViewBag.FromDate + "' and Date<='" + ViewBag.ToDate + "'");
+                            }
+                            else if (Type == 2)
+                            {
+                                TransferHistory = b.getAllByQuery("select * from TransferHistory where ReceiverID=" + MemberID + " and Date>='" + ViewBag.FromDate + "' and Date<='" + ViewBag.ToDate + "'");
+                            }
+
+                            foreach (DataRow rows in TransferHistory.Rows)
+                            {
+                                int ID = Convert.ToInt32(rows["ID"]);
+                                if (Type == 1)
+                                {
+                                    Task = "Send "+rows["TransferAmount"]+"Ks to "+b.getStringByQuery("select * from Wallet where MemberID="+Convert.ToInt32(rows["ReceiverID"]),"WalletNumber");
+                                }
+                                else if (Type == 2)
+                                {
+                                    Task = "Receive "+rows["TransferAmount"]+"Ks From "+ b.getStringByQuery("select * from Wallet where MemberID=" + Convert.ToInt32(rows["SenderID"]), "WalletNumber");
+                                }
+                                    <tr><td>@ID</td><td>@Task</td></tr>
+                                }
+                        }
+                    </tbody>
+                </table>
+                <center>Note: ID is Transaction ID.</center>
+            </div>
+        </div>
+    </p>
+                            }

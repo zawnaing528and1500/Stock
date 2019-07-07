@@ -1,0 +1,23 @@
+﻿@using EventTicket.App_Code;
+@using System.Data;
+@{
+    Base b = new Base();
+    ViewBag.Title = "DM Group - Onine Home Jobs Program";
+    Layout = "~/Views/Shared/Staff.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-aqua">
+            <div class="inner">
+                <h3>@b.getCountByQuery("select * from Member where Date='" + DateTime.Now.ToString("MM.dd.yyyy") + "'")</h3>
+                <p><span class="zg">Today Members</span></p>
+            </div>
+            <div class="icon">
+                <i class="fa fa-bar-chart"></i>
+            </div>
+            <a href="" class="small-box-footer">​<span class="zg">More Info​ </span><i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+</div>

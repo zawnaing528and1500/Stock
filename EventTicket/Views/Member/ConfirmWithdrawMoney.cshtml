@@ -1,0 +1,26 @@
+﻿@using EventTicket.App_Code;
+@using System.Data;
+@{
+    ViewBag.Title = "Myanmar IT Star Company Limited";
+    Layout = "~/Views/Shared/Member.cshtml";
+    Base b = new Base();
+    int MemberID = Convert.ToInt32(Session["CurrentUserID"]);
+    string MemberBankID = ViewBag.MemberBankID;
+    int BankID = b.getIntByQuery("select * from MemberBank where ID="+MemberBankID,"BankID");
+    string AmountToWithdraw = ViewBag.AmountToWithdraw;
+    
+}
+@using (Html.BeginForm("ProcessConfirmWithdrawMoney", "Member"))
+{
+    <div class="contentBodyBox">
+        <table class='table table-bordered' style='background-color:#F6F9ED'>
+            <tr><td>Bank</td><td>@b.getStringByQuery("select * from Bank where ID="+ BankID, "Name") </td></tr>
+            <tr><td>Withdrawed Amount</td><td>@AmountToWithdraw</td></tr>
+            <tr><td colspan="2"><center><input type="submit" value="COMFIRM" class="btn btn-primary" /></center></td></tr>
+        </table>
+    </div>
+    <input type="hidden" name="MemberBankID" value="@MemberBankID" />
+    <input type="hidden" name="AmountToWithdraw" value="@AmountToWithdraw" />
+}
+
+

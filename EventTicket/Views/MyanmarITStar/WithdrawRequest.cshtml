@@ -1,0 +1,35 @@
+﻿@using EventTicket.App_Code;
+@using System.Data;
+@{
+    ViewBag.Title = "DM Group - Onine Home Jobs Program";
+    Layout = "~/Views/Shared/MyanmarITStar.cshtml";
+    Base b = new Base(); int i = 1;
+    DataTable dt = b.getAllByQuery("select * from WithdrawHistory where Proof='False'");
+}
+<div class="contentBodyBox"> <table id="displayTable" class="table table-bordered">
+        <thead><tr><th><span class="zg">No</span></th><th><span class="zg">Name</span>​</th><th><span class="zg">Phone</span></th><th><span class="zg">Bank Account</span></th><th><span class="zg">Withdraw Amount</span></th><th>Accept/Reject</th></tr></thead>
+        <tbody>
+            @{
+                foreach (DataRow row in dt.Rows)
+                {
+                    int MemberID = Convert.ToInt32(row["MemberID"]);
+                    int WithdrawAmount = Convert.ToInt32(row["WithdrawedAmount"]);
+                    int MemberBankID = Convert.ToInt32(row["MemberBankID"]);
+                    int BankID = b.getIntByQuery("select * from MemberBank where ID="+MemberBankID, "BankID");
+                    string BankName = b.getStringByQuery("select * from Bank where ID="+BankID, "Name");
+                    string AccountNumber = b.getStringByQuery("select * from MemberBank where ID=" + MemberBankID, "AccountNumber");
+             <tr><td>@i</td>
+            <td><font class="normalText"><span class="zg">@b.getStringByQuery("select * from Member where ID="+MemberID,"Name")</span></font></td>
+            <td><font class="normalText"><span class="zg">@b.getStringByQuery("select * from Member where ID=" + MemberID, "Phone")</span></font></td>
+            <td><font class="normalText"><span class="zg">@AccountNumber [@BankName]</span></font></td>
+            <td><span class="zg">@WithdrawAmount</span></td>
+            <td>
+                 <a href="~/MyanmarITStar/AcceptWithdrawRequest?ID=@row["ID"]&MemberID=@MemberID"><span class="label label-success">Accept</span></a>&nbsp;&nbsp;
+                 <a href="~/MyanmarITStar/RejectWithdrawRequest?ID=@row["ID"]&MemberID=@MemberID"><span class="label label-danger">Reject</span></a>
+           </td></tr>
+                    i++;
+                }
+            }
+        </tbody>
+    </table>
+</div>

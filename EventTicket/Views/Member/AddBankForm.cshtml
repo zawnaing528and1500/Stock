@@ -1,0 +1,70 @@
+﻿@using EventTicket.App_Code;
+@using System.Data;
+@{
+    ViewBag.Title = "DM Group - Onine Home Jobs Program";
+    Layout = "~/Views/Shared/Member.cshtml";
+    Base b = new Base();
+    int MemberID = Convert.ToInt32(Session["CurrentUserID"]);
+    DataTable bank = b.getAllByQuery("select * from Bank");
+    DataTable memberbank = b.getAllByQuery("select * from MemberBank where MemberID="+MemberID);
+}
+<div class="contentFormBox">
+    <div class="row">
+@using (Html.BeginForm("ProcessAddBankForm", "Member"))
+{
+    <div class="col-md-12">
+        <div class="col-md-6">
+            <table align="center">
+                <tr>
+                    <td>
+                        <select id="letter" class="form-control select2" style="width: 100%;" required autofocus="autofocus" class="form-control" style="width: 80px" name="BankID">
+                            @{
+                                foreach (DataRow rows in bank.Rows)
+                                {
+                                    <option value="@rows["ID"]">@rows["Name"]</option>
+                                }
+                            }
+                        </select>
+                    </td>
+                    <td>
+                        <span class="zg"><input type="text" placeholder="Bank Account No" maxlength="30" class="form-control" name="AccountNumber" /></span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <center><span class="zg"><input type="submit" class="btn btn-primary" value="ADD" /></span></center>
+        </div>
+    </div>
+    <br />
+   
+       
+                            }
+        
+    </div>
+<div class='contentBodyBox'>
+        <div class='box-body'>
+            <table class='table table-bordered' style='background-color:#F6F9ED' ;>
+                <tr><th><span class='zg'>Bank</span></th><th><span class='zg'>Account No</span></th><th></th></tr>
+                @{
+                    foreach (DataRow rows in memberbank.Rows)
+                    {
+                        int BankID = Convert.ToInt32(rows["BankID"]);
+                       <tr><td>@b.getStringByQuery("select * from Bank where ID="+BankID,"Name")</td><td>@rows["AccountNumber"]</td><td><a onclick="CheckForDeleteProduct(@rows["ID"])" href="">❎</a></td></tr>
+                    }
+                }
+            </table>
+        </div>
+        </div>
+ </div>
+<script>
+    function CheckForDeleteProduct(ID) {
+        var r = confirm("Are You Sure to Delete?");
+        if (r == true) {
+            location.href = '/Member/DeleteBankAccount?ID=' + ID;
+        } else {
+            return;
+        }
+    }
+</script>
+

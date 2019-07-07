@@ -8,8 +8,14 @@
 <script>
               $(document).ready(function () {
                   var passedError = document.getElementById("serverMessage").textContent;
-                  if (passedError == "successful") {
-                      alert("Registration is successful. Log in now.");
+                  if (passedError == "wrong") {
+                      alert("Invalid Username and Password");
+                  }
+                  else if (passedError == "successful") {
+                      alert("Registration is successful");
+                  }
+                  else if (passedError == "wrongEmail") {
+                      alert("Email is Wrong");
                   }
               });
 </script>
@@ -17,11 +23,12 @@
 {
 <p id="serverMessage" hidden>@Session["RegisterSession"]</p>
 <div class="limiter">
-    <div class="container-login100" style="background-image: url('../Image/bg2.jpg');">
+    <div class="container-login100" style="background-image: url('../Image/bg2.jpg');background-attachment:fixed">
         <div class="wrap-login100 p-t-190 p-b-30">
+            <center><img src="~/Image/Logo/logo.png" width="200px" height="200px"/></center>
             <form class="login100-form validate-form">
                 <div class="wrap-input100 validate-input m-b-10" data-validate="Username is required">
-                    <input class="input100" type="text" name="Username" placeholder="Username">
+                    <input class="input100" type="text" name="Username" placeholder="Username or Email">
                     <span class="focus-input100"></span>
                     <span class="symbol-input100">
                         <i class="fa fa-user"></i>
@@ -38,12 +45,30 @@
                     <button class="login100-form-btn">
                         LOGIN
                     </button>
-                </div><br>
+                </div>
+                <br>
                 <div class="text-center w-full p-t-25 p-b-230">
                     <a href="~/Account/RegisterForm?ReferredCode=1111" class="txt1">
-                        Create new account
+                        New Account
                     </a>
-                </div><br>
+                    |
+                    <a href="~/Account/ForgotPasswordForm" class="txt1">
+                        Forgot Password
+                    </a>
+                    |
+                    <a href="~/Account/FAQ" class="txt1">
+                        Questions
+                    </a>
+                    <br /><br />
+                    <a href="https://www.facebook.com/groups/913808368954275/?epa=SEARCH_BOX" class="txt1">
+                        Join Support-Group
+                    </a>
+                    <br /><br />
+                    <a href="https://www.facebook.com/groups/913808368954275/permalink/915865698748542/" class="txt1">
+                        Contact Our Staffs
+                    </a>
+                </div>
+                    
                 @*<div class="text-center w-full">
                     <a class="txt1" href="#">
                         Create new account

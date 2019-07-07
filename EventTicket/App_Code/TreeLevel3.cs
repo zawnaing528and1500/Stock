@@ -135,5 +135,14 @@ namespace EventTicket.App_Code
             GetLevel3(Parent);
             return Child.Length + Level2.Length + Level3.Length;
         }
+        public Array GetLevel123TotalNodeList(int Parent)
+        {
+            GetLevel3(Parent);
+            var z = new int[Child.Length + Level2.Length + Level3.Length];
+            Child.CopyTo(z, 0);
+            Level2.CopyTo(z, Child.Length);
+            Level3.CopyTo(z, Level2.Length);
+            return z;
+        }
     }
 }

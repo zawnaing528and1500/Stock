@@ -25,6 +25,19 @@
     <!-- ./col -->
     <div class="col-lg-3 col-xs-6">
         <!-- small box -->
+        <div class="small-box bg-blue">
+            <div class="inner">
+                <h3>@b.getIntByQuery("select * from Wallet where MemberID=" + MemberID, "Balance") Ks</h3>
+                <p>Wallet-@b.getStringByQuery("select * from Wallet where MemberID=" + MemberID, "WalletNumber")</p>
+            </div>
+            <div class="icon">
+                <i class="fa fa-dollar"></i>
+            </div>
+            <a href="~/Member/Transfermoney" class="small-box-footer">Transfer Money<i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
         <div class="small-box bg-green">
             <div class="inner">
                 <h3>@ActiveCount<sup style="font-size: 20px"></sup></h3>

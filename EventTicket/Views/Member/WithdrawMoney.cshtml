@@ -1,0 +1,45 @@
+﻿@using EventTicket.App_Code;
+@using System.Data;
+@{
+    ViewBag.Title = "Myanmar IT Star Company Limited";
+    Layout = "~/Views/Shared/Member.cshtml";
+    Base b = new Base();
+    int MemberID = Convert.ToInt32(Session["CurrentUserID"]);
+    DataTable MemberBank = b.getAllByQuery("select * from MemberBank where MemberID="+MemberID);
+}
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script>
+              $(document).ready(function () {
+                  var passedError = document.getElementById("serverMessage").textContent;
+                  if (passedError == "successful") {
+                      alert("Withdraw is made successfully");
+                  }
+                  else if (passedError == "notEnoughBalance") {
+                      alert("You do not have enough balance");
+                  }
+              });
+</script>
+@using (Html.BeginForm("ConfirmWithdrawMoney", "Member"))
+{
+    <p id="serverMessage" hidden>@Session["WithdrawMoneySession"]</p>
+    <div class="contentBodyBox">
+        <table align="center">
+            <tr><td><input type="number" min="1000" max="3000000" class="form-control" name="AmountToWithdraw" required></td></tr>
+            <tr><td><center><span>Available Balance: @b.getIntByQuery("select * from Wallet where MemberID=" + MemberID, "Balance") Ks</span></center></td></tr>
+            <tr><td>
+                <select name="MemberBankID" class="form-control">
+                    @{
+                        foreach (DataRow row in MemberBank.Rows)
+                        {
+                            <option value="@row["ID"]">@row["AccountNumber"] (@b.getStringByQuery("select * from Bank where ID="+row["BankID"],"Name"))</option>
+                        }
+                    }
+                </select>
+                </td></tr>
+            <tr><td><center><input type="submit" value="WITHDRAW" class="btn btn-primary" /></center></td></tr>
+        </table>
+    </div>
+}
+
+

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data;
+using System.Net.Mail;
+using System.Diagnostics;
 namespace EventTicket.App_Code
 {
     public class Tree
@@ -86,5 +88,79 @@ namespace EventTicket.App_Code
             AddChildrenToArray(Parent);
             return Child;
         }
+
+        #region Wallet Section
+
+        public void updateWalletBalance(int CurrentUserID)
+        {
+            int ActiveCount = 0, ChildID = 0;int Period = 0;
+            int day = DateTime.Now.Day;
+            if (day > 14 || day < 29)
+            {
+                Period = 1;
+            }
+            if (day == 30 || day == 31 || day < 14)
+            {
+                Period = 2;
+            }
+            TreeLevel3 t = new TreeLevel3();
+            Array TotalChildList = t.GetLevel123TotalNodeList(CurrentUserID);
+            //Convert Array Object to int Array
+            int[] ChildList = TotalChildList.Cast<int>().ToArray();
+            for(int i=0; i< ChildList.Length; i++)
+            {
+                ChildID = ChildList[i];
+                if (db.CheckByQuery("select * from Member where ID=" + ChildID + " and Active='True'") && !(db.CheckByQuery("select * from Payment where MemberID="+CurrentUserID+" and Child="+ChildID+" and Period="+Period)))
+                {
+                    db.ChangeByQuery("insert into Payment values("+CurrentUserID+","+ChildID+","+Period+")");
+                    ActiveCount++;
+                }
+            }
+            if (ActiveCount > 0)
+            {
+                int Amount = ActiveCount * db.getIntByQuery("select * from DollarRate where ID=1", "Rate");
+                db.ChangeByQuery("update Wallet set Balance = Balance + " + Amount + " where MemberID=" + CurrentUserID);
+            }
+            if (day == 14 || day == 29)
+            {
+                db.ChangeByQuery("delete From Payment");
+            }
+        }
+        public void TransferMoney(string OwnWallet,string WalletToTransfer,int AmountToTransfer)
+        {
+            db.ChangeByQuery("update Wallet set Balance=Balance-"+AmountToTransfer+" where WalletNumber=N'"+OwnWallet+"'");
+            db.ChangeByQuery("update Wallet set Balance=Balance+" + AmountToTransfer + " where WalletNumber=N'" + WalletToTransfer + "'");
+        }
+
+        #endregion
+
+        #region Sending Email
+        public void SendEmail(string Subject, string Body, string To)
+        {
+            if (String.IsNullOrEmpty(To))
+                return;
+            try
+            {
+                //dmgrouponlinehomejobprogram@gmail.com, Myanmaritstar123
+                //dmgrouponlinehomejobsprogram@gmail.com, *Dmgroup* 
+                MailMessage mail = new MailMessage();
+                mail.To.Add(To);
+                mail.From = new MailAddress("dmgrouponlinehomejobsprogram@gmail.com");
+                mail.Subject = Subject;
+                mail.Body = Body;
+                mail.IsBodyHtml = true;
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = "smtp.gmail.com";
+                smtp.Credentials = new System.Net.NetworkCredential("dmgrouponlinehomejobprogram@gmail.com", "Myanmaritstar123"); // ***use valid credentials***
+                smtp.Port = 587;
+                smtp.EnableSsl = true;
+                smtp.Send(mail);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Error in Sending Mail");
+            }
+        }
+        #endregion
     }
 }

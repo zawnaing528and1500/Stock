@@ -1,7 +1,10 @@
-﻿
+﻿@using EventTicket.App_Code;
+@using System.Data;
 @{
     ViewBag.Title = "DM Group - Onine Home Jobs Program";
     Layout = "~/Views/Shared/Account.cshtml";
+    Base b = new Base();
+    DataTable township = b.getAllByQuery("select * From Township order by Name asc");
 }
 <script src="~/Scripts/jquery.min.js"></script>
 <script src="~/Scripts/bootstrap.min.js"></script>
@@ -25,53 +28,62 @@
               });
 </script>
 
-    @using (Html.BeginForm("ProcessRegisterForm", "Account"))
+    @using (Html.BeginForm("RegisterCodeForm", "Account"))
     {
         <p id="serverMessage" hidden>@Session["RegisterSession"]</p>
         <div class="limiter">
-            <div class="container-login100" style="background-image: url('../Image/bg2.jpg');">
+            <div class="container-login100" style="background-image: url('../Image/bg2.jpg');background-attachment:fixed">
                 <div class="wrap-login100 p-t-190 p-b-30">
+                    <center><img src="~/Image/Logo/logo.png" width="200px" height="200px" /></center>
                     <form class="login100-form validate-form">
                         <div class="wrap-input100 validate-input m-b-10" data-validate="">
                             <p id="Message" style="background-color:lightgray;text-align:center;"></p>
                         </div><br />
                         <div class="wrap-input100 validate-input m-b-10" data-validate="Username is required">
-                            <input class="input100" type="text" name="Name" placeholder="Name" required>
+                            <input class="input100" type="text" name="Name" placeholder="Full Real Name" maxlength="50" required>
                             <span class="focus-input100"></span>
                             <span class="symbol-input100">
                                 <i class="fa fa-user-o"></i>
                             </span>
                         </div><br>
                         <div class="wrap-input100 validate-input m-b-10" data-validate="Phone is required">
-                            <input class="input100" type="text" name="Phone" placeholder="Phone" required>
+                            <input class="input100" type="text" name="Phone" placeholder="Phone" maxlength="15" required>
                             <span class="focus-input100"></span>
                             <span class="symbol-input100">
                                 <i class="fa fa-phone"></i>
                             </span>
                         </div><br>
                         <div class="wrap-input100 validate-input m-b-10" data-validate="Address is required">
-                            <input class="input100" type="text" name="Address" placeholder="Address" required>
+                            <input class="input100" type="text" name="Address" placeholder="Address"maxlength="500" required>
                             <span class="focus-input100"></span>
                             <span class="symbol-input100">
                                 <i class="fa fa-address-book"></i>
                             </span>
                         </div><br>
+                        <div class="wrap-input100 validate-input m-b-10" data-validate="Address is required">
+                            <select class="input100" name="TownshipID">
+                                <option value="">Please Select Township</option>
+                                @{ 
+                                    foreach(DataRow row in township.Rows)
+                                    {
+                                        <option value="@row["ID"]">@row["Name"]</option>
+                                    }
+                                }
+                            </select>
+                            <span class="focus-input100"></span>
+                            <span class="symbol-input100">
+                                <i class="fa fa-home"></i>
+                            </span>
+                        </div><br>
                         <div class="wrap-input100 validate-input m-b-10" data-validate="Email is required">
-                            <input class="input100" type="email" name="Email" placeholder="Email" required>
+                            <input class="input100" type="email" name="Email" placeholder="Email"maxlength="50" required>
                             <span class="focus-input100"></span>
                             <span class="symbol-input100">
                                 <i class="fa fa-paper-plane"></i>
                             </span>
                         </div><br>
-                        <div class="wrap-input100 validate-input m-b-10" data-validate="Username is required">
-                            <input class="input100" type="text" name="Username" placeholder="Username" required>
-                            <span class="focus-input100"></span>
-                            <span class="symbol-input100">
-                                <i class="fa fa-user"></i>
-                            </span>
-                        </div><br>
                         <div class="wrap-input100 validate-input m-b-10" data-validate="Password is required">
-                            <input class="input100" type="password" id="password" name="Password" onkeyup="CheckPassword()" placeholder="Password" required>
+                            <input class="input100" type="password" id="password" name="Password"maxlength="50" onkeyup="CheckPassword()" placeholder="Password" required>
                             <span class="focus-input100"></span>
                             <span class="symbol-input100">
                                 <i class="fa fa-key"></i>
@@ -92,7 +104,7 @@
                             <p id="confirmPassword-message" style="background-color:lightblue;text-align:center"></p>
                         </div><br />
                         <div class="wrap-input100 validate-input m-b-10" data-validate="Facebook Link is required">
-                            <input class="input100" type="text" name="FBLink" id="fblink" placeholder="Facebook Link" required>
+                            <input class="input100" type="text" name="FBLink" id="fblink" placeholder="Facebook Link"maxlength="500" required>
                             <span class="focus-input100"></span>
                             <span class="symbol-input100">
                                 <i class="fa fa-facebook"></i>

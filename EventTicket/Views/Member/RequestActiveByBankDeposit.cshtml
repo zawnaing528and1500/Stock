@@ -1,0 +1,34 @@
+﻿@using EventTicket.App_Code;
+@using System.Data;
+@{
+    ViewBag.Title = "Myanmar IT Star Company Limited";
+    Layout = "~/Views/Shared/Member.cshtml";
+    Base b = new Base();
+    int MemberID = Convert.ToInt32(Session["CurrentUserID"]);
+    DataTable MemberBank = b.getAllByQuery("select * from MemberBank where MemberID=" + MemberID);
+    int Rate = 5 * b.getIntByQuery("select * from DollarRate", "Rate");
+}
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script>
+              $(document).ready(function () {
+                  var passedError = document.getElementById("serverMessage").textContent;
+                  if (passedError == "successful") {
+                      alert("Deposit is made successfully");
+                  }
+                  else if (passedError == "invalidBankAccount") {
+                      alert("You Enter Invalid Bank Account Number");
+                  }
+              });
+</script>
+@using (Html.BeginForm("ProcessRequestActiveByBankDeposit", "Member"))
+{
+    <p id="serverMessage" hidden>@Session["RequestActiveByBankDepositSession"]</p>
+    <div class="contentBodyBox">
+        <table align="center">
+            <tr><td>If You dont want to type captcha, you need To Deposit @Rate Ks</td></tr>
+            <tr><td><input type="text" maxlength="30" class="form-control" name="AccountNumber" placeholder="Enter Bank Account Number" required></td></tr>
+            <tr><td><center><input type="submit" value="DEPOSIT" class="btn btn-primary" /></center></td></tr>
+        </table>
+    </div>
+                            }

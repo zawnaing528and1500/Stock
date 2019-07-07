@@ -1,0 +1,28 @@
+﻿@using EventTicket.App_Code;
+@using System.Data;
+@{
+    ViewBag.Title = "Myanmar IT Star Company Limited";
+    Layout = "~/Views/Shared/Member.cshtml";
+    Base b = new Base();
+    int MemberID = Convert.ToInt32(Session["CurrentUserID"]);
+    string WalletToTransfer = ViewBag.WalletToTransfer;
+    string AmountToTransfer = ViewBag.AmountToTransfer;
+
+    //Get ReceviverMemberID from WalletToTransfer
+    int ReceiverMemberID = b.getIntByQuery("select * from Wallet where WalletNumber=N'"+WalletToTransfer+"'","MemberID");
+}
+@using (Html.BeginForm("ProcessConfirmTransferMoney", "Member"))
+{
+    <div class="contentBodyBox">
+        <table class='table table-bordered' style='background-color:#F6F9ED'>
+            <tr><td>Receiver Name</td><td>@b.getStringByQuery("select * from Member where ID="+ ReceiverMemberID, "Name")</td></tr>
+            <tr><td>Wallet No</td><td>@WalletToTransfer</td></tr>
+            <tr><td>Amount To Transfer</td><td>@AmountToTransfer</td></tr>
+            <tr><td colspan="2"><center><input type="submit" value="COMFIRM" class="btn btn-primary" /></center></td></tr>
+        </table>
+    </div>
+    <input type="hidden" name="WalletToTransfer" value="@WalletToTransfer"/>
+    <input type="hidden" name="AmountToTransfer" value="@AmountToTransfer" />
+}
+
+

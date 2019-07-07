@@ -1,0 +1,50 @@
+﻿@using EventTicket.App_Code;
+@using System.Data;
+@{
+    ViewBag.Title = "DM Group - Onine Home Jobs Program";
+    Layout = "~/Views/Shared/Member.cshtml";
+    Base b = new Base();
+    int MemberID = Convert.ToInt32(Session["CurrentUserID"]);
+}
+<div class="contentFormBox">
+    <div class="row">
+        @using (Html.BeginForm("ProcessChange2CaptchaEmailForm", "Member"))
+        {
+            <div class="col-md-12">
+                    <table align="center">
+                        <tr>
+                            <td>
+                                <span class="zg"><input type="email" placeholder="Enter 2Captcha Email" maxlength="30" class="form-control" name="CaptchaEmail" /></span>
+                            </td>
+                            <td>
+                                <input type="submit" class="btn btn-primary" value="ADD" />
+                            </td>
+                        </tr>
+                    </table>
+            </div>
+            <br />
+
+
+                                        }
+
+    </div>
+    <div class='contentBodyBox'>
+        <div class='box-body'>
+            <table class='table table-bordered' style='background-color:#F6F9ED' ;>
+                <tr><th><span class='zg'>2Captch Email</span></th><th></th></tr>
+                         <tr><td>@b.getStringByQuery("select * from MemberCaptchaEmail where MemberID=" + MemberID, "CaptchaEmail")</td><td><a onclick="CheckForDeleteProduct()" href="">❎</a></td></tr>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    function CheckForDeleteProduct(ID) {
+        var r = confirm("Are You Sure to Delete?");
+        if (r == true) {
+            location.href = '/Member/DeleteChange2CaptchaEmailForm';
+        } else {
+            return;
+        }
+    }
+</script>
+

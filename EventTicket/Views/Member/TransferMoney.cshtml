@@ -1,0 +1,38 @@
+﻿@using EventTicket.App_Code;
+@using System.Data;
+@{
+    ViewBag.Title = "Myanmar IT Star Company Limited";
+    Layout = "~/Views/Shared/Member.cshtml";
+    Base b = new Base();
+    int MemberID = Convert.ToInt32(Session["CurrentUserID"]);
+}
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script>
+              $(document).ready(function () {
+                  var passedError = document.getElementById("serverMessage").textContent;
+                  if (passedError == "successful") {
+                      alert("Transfer is made successfully");
+                  }
+                  else if (passedError == "notEnoughBalance") {
+                      alert("You do not have enough balance");
+                  }
+                  else if (passedError == "invalidWallet") {
+                      alert("You Enter Invalid Wallet");
+                  }
+              });
+</script>
+@using (Html.BeginForm("ConfirmTransferMoney", "Member"))
+{
+    <p id="serverMessage" hidden>@Session["TransferMoneySession"]</p>
+    <div class="contentBodyBox">
+        <table align="center">
+            <tr><td>Wallet No</td><td><input type="text" name="WalletToTransfer"  class="form-control" maxlength="9" placeholder="M82435467" required/></td></tr>
+            <tr><td>Amount</td><td><input type="number" min="1000" max="3000000" class="form-control" name="AmountToTransfer" required></td></tr>
+            <tr><td colspan="2"><center><span>Available Balance: @b.getIntByQuery("select * from Wallet where MemberID=" + MemberID, "Balance")</span></center></td></tr>
+            <tr><td colspan="2"><center><input type="submit" value="TRANSFER" class="btn btn-primary" /></center></td></tr>
+        </table>
+    </div>
+}
+
+

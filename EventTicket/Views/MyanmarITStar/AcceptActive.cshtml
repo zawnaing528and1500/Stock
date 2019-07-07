@@ -9,13 +9,13 @@
 <div class="contentBodyBox">
     @*<font color="#8B7D6B" class="zg">The following are all registered members.</font><br /><br />*@
     <table id="displayTable" class="table table-bordered">
-        <thead><tr><th><span class="zg">No</span></th><th><span class="zg">Username</span>​</th><th><span class="zg">Phone</span></th><th>Accept/Reject</th></tr></thead>
+        <thead><tr><th><span class="zg">No</span></th><th><span class="zg">DM Email</span>​</th><th>2Captcha Email</th><th><span class="zg">Phone</span></th><th>Accept/Reject</th></tr></thead>
         <tbody>
             @{
                 foreach (DataRow row in dt.Rows)
                 {
                     int MemberID = Convert.ToInt32(row["MemberID"]);
-                    <tr><td>@i</td><td><font class="normalText"><span class="zg">@b.getStringByQuery("select * from Login where AllID="+MemberID,"Username")</span></font></td><td><font class="normalText"><span class="zg">@b.getStringByQuery("select * from Member where ID="+MemberID,"Phone")</span></font></td><td><a href="~/MyanmarITStar/AcceptRequest?ID=@row["ID"]&MemberID=@MemberID"><span class="label label-success">Accept</span></a>&nbsp;&nbsp;<a href="~/MyanmarITStar/RejectRequest?ID=@row["ID"]&MemberID=@MemberID"><span class="label label-danger">Reject</span></a></td></tr>
+                    <tr><td>@i</td><td><font class="normalText"><span class="zg">@b.getStringByQuery("select * from Member where ID="+MemberID,"Email")</span></font></td><td>@b.getStringByQuery("select * from MemberCaptchaEmail where MemberID="+MemberID, "CaptchaEmail")</td><td><font class="normalText"><span class="zg">@b.getStringByQuery("select * from Member where ID="+MemberID,"Phone")</span></font></td><td><a href="~/MyanmarITStar/AcceptRequest?ID=@row["ID"]&MemberID=@MemberID"><span class="label label-success">Accept</span></a>&nbsp;&nbsp;<a href="~/MyanmarITStar/RejectRequest?ID=@row["ID"]&MemberID=@MemberID"><span class="label label-danger">Reject</span></a></td></tr>
                     i++;
                 }
             }

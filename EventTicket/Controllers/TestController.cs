@@ -143,5 +143,40 @@ namespace EventTicket.Controllers
                 Debug.WriteLine("Root has no children");
             }
         }
+        public ActionResult TestWallet()
+        {
+            InitialTask i = new InitialTask();
+            i.updateWalletBalance(42);
+            return View();
+        }
+        public void SendEmail()
+        {
+            string email = "zawnaing528and1500@gmail.com";
+            if (String.IsNullOrEmpty(email))
+                return;
+            try
+            {
+                MailMessage mail = new MailMessage();
+                mail.To.Add(email);
+                mail.From = new MailAddress("dmgrouponlinehomejobprogram@gmail.com");
+                mail.Subject = "sub";
+
+                mail.Body = "I am Testing";
+
+                mail.IsBodyHtml = true;
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = "smtp.gmail.com"; //Or Your SMTP Server Address
+                smtp.Credentials = new System.Net.NetworkCredential("dmgrouponlinehomejobprogram@gmail.com", "Myanmaritstar123"); // ***use valid credentials***
+                smtp.Port = 587;
+
+                //Or your Smtp Email ID and Password
+                smtp.EnableSsl = true;
+                smtp.Send(mail);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Error in Sending Mail");
+            }
+        }
     }
 }

@@ -4,10 +4,12 @@
     int i = 1;
     Base b = new Base();
     Node n = new Node();
-    DataTable Member = b.getAllByQuery("select * from Member where ID>7");
+    DataTable Member = b.getAllByQuery("select * from Member");
     ViewBag.Title = "DM Group - Onine Home Jobs Program";
     Layout = "~/Views/Shared/MyanmarITStar.cshtml";
 }
+@ViewBag.From
+@ViewBag.To
 <div class="contentBodyBox">
     @*<font color="#8B7D6B" class="zg">The following are all registered members.</font><br /><br />*@
     <table id="displayTable" class="table table-bordered">

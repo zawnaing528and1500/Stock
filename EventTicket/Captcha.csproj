@@ -193,6 +193,7 @@
     <Content Include="App_Code\Base.cs" />
     <Content Include="App_Code\EncryptParameter.cs" />
     <Compile Include="App_Code\DecryptParameter.cs" />
+    <Compile Include="App_Code\InitialTask.cs" />
     <Compile Include="App_Code\LoginAuthorization.cs" />
     <Compile Include="App_Code\MyWebRequest.cs" />
     <Content Include="App_Code\Node.cs" />
@@ -204,6 +205,7 @@
     <Compile Include="App_Code\Tree.cs" />
     <Compile Include="App_Code\TreeLevel2.cs" />
     <Compile Include="App_Code\TreeLevel3.cs" />
+    <Compile Include="App_Code\Wallet.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -217,6 +219,7 @@
     <Compile Include="Controllers\MyanmarITStarController.cs" />
     <Compile Include="Controllers\OwnerController.cs" />
     <Compile Include="Controllers\ShopController.cs" />
+    <Compile Include="Controllers\StaffController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -305,6 +308,8 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\dataTables.bootstrap.min.css" />
+    <Content Include="Content\faq\DMmain_faq.css" />
+    <Content Include="Content\faq\reset_faq.css" />
     <Content Include="Content\font-awesome-icon.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
@@ -331,6 +336,7 @@
     <Content Include="Image\bg.PNG" />
     <Content Include="Image\bg1.jpg" />
     <Content Include="Image\CEO.JPG" />
+    <Content Include="Image\construction.png" />
     <Content Include="Image\Cover\404.png" />
     <Content Include="Image\Icon\404.png" />
     <Content Include="Image\Icon\banking.png" />
@@ -356,6 +362,7 @@
     <Content Include="Image\Logo\logo1.png" />
     <Content Include="Image\open.png" />
     <Content Include="Image\print.png" />
+    <Content Include="Image\profile.png" />
     <Content Include="Image\Seat_Map\404.png" />
     <Content Include="Image\skin.PNG" />
     <Content Include="Image\skin1.png" />
@@ -390,6 +397,10 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\dataTables.bootstrap.min.js" />
+    <Content Include="Scripts\faq\jquery-2.1.1_faq.js" />
+    <Content Include="Scripts\faq\jquery.mobile.custom.min_faq.js" />
+    <Content Include="Scripts\faq\main_faq.js" />
+    <Content Include="Scripts\faq\modernizr_faq.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
@@ -477,6 +488,29 @@
     <Content Include="Views\MyanmarITStar\AcceptActive.cshtml" />
     <Content Include="Views\Member\Setting.cshtml" />
     <Content Include="Views\Member\CaptchaWebsite.cshtml" />
+    <Content Include="Views\Member\AddBankForm.cshtml" />
+    <Content Include="Views\Account\ForgotPasswordForm.cshtml" />
+    <Content Include="Views\Account\ReForgotPasswordForm.cshtml" />
+    <Content Include="Views\Account\CheckCodeForm.cshtml" />
+    <Content Include="Views\Account\RegisterCodeForm.cshtml" />
+    <Content Include="Views\Member\TransferMoney.cshtml" />
+    <Content Include="Views\Member\ConfirmTransferMoney.cshtml" />
+    <Content Include="Views\Member\TransferHistory.cshtml" />
+    <Content Include="Views\Account\FAQ.cshtml" />
+    <Content Include="Views\Shared\faq.cshtml" />
+    <Content Include="Views\Member\WithdrawMoney.cshtml" />
+    <Content Include="Views\Member\ConfirmWithdrawMoney.cshtml" />
+    <Content Include="Views\MyanmarITStar\Notification.cshtml" />
+    <Content Include="Views\MyanmarITStar\WithdrawRequest.cshtml" />
+    <Content Include="Views\Member\Change2CaptchaEmailForm.cshtml" />
+    <Content Include="Views\Member\WithdrawHistory.cshtml" />
+    <Content Include="Views\Member\Aggreement.cshtml" />
+    <Content Include="Views\Member\RequestActiveByBankDeposit.cshtml" />
+    <Content Include="Views\Member\Construction.cshtml" />
+    <Content Include="Views\MyanmarITStar\SeeRequestActiveByBank.cshtml" />
+    <Content Include="Views\Shared\Staff.cshtml" />
+    <Content Include="Views\Staff\ViewAllMembers.cshtml" />
+    <Content Include="Views\Staff\Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,71 @@
+﻿
+@using EventTicket.App_Code;
+@using System.Data;
+@{
+    ViewBag.Title = "Myanmar IT Star Company Limited";
+    Layout = "~/Views/Shared/Member.cshtml";
+    int MemberID = Convert.ToInt32(Session["CurrentUserID"]);
+    Base b = new Base();
+    DataTable WithdrawHistory = b.getAllByQuery("select * from WithdrawHistory where MemberID="+ MemberID + " and Date>='" + ViewBag.FromDate + "' and Date<='" + ViewBag.ToDate + "'");
+}
+
+@using (Html.BeginForm("ProcessWithdrawHistory", "Member"))
+{
+    <p class="zg">
+        <div class="contentFormBox">
+            <div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input type="text" name="FromDate" class="form-control" id="datepicker" value="@ViewBag.FromDate" required>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="text" name="ToDate" class="form-control" id="Todatepicker" value="@ViewBag.ToDate" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <center> <span class="zg"><input type="submit" class="btn btn-primary" value="SUBMIT" /></span></center>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <th><span class="zg">ID</span></th>
+                            <th><span class="zg">Withdraw(Ks)</span></th>
+                            <th><span class="zg">Account (Date)</span></th>
+                        </tr>
+                        @{
+                            foreach (DataRow row in WithdrawHistory.Rows)
+                            {
+                                int MemberBankID = Convert.ToInt32(row["MemberBankID"]);
+                                int BankID = b.getIntByQuery("select * from MemberBank where ID="+MemberBankID,"BankID");
+                                string BankName = b.getStringByQuery("select * from Bank where ID=" + BankID, "Name");
+                                string AccountNumber = b.getStringByQuery("select * from MemberBank where ID="+MemberBankID,"AccountNumber");
+                                <tr><td>@row["ID"]</td><td>@row["WithdrawedAmount"]</td><td>@AccountNumber [@BankName] (@row["Date"])</td></tr>
+                            }
+                        }
+                        
+                    </tbody>
+                </table>
+                <center>Note: ID is Transaction ID.</center>
+            </div>
+        </div>
+    </p>
+                            }

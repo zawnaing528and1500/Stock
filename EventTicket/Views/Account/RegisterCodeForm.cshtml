@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "DM Group - Onine Home Jobs Program";
+    Layout = "~/Views/Shared/Account.cshtml";
+}
+@using (Html.BeginForm("ProcessRegisterForm", "Account"))
+{
+    <div class="limiter">
+        <div class="container-login100" style="background-image: url('../Image/bg2.jpg');">
+            <div class="wrap-login100 p-t-190 p-b-30">
+                <center><img src="~/Image/Logo/logo.png" width="200px" height="200px" /></center>
+                <form class="login100-form validate-form">
+                    <div class="wrap-input100 validate-input m-b-10" data-validate="Code is required">
+                        <input class="input100" type="text" name="Code" placeholder="Code">
+                        <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                            <i class="fa fa-paper-plane"></i>
+                        </span>
+                        <input type="hidden" name="Name" value="@ViewBag.Name"/>
+                        <input type="hidden" name="Phone" value="@ViewBag.Phone" />
+                        <input type="hidden" name="Address" value="@ViewBag.Address" />
+                        <input type="hidden" name="Email" value="@ViewBag.Email" />
+                        <input type="hidden" name="Username" value="@ViewBag.Username" />
+                        <input type="hidden" name="Password" value="@ViewBag.Password" />
+                        <input type="hidden" name="ReferredCode" value="@ViewBag.ReferredCode" />
+                        <input type="hidden" name="FBLink" value="@ViewBag.FBLink" />
+                        <input type="hidden" name="TownshipID" value="@ViewBag.TownshipID" />
+                    </div><br>
+                    <div class="container-login100-form-btn p-t-10">
+                        <button class="login100-form-btn">
+                            SUBMIT
+                        </button>
+                    </div>
+                    @*<div class="text-center w-full">
+                            <a class="txt1" href="#">
+                                Create new account
+                                <i class="fa fa-long-arrow-right"></i>
+                            </a>
+                        </div>*@
+                </form>
+            </div>
+        </div>
+    </div>
+}
