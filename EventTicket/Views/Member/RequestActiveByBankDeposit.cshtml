@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/Member.cshtml";
     Base b = new Base();
     int MemberID = Convert.ToInt32(Session["CurrentUserID"]);
-    DataTable MemberBank = b.getAllByQuery("select * from MemberBank where MemberID=" + MemberID);
+    DataTable CompanyBank = b.getAllByQuery("select * from MemberBank where MemberID=80");
     int Rate = 5 * b.getIntByQuery("select * from DollarRate", "Rate");
 }
 <script src="~/Scripts/jquery.min.js"></script>
@@ -14,7 +14,7 @@
               $(document).ready(function () {
                   var passedError = document.getElementById("serverMessage").textContent;
                   if (passedError == "successful") {
-                      alert("Deposit is made successfully");
+                      alert("Deposit Request is made successfully");
                   }
                   else if (passedError == "invalidBankAccount") {
                       alert("You Enter Invalid Bank Account Number");
@@ -28,6 +28,18 @@
         <table align="center">
             <tr><td>If You dont want to type captcha, you need To Deposit @Rate Ks</td></tr>
             <tr><td><input type="text" maxlength="30" class="form-control" name="AccountNumber" placeholder="Enter Bank Account Number" required></td></tr>
+            <tr><td>
+                <select name="CompanyBankID" class="form-control">
+                    @{ 
+                        foreach(DataRow row in CompanyBank.Rows)
+                        {
+                            int BankID = Convert.ToInt32(row["BankID"]);
+                            string AccountNumber = row["AccountNumber"].ToString();
+                            <option value="@row["ID"]">@AccountNumber [@b.getStringByQuery("select * from Bank where ID="+BankID,"Name")]</option>
+                        }
+                    }
+                </select>
+                </td></tr>
             <tr><td><center><input type="submit" value="DEPOSIT" class="btn btn-primary" /></center></td></tr>
         </table>
     </div>

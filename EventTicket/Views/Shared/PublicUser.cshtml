@@ -1,9 +1,24 @@
-﻿<!DOCTYPE html>
+﻿@using System.Data;
+@using EventTicket.App_Code;
+@{
+    Base b = new Base();
+    DataTable Category = b.getAllByQuery("select * from Category order by Name asc");
+}
+<!DOCTYPE html>
 <html>
 <head>
+
+    @*<!--https://hilltopads.com/user/publisher/sites?success=1-->
+
+    <!-- https://publishers.propellerads.com-->
+    <meta name="propeller" content="2713efdc9c4437cc7ad3cca081c62242">
+    <script src="//pushrase.com/ntfc.php?p=2768705" data-cfasync="false" async></script>
+    <script src="//pushlaram.com/ntfc.php?p=2768705" data-cfasync="false" async></script>
+    <script src="//pushrase.com/ntfc.php?p=2768403" data-cfasync="false" async></script>
+    <script src="//pushmejs.com/ntfc.php?p=2768403" data-cfasync="false" async></script>*@
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Event Ticket</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="~/Content/bootstrap.min.css">
     <link rel="stylesheet" href="~/Content/font-awesome.min.css">
@@ -13,9 +28,9 @@
     <link rel="stylesheet" href="~/Content/jquery-ui.css">
     <link rel="stylesheet" href="~/Content/select2.min.css">
     <link rel="stylesheet" href="~/Content/Site.css">
-    <link rel="stylesheet" href="~/Content/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href='https://mmwebfonts.comquas.com/fonts/?font=zawgyi' />
-    <link rel="stylesheet" href="~/Content/hover.css">
+    <link rel="stylesheet" href="~/Content/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/bootstrap3-wysihtml5.min.css">
     <script src="~/Scripts/jquery.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/admin-lte/js/adminlte.min.js"></script>
@@ -23,47 +38,106 @@
     <script src="~/Scripts/select2.full.min.js"></script>
     <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
     <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/ckeditor.js"></script>
     <script src="~/Scripts/Site.js"></script>
-    <script src="~/Scripts/jquery-ui.min.js"></script>
-
+    <script src="~/Scripts/bootstrap3-wysihtml5.all.min.js"></script>
+    <script>
+  $(function () {
+    // Replace the <textarea id="editor1"> with a CKEditor
+    // instance, using default configuration.
+    CKEDITOR.replace('editor1')
+    //bootstrap WYSIHTML5 - text editor
+    $('.textarea').wysihtml5()
+  })
+    </script>
 </head>
 <body class="hold-transition skin-purple-light sidebar-mini">
+
+
+    <!--PopCash : auto , no redirect link-->
+    @*<script type="text/javascript">
+     var uid = '246572';
+     var wid = '506962';
+    </script>
+    <script type="text/javascript" src="//cdn.popcash.net/pop.js"></script>*@
+
+
     <div class="loader"></div>
     <div class="wrapper">
         <header class="main-header">
-            <a href="~/Login/LoginForm" class="logo">
-                <span class="logo-mini"><b>TTC</b></span>
-                <span class="logo-lg"><b>TopTicket Center</b></span>
+            <a href="http://naing.org" class="logo">
+                <span class="logo-mini"><b>N</b></span>
+                <span class="logo-lg"><b>Naing.org</b></span>
             </a>
             <nav class="navbar navbar-static-top" role="navigation">
                 <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
                     <span class="sr-only">Toggle navigation</span>
                 </a>
+                @*Notification*@
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown notifications-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-bell-o"></i>
+                                <span class="label label-warning">3</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="header">Session 1 : 3 articles</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
             </nav>
-            
         </header>
         <aside class="main-sidebar">
             <section class="sidebar">
-                <div class="user-panel">
-                    <div class="pull-left image">
-                        <img src="~/Image/Logo/logo.png">
-                    </div>
-                </div>
+                @*<div class="user-panel">
+                        <div class="pull-left image">
+                            <img src="~/Image/Logo/logo1.png" class="img-circle">
+                        </div>
+                    </div>*@
                 <!-- /.search form -->
+                <form action="~/PublicUser/SearchPost" method="post" class="sidebar-form">
+                    <div class="input-group">
+                        <input type="text" name="SearchText" class="form-control" placeholder="Search...">
+                        <span class="input-group-btn">
+                            <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                </form>
                 <!-- Sidebar Menu -->
                 <ul class="sidebar-menu" data-widget="tree">
-                    <li><a href="~/PublicUser/AllEvent"><i class="fa fa-th" aria-hidden="true"></i><span>All Items</span></a></li>
-                    <li><a href="~/PublicUser/ApplyEOrgAccount"><i class="fa fa-file-text-o" aria-hidden="true"></i><span>Apply Account</span></a></li>
-                    <li><a href="~/Document/pricing.pdf"><i class="fa fa-usd" aria-hidden="true"></i><span>Pricing</span></a></li>
-                    <li><a href="~/Document/product_feature.pdf"><i class="fa fa-line-chart" aria-hidden="true"></i><span>Product Feature</span></a></li>
-                    <li><a href="~/Document/UserManual.pdf"><i class="fa fa-book" aria-hidden="true"></i><span>User Manual</span></a></li>
-                    <li><a href="~/PublicUser/AboutCEO"><i class="fa fa-institution" aria-hidden="true"></i><span>About CEO</span></a></li>
+                    <li class="header"><b>@*<span class="zg">ျမန္​မာအိုင္​တီစတား ကုမၸဏီ လီမိတက္</span>*@​Myanmar IT Star Company Limited </b></li>
+                    <li><a href="http://account.myanmaritstar.com/Account/LoginForm"><i class="fa fa-play-circle-o" aria-hidden="true"></i><span class="zg"><font color="green">Account</font></span></a></li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-users"></i> <span class="zg">​ေၾကာ္​ျငာ</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="~/PublicUser/SeeAds"><i class="fa fa-circle-o"></i><span class="zg">ရိုးရိုးနိွပ္</span></a></li>
+                            <li><a href="~/PublicUser/SeePopup"><i class="fa fa-circle-o"></i><span class="zg">​ေပါ့အပ္</span></a></li>
+                            <li><a href="~/PublicUser/SeeBanner"><i class="fa fa-circle-o"></i><span class="zg">ဘန္​နာ</span></a></li>
+                            <li><a href="~/PublicUser/SecreteCodeForm"><i class="fa fa-circle-o"></i><span class="zg">ခ်ိန္​ညိွ</span></a></li>
+                        </ul>
+                    </li>
+                    <li><a href="~/PublicUser/Index"><i class="fa fa-play-circle-o" aria-hidden="true"></i><span class="zg"><font color="#8B3E2F">Most Popular</font></span></a></li>
+                    @foreach (DataRow rows in Category.Rows)
+                    {
+                        <li><a href="~/PublicUser/SeePost?CategoryID=@rows["ID"]"><i class="fa fa-play-circle-o" aria-hidden="true"></i><span class="zg"><font color="#8B3E2F">@rows["Name"]</font></span></a></li>
+                    }
+    @*<li><a href="~/Account/Register"><i class="fa fa-plus-circle" aria-hidden="true"></i><span class="zg">Regsiter</span></a></li>
+                    <li><a href="~/Account/Login"><i class="fa fa-plus-circle" aria-hidden="true"></i><span class="zg">Login</span></a></li>*@                
+    @*<li><a href="~/MyanmarITStar/Notification"><i class="fa fa-cog" aria-hidden="true"></i><span class="zg">Notification</span></a></li>*@
                 </ul>
                 <!-- /.sidebar-menu -->
             </section>
             <!-- /.sidebar -->
         </aside>
-
         <div class="content-wrapper">
             <section class="content container-fluid">
                 @RenderBody()
@@ -72,9 +146,10 @@
         <footer class="main-footer">
             <!-- To the right -->
             <div class="pull-right hidden-xs">
+
             </div>
             <!-- Default to the left -->
-           <img src="~/Image/Icon/payment.png" width="160px"/><img src="~/Image/Icon/banking.png" width="160px" /> @*<strong>Developed by &copy; 2018 <a href="#">InnoStar Co.Ltd</a>.</strong>*@
+            <strong>Copyright &copy; 2019 <a href="#">MyanmarITStar Co.Ltd</a>.</strong>
         </footer>
         <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-dark">
@@ -143,16 +218,5 @@
         </aside>
         <div class="control-sidebar-bg"></div>
     </div>
-            <!-- Start of LiveChat (www.livechatinc.com) code -->
-            <script type="text/javascript">
-                window.__lc = window.__lc || {};
-                window.__lc.license = 9989045;
-                (function() {
-                  var lc = document.createElement('script'); lc.type = 'text/javascript'; lc.async = true;
-                  lc.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.livechatinc.com/tracking.js';
-                  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(lc, s);
-                })();
-            </script>
-            <!-- End of LiveChat code -->
 </body>
 </html>

@@ -1,0 +1,61 @@
+﻿@using System.Data;
+@using EventTicket.App_Code;
+@{
+    Base b = new Base();
+    ViewBag.Title = "AddPost";
+    Layout = "~/Views/Shared/Staff.cshtml";
+    DataTable Category = b.getAllByQuery("select * from Category order by Name asc");
+    DataTable Staff = b.getAllByQuery("select * from Staff");
+}
+@using (Html.BeginForm("ProcessAddPost", "Staff", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <p class="zg">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-3">
+                    <input type="text" name="Name" placeholder="Enter Article Name" class="form-control" required />
+                </div>
+                <div class="col-md-3">
+                    <select name="CategoryID" class="form-control" required>
+                        @foreach (DataRow rows in Category.Rows)
+                        {
+                            <option value="@rows["ID"]">@rows["Name"]</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select name="StaffID" class="form-control" required>
+                        @foreach (DataRow rows in Staff.Rows)
+                        {
+                            <option value="@rows["ID"]">@rows["Name"]</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <input type="file" class="form-control" name="file" id="file" required />
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-12">
+                <textarea class="form-control" style="min-height:400px;" minlength="50" maxlength="2000" name="Description" placeholder="Copy-Paste Details Here"></textarea>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <input type="text" name="Reference" Placeholder="Enter Reference (မပါလည္​းရ)" class="form-control" />
+                </div>
+                <div class="col-md-6">
+                </div>
+                <center><input type="submit" class="btn btn-primary" value="POST" /></center>
+            </div>
+        </div>
+    </p>
+}
+  
+@*<textarea id="editor1" name="editor1" rows="10" cols="80">
+        This is my textarea to be replaced with CKEditor.
+    </textarea>*@

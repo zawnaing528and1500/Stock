@@ -154,7 +154,33 @@ namespace EventTicket.App_Code
             }
             return name;
         }
+        public decimal getDecimalByQuery(string query, string Column)
+        {
+            decimal name = 0;
+            DataTable dt;
+            var connectionString = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
 
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    using (SqlDataAdapter sda = new SqlDataAdapter())
+                    {
+                        cmd.Connection = con;
+                        sda.SelectCommand = cmd;
+                        using (dt = new DataTable())
+                        {
+                            sda.Fill(dt);
+                        }
+                    }
+                }
+            }
+            foreach (DataRow row in dt.Rows)
+            {
+                name = Convert.ToDecimal(row[Column]);
+            }
+            return name;
+        }
         public Boolean getBooleanByQuery(string query, string Column)
         {
             Boolean name = false;

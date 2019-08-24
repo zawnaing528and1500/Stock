@@ -12,6 +12,14 @@ namespace EventTicket.Controllers
         DBBase db = new DBBase();
         Tree t = new Tree();
         // GET: Member
+        public ActionResult GetBrowser()
+        {
+            if (Session["CurrentUserID"] == null)
+            {
+                Response.Redirect("~/Account/LoginForm");
+            }
+            return View();
+        }
 
         #region History
 
@@ -145,8 +153,8 @@ namespace EventTicket.Controllers
             //Get Email of sender and receiver
             string MailBodyForSender = "Dear " + SenderName + ",<br><br>You have successfully sent " + AmountToTransfer + " Kyats to " + WalletToTransfer + "(" + ReceiverName + "). Transaction ID is " + TransactionID + ". Remember Transaction ID for further reference.<br><br>Kind Regards,<br>Myanmar IT Star Company Limited";
             string MailModyForReceiver = "Dear " + ReceiverName + ",<br><br>You Received " + AmountToTransfer + " Kyats From " + OwnWallet + "(" + SenderName + ").<br><br>Kind Regards,<br>Myanmar IT Star Company Limited";
-            t.SendEmail("Transfer Money-DM Group-Online Home Jobs Program", MailBodyForSender, db.getStringByQuery("select * from Member where ID=" + MemberID, "Email"));
-            t.SendEmail("Transfer Money-DM Group-Online Home Jobs Program", MailModyForReceiver, db.getStringByQuery("select * from Member where ID=" + ReceiverID, "Email"));
+            t.SendEmail("Transfer Money-Myanmar IT Star Company Limited", MailBodyForSender, db.getStringByQuery("select * from Member where ID=" + MemberID, "Email"));
+            t.SendEmail("Transfer Money-Myanmar IT Star Company Limited", MailModyForReceiver, db.getStringByQuery("select * from Member where ID=" + ReceiverID, "Email"));
             Session["TransferMoneySession"] = "successful";
             return RedirectToAction("TransferMoney");
         }
@@ -182,7 +190,7 @@ namespace EventTicket.Controllers
 
             db.ChangeByQuery("insert into WithdrawHistory values("+MemberID+","+AmountToWithdraw+","+MemberBankID+",'False','"+DateTime.Now+"')");
             string MailBody = "Dear "+db.getStringByQuery("select * from Member where ID="+MemberID,"Name")+",<br><br> We received your withdwraw Request. Withdraw Amount is "+AmountToWithdraw+"Ks. It will be deposited to your "+db.getStringByQuery("select * from Bank where ID="+BankID,"Name")+" Account ("+db.getStringByQuery("select * from MemberBank where ID="+MemberBankID,"AccountNumber")+ "). It will take 24 to 48 hours to appear in your bank Account.<br><br>Kind Regards,<br>Myanmar IT Star Company Limited";
-            t.SendEmail("Withdraw Request-DM Group", MailBody, Email);
+            t.SendEmail("Withdraw Request-Myanmar IT Star Company Limited", MailBody, Email);
             Session["WithdrawMoneySession"] = "successful";
             return RedirectToAction("WithdrawMoney");
         }
@@ -204,6 +212,7 @@ namespace EventTicket.Controllers
                 Response.Redirect("~/Account/LoginForm");
             }
             string AccountNumber = Request.Form["AccountNumber"];
+            int CompanyBankID =Convert.ToInt32(Request.Form["CompanyBankID"]);
             int MemberID = Convert.ToInt32(Session["CurrentUserID"]);
             string Email = db.getStringByQuery("select * from Member where ID=" + MemberID, "Email");
             int Rate = db.getIntByQuery("select * from DollarRate", "Rate");
@@ -215,10 +224,10 @@ namespace EventTicket.Controllers
             }
             int MemberBankID = db.getIntByQuery("select * from MemberBank where MemberID=" + MemberID + " and AccountNumber=N'" + AccountNumber+"'", "ID");
             int BankID = db.getIntByQuery("select * from MemberBank where ID="+MemberBankID, "BankID");
-            db.ChangeByQuery("insert into RequestActiveDepositHistory values(" + MemberID+","+db.getIntByQuery("select * from MemberBank where MemberID="+MemberID+" and AccountNumber=N'"+AccountNumber+"'","ID")+"," +5 * db.getIntByQuery("select * from DollarRate", "Rate") +",'False','"+DateTime.Now+"')");
+            db.ChangeByQuery("insert into RequestActiveDepositHistory values(" + MemberID+","+db.getIntByQuery("select * from MemberBank where MemberID="+MemberID+" and AccountNumber=N'"+AccountNumber+"'","ID")+"," +5 * db.getIntByQuery("select * from DollarRate", "Rate") +",'False','"+DateTime.Now+"',"+CompanyBankID+")");
            
-            string MailBody = "Dear " + db.getStringByQuery("select * from Member where ID=" + MemberID, "Name") + ",<br><br> We received your Active Request By Bank Account, "+ db.getStringByQuery("select * from Bank where ID=" + BankID, "Name") + ". Deposit amount should be "+5*Rate+" Ks. We will check and update your DM account Active.<br><br>Kind Regards,<br>Myanmar IT Star Company Limited";
-            t.SendEmail("Receive Request Active By Bank-DM Group", MailBody, Email);
+            string MailBody = "Dear " + db.getStringByQuery("select * from Member where ID=" + MemberID, "Name") + ",<br><br> We received your Active Request By Bank Account, "+ db.getStringByQuery("select * from Bank where ID=" + BankID, "Name") + ". Deposit amount should be "+5*Rate+" Ks. We will check and update your account Active.<br><br>Kind Regards,<br>Myanmar IT Star Company Limited";
+            t.SendEmail("Receive Request Active By Bank-Myanmar IT Star Company Limited", MailBody, Email);
             Session["RequestActiveByBankDepositSession"] = "successful";
             return RedirectToAction("RequestActiveByBankDeposit");
         }

@@ -1,0 +1,39 @@
+﻿@using System.Data;
+@using EventTicket.App_Code;
+@{
+    ViewBag.Title = "SeeAds";
+    Layout = "~/Views/Shared/PublicUser.cshtml";
+    Base b = new Base();
+    DataTable AdsLink = b.getAllByQuery("select * from AdsLink");
+    int i = 1;
+}
+<script>
+    var count = 0;
+    function FollowLink(link) {
+        count = count + 1;
+        document.getElementById("TotalCount").value = count;
+        window.open(link);
+    }
+</script>
+<div class="contentFormBox">
+    <div class="row">
+        @foreach (DataRow rows in AdsLink.Rows)
+        {
+
+            <div class="col-md-4">
+              <a onClick="FollowLink('@rows["Name"]');">
+                                      <table class="table table-bordered" style="background-color:#F6F9ED;">
+                                          <tr><td colspan="2"><p class="zg" style="border:1px solid green;margin:5px;padding:5px;">​​ေၾကာ္​ျငာၾကည္​့ရန္​ ဤ​ေနရာကိုနိွပ္​ပါ<br />(@rows["LinkName"])</p></td></tr>
+                                          <tr><td>Count</td><td>@rows["CPM"] CPM</td></tr>
+                                      </table>
+                                         
+             </a>
+            </div>
+            i++;
+        }
+        <center>Total Count- <input type="text" id="TotalCount" disabled></center>
+        <br />
+        <p class="zg">မွတ္​ခ်က္​။ ။ CPM သည္​ နာရီျခားၿပီး Update လုပ္​ပါသည္​။</p> 
+    </div>
+</div>
+

@@ -218,6 +218,7 @@
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\MyanmarITStarController.cs" />
     <Compile Include="Controllers\OwnerController.cs" />
+    <Compile Include="Controllers\PublicUserController.cs" />
     <Compile Include="Controllers\ShopController.cs" />
     <Compile Include="Controllers\StaffController.cs" />
     <Compile Include="Controllers\TestController.cs" />
@@ -307,6 +308,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bootstrap3-wysihtml5.min.css" />
     <Content Include="Content\dataTables.bootstrap.min.css" />
     <Content Include="Content\faq\DMmain_faq.css" />
     <Content Include="Content\faq\reset_faq.css" />
@@ -319,6 +321,7 @@
     <Content Include="Content\LoginRegister.css" />
     <Content Include="Content\account.css" />
     <Content Include="Content\select2.min.css" />
+    <Content Include="Content\Team\Team.css" />
     <Content Include="Content\tether\tether-theme-arrows-dark.css" />
     <Content Include="Content\tether\tether-theme-arrows-dark.min.css" />
     <Content Include="Content\tether\tether-theme-arrows.css" />
@@ -333,9 +336,9 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Image\404.png" />
-    <Content Include="Image\bg.PNG" />
     <Content Include="Image\bg1.jpg" />
     <Content Include="Image\CEO.JPG" />
+    <Content Include="Image\click.png" />
     <Content Include="Image\construction.png" />
     <Content Include="Image\Cover\404.png" />
     <Content Include="Image\Icon\404.png" />
@@ -358,7 +361,7 @@
     <Content Include="Image\KBZPay\jcgvcitymall.jpg" />
     <Content Include="Image\load.gif" />
     <Content Include="Image\logo.png" />
-    <Content Include="Image\Logo\logo.png" />
+    <Content Include="Image\Logo\nainglogo.png" />
     <Content Include="Image\Logo\logo1.png" />
     <Content Include="Image\open.png" />
     <Content Include="Image\print.png" />
@@ -366,6 +369,15 @@
     <Content Include="Image\Seat_Map\404.png" />
     <Content Include="Image\skin.PNG" />
     <Content Include="Image\skin1.png" />
+    <Content Include="Image\Team\bg.PNG" />
+    <Content Include="Image\Team\Md.jpg" />
+    <Content Include="Image\Team\member1.jpeg" />
+    <Content Include="Image\Team\member2.jpeg" />
+    <Content Include="Image\Team\member3.jpg" />
+    <Content Include="Image\Team\member4.jpeg" />
+    <Content Include="Image\Team\member5.jpeg" />
+    <Content Include="Image\Team\member6.jpeg" />
+    <Content Include="Image\Team\member7.jpg" />
     <Content Include="Image\user1-128x128.jpg" />
     <Content Include="Image\zaw naing.jpg" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
@@ -396,6 +408,8 @@
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\bootstrap3-wysihtml5.all.min.js" />
+    <Content Include="Scripts\ckeditor.js" />
     <Content Include="Scripts\dataTables.bootstrap.min.js" />
     <Content Include="Scripts\faq\jquery-2.1.1_faq.js" />
     <Content Include="Scripts\faq\jquery.mobile.custom.min_faq.js" />
@@ -423,6 +437,7 @@
     <Content Include="Scripts\tether.js" />
     <Content Include="Scripts\tether.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="sw.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -437,7 +452,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Shared\Owner.cshtml" />
     <Content Include="Views\Shared\Test\Index.cshtml" />
     <Content Include="Views\Owner\Index.cshtml" />
     <Content Include="Views\Owner\setEventOrgAccount.cshtml" />
@@ -450,7 +464,6 @@
     <Content Include="Views\EOrg\Manage.cshtml" />
     <Content Include="Views\EOrg\SetRowDetail.cshtml" />
     <Content Include="Views\EOrg\SetSeatStatus.cshtml" />
-    <Content Include="Views\Shared\PublicUser.cshtml" />
     <Content Include="Views\Shared\Test\SendSeatInfo.cshtml" />
     <Content Include="Views\EOrg\AddSMSGate.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -462,7 +475,6 @@
     <Content Include="Views\EOrg\SeeBookingList.cshtml" />
     <Content Include="Views\EOrg\SeeSoldList.cshtml" />
     <Content Include="Views\Owner\AddShopForm.cshtml" />
-    <Content Include="Views\Shared\Shop.cshtml" />
     <Content Include="Views\Shop\CustomerForm.cshtml" />
     <Content Include="Views\Shop\HteNumberForm.cshtml" />
     <Content Include="Views\Shop\ViewTodayCustomer.cshtml" />
@@ -470,9 +482,6 @@
     <Content Include="Views\Shop\ViewMonthlyCustomerHteNumber.cshtml" />
     <Content Include="Views\Shop\ShowAggreement.cshtml" />
     <Content Include="Views\Shop\ShowSuccessNumber.cshtml" />
-    <Content Include="Views\Shared\StockShop.cshtml" />
-    <Content Include="Views\Shared\StockCentral.cshtml" />
-    <Content Include="Views\Shared\StockStaff.cshtml" />
     <Content Include="Views\Login\RegistrationForm.cshtml" />
     <Content Include="Views\Shared\Account.cshtml" />
     <Content Include="Views\Account\LoginForm.cshtml" />
@@ -511,6 +520,22 @@
     <Content Include="Views\Shared\Staff.cshtml" />
     <Content Include="Views\Staff\ViewAllMembers.cshtml" />
     <Content Include="Views\Staff\Dashboard.cshtml" />
+    <Content Include="Views\Shared\Team.cshtml" />
+    <Content Include="Views\Account\Team.cshtml" />
+    <Content Include="Views\Member\GetBrowser.cshtml" />
+    <Content Include="Views\Staff\AddPost.cshtml" />
+    <Content Include="Views\Staff\AllPost.cshtml" />
+    <Content Include="Views\Staff\PostDescription.cshtml" />
+    <Content Include="Views\Shared\PublicUser.cshtml" />
+    <Content Include="Views\PublicUser\Index.cshtml" />
+    <Content Include="Views\PublicUser\PostDescription.cshtml" />
+    <Content Include="Views\PublicUser\SeePost.cshtml" />
+    <Content Include="Views\PublicUser\SearchPost.cshtml" />
+    <Content Include="Views\PublicUser\SeeAds.cshtml" />
+    <Content Include="Views\PublicUser\SecreteCodeForm.cshtml" />
+    <Content Include="Views\PublicUser\ClickSection.cshtml" />
+    <Content Include="Views\PublicUser\SeePopup.cshtml" />
+    <Content Include="Views\PublicUser\SeeBanner.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -45,13 +45,14 @@
 <div class="contentBodyBox">
     @*<font color="#8B7D6B" class="zg">The following are all registered members.</font><br /><br />*@
     <table id="displayTable" class="table table-bordered">
-        <thead><tr><th><span class="zg">No</span></th><th>MemberID</th><th><span class="zg">Name</span>​</th><th><span class="zg">Phone</span></th><th><span class="zg">Address</span></th><th><span class="zg">Email</span></th><th>Level 1,2,3</th><th>FB</th></tr></thead>
+        <thead><tr><th><span class="zg">No</span></th><th>MemberID</th><th>ParentID</th><th><span class="zg">Name</span>​</th><th><span class="zg">Phone</span></th><th><span class="zg">Address</span></th><th><span class="zg">Email</span></th><th>Level 1,2,3</th><th>FB</th></tr></thead>
         <tbody>
             @{
                 foreach (DataRow rows in Member.Rows)
                 {
                     int MemberID = Convert.ToInt32(rows["ID"]);
-                    <tr><td><span class="zg">@i</span></td><td>@MemberID</td><td><font class="normalText"><span class="zg">@rows["Name"]</span></font></td><td><font class="normalText"><span class="zg">@rows["Phone"]</span></font></td><td><span class="zg">@rows["Address"]</span></td><td><span class="zg">@rows["Email"]</span></td><td>@n.GetTotalNode(MemberID, 123) | @n.GetTotalNode(MemberID, 1) , @n.GetTotalNode(MemberID, 2) , @n.GetTotalNode(MemberID, 3)</td><td><a href="@rows["FBLink"]">Click</a></td></tr>
+                    int Parent = b.getIntByQuery("select * from Tree where Child=" + MemberID, "Parent");
+                    <tr><td><span class="zg">@i</span></td><td>@MemberID</td><td>@Parent</td><td><font class="normalText"><span class="zg">@rows["Name"]</span></font></td><td><font class="normalText"><span class="zg">@rows["Phone"]</span></font></td><td><span class="zg">@rows["Address"]</span></td><td><span class="zg">@rows["Email"]</span></td><td>@n.GetTotalNode(MemberID, 123) | @n.GetTotalNode(MemberID, 1) , @n.GetTotalNode(MemberID, 2) , @n.GetTotalNode(MemberID, 3)</td><td><a href="@rows["FBLink"]">Click</a></td></tr>
                     i++;
                 }
             }

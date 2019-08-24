@@ -38,7 +38,9 @@ namespace EventTicket.Controllers
             int MemberID = Convert.ToInt32(Request.QueryString["MemberID"]);
             //Delete and Change Active in Member Table
             db.ChangeByQuery("delete from RequestActive where ID=" + ID);
+            db.ChangeByQuery("delete from InactiveCount where MemberID=" + ID);
             db.ChangeByQuery("update Member set Active='True' where ID=" + MemberID);
+          
             return RedirectToAction("AcceptActive");
         }
         public ActionResult RejectRequest()
@@ -66,7 +68,39 @@ namespace EventTicket.Controllers
         }
         public ActionResult SeeRequestActiveByBank()
         {
+            if (Session["CurrentUserID"] == null)
+            {
+                Response.Redirect("~/Account/LoginForm");
+            }
             return View();
+        }
+        public ActionResult AcceptRequestByBank()
+        {
+            if (Session["CurrentUserID"] == null)
+            {
+                Response.Redirect("~/Account/LoginForm");
+            }
+            int ID = Convert.ToInt32(Request.QueryString["ID"]);
+            int MemberID = Convert.ToInt32(Request.QueryString["MemberID"]);
+            string Email = db.getStringByQuery("select * from Member where ID=" + MemberID, "Email");
+
+            db.ChangeByQuery("update RequestActiveDepositHistory set Proof='True' where ID=" + ID);
+            db.ChangeByQuery("delete from InactiveCount where MemberID=" + ID);
+            db.ChangeByQuery("update Member set Active='True' where ID=" + MemberID);
+            //Send Mail
+            string MailBody = "Dear " + db.getStringByQuery("select * from Member where ID=" + MemberID, "Name") + ",<br><br> We approved your active request deposited by bank.Your Account is now worked account. Your Account should turn to green. If it is not green, contact us.<br><br>Kind Regards,<br>Myanmar IT Star Company Limited";
+            t.SendEmail("Request Active By Bank-DM Group", MailBody, Email);
+            return RedirectToAction("SeeRequestActiveByBank");
+        }
+        public ActionResult RejectRequestByBank()
+        {
+            if (Session["CurrentUserID"] == null)
+            {
+                Response.Redirect("~/Account/LoginForm");
+            }
+            int ID = Convert.ToInt32(Request.QueryString["ID"]);
+            db.ChangeByQuery("delete from RequestActiveDepositHistory where ID=" + ID);
+            return RedirectToAction("SeeRequestActiveByBank");
         }
         #region Withdraw Request
         public ActionResult WithdrawRequest()
@@ -124,7 +158,31 @@ namespace EventTicket.Controllers
             {
                 Response.Redirect("~/Account/LoginForm");
             }
+            if (TempData["From"] != null)
+            {
+                ViewBag.From = TempData["From"].ToString();
+                ViewBag.To = TempData["To"].ToString();
+            }
+            else
+            {
+                ViewBag.From = 0;
+                ViewBag.To = 10;
+            }
             return View();
+        }
+        public ActionResult ProcessViewAllMembers()
+        {
+            if (Session["CurrentUserID"] == null)
+            {
+                Response.Redirect("~/Account/LoginForm");
+            }
+
+            string From = Request.Form["From"];
+            string To = Request.Form["To"];
+            TempData["From"] = From;
+            TempData["To"] = To;
+
+            return RedirectToAction("ViewAllMembers");
         }
     }
 }

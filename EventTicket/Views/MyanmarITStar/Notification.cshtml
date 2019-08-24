@@ -1,8 +1,18 @@
 ﻿@using EventTicket.App_Code;
+@using System.Data;
 @{
     ViewBag.Title = "Setting";
     Layout = "~/Views/Shared/MyanmarITStar.cshtml";
-    Base b = new Base();
+    Base b = new Base();int OneMonthInactiveCount = 0;
+    DataTable InactiveMember = b.getAllByQuery("select * from Member where Active='False'");
+    foreach(DataRow row in InactiveMember.Rows){
+        int MemberID = Convert.ToInt32(row["ID"]);
+        int Count = b.getCountByQuery("select * from InactiveCount where MemberID=" + MemberID);
+        if(Count == 2)
+        {
+            OneMonthInactiveCount++;
+        }
+    }
 }
 <div>
     <div class="box-body">      
@@ -18,22 +28,23 @@
             <span class="badge bg-green">@b.getCountByQuery("select * from WithdrawHistory where Proof='False'")</span>
             <i class="fa fa-money"></i> Withdraw Requests
         </a>
-        <a class="btn btn-app">
-            <span class="badge bg-purple">891</span>
-            <i class="fa fa-users"></i>Inactive Member
+       <a class="btn btn-app">
+            <span class="badge bg-purple">@OneMonthInactiveCount</span>
+            <i class="fa fa-users"></i>1 month Inactive 
         </a>
-        <a class="btn btn-app">
-            <span class="badge bg-teal">67</span>
-            <i class="fa fa-inbox"></i> Orders
-        </a>
-        <a class="btn btn-app">
-            <span class="badge bg-aqua">12</span>
-            <i class="fa fa-envelope"></i> Inbox
-        </a>
-        <a class="btn btn-app">
-            <span class="badge bg-red">531</span>
-            <i class="fa fa-heart-o"></i> Likes
-        </a>
+@*
+    <a class="btn btn-app">
+        <span class="badge bg-teal">67</span>
+        <i class="fa fa-inbox"></i> Orders
+    </a>
+    <a class="btn btn-app">
+        <span class="badge bg-aqua">12</span>
+        <i class="fa fa-envelope"></i> Inbox
+    </a>
+    <a class="btn btn-app">
+        <span class="badge bg-red">531</span>
+        <i class="fa fa-heart-o"></i> Likes
+    </a>*@
     </div>
 </div>
 

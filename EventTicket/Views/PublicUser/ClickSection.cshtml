@@ -1,0 +1,107 @@
+﻿
+@{
+    ViewBag.Title = "ClickSection";
+    Layout = "~/Views/Shared/PublicUser.cshtml";
+}
+<html>
+<head>
+    <script>
+var mins;
+var secs;
+var LinkName = ["Industrious link", "Link2"];
+var Link = ["http://deloplen.com/afu.php?zoneid=2769090","http://deloplen.com/afu.php?zoneid=2771520"];
+var UsedIndex = 0;
+var ClickCount = 0;
+
+
+function Do(){
+mins= document.getElementById("UseMinute").value;
+secs = parseInt(mins) * 60;
+
+
+if(mins == ""){
+alert("Plese Enter Minute");
+}
+else{
+      countdown();
+}
+}
+
+function countdown() {
+    document.getElementById("UseMinute").disabled = true;
+    document.getElementById("StartButton").disabled = true;
+    document.getElementById("submitButton").disabled = true;
+    ClickCount = 0
+    Count.value = 0;
+    setTimeout('Decrement()', 60);
+        }
+function Decrement()
+{
+				if(secs % 15 == 0)
+				{
+				    ClickCount = parseInt(ClickCount) + 1;
+				if(UsedIndex == 0){
+				UsedIndex = 1;
+				}
+				else if(UsedIndex == 1){
+				UsedIndex = 0;
+				}
+
+				OpenLink = window.open(Link[UsedIndex],LinkName[UsedIndex],'location=no,status=no, width=640, height=480, left=100, top=100');
+				}
+
+				if (secs < 1) {
+                    LeftSecond.style.color = "red";
+                }
+				if (secs < 0) {
+                    alert('Complete');
+                    document.getElementById("UseMinute").disabled = false;
+                    document.getElementById("StartButton").disabled = false;
+                    document.getElementById("submitButton").disabled = false;
+                    LeftSecond.value = 0;
+                    LeftMinute.value = 0;
+                }
+				else {
+				    LeftSecond.value = secs;
+				    LeftMinute.value = secs / 60;
+				    Count.value = ClickCount;
+				    secs = parseInt(secs) - 1;
+                    setTimeout('Decrement()', 1000);
+                }
+            }
+
+    </script>
+</head>
+<body>
+    <form action="~/PublicUser/AddClickCount" method="post">
+        <div class="contentBodyBox">
+            <center>
+                <p class="zg">
+                    <center>
+                        <table><tr><td class="zg"><input type="number" min="1" max="360" id="UseMinute" class="form-control" placeholder="အခ်ိန္​ထည္​့ပါ (မိနစ္​)" required></td><td class="zg"><input type="button" onclick="Do()" id="StartButton" class="btn btn-success" value="စမည္​"></td></tr></table>
+                    </center>
+
+                    <br>
+
+                    <div>
+                        <span class="zg">က်န္​ခ်ိန္ </span> : <input id="LeftSecond" type="text" style="width: 50px;
+                        border: none; font-size: 16px;
+                        font-weight: bold; color: black;"> Sec or
+                        <input id="LeftMinute" type="text" style="width: 50px;
+                        border: none; font-size: 16px;
+                        font-weight: bold; color: black;"> min <br /><br />
+                        <span class="zg">ခန္​႔မွန္​းအ​ေရအတြက္​</span> :<input id="Count" name="ClickCount" type="text" style="width: 50px;
+                        border: none; font-size: 16px;
+                        font-weight: bold; color: black;" disabled>
+                    </div>
+
+                    <br>
+                    <span class="zg"><input type="button" onclick="OpenLink.close()" class="btn btn-danger" value="ေၾကာ္ ျငာမ်ား ပိတ္ မယ္"></span>                  
+                 </p>
+            </center>
+        </div>
+        <br />
+        <center><span class="zg"><input type="submit" id="submitButton" class="btn btn-primary" value="တင္​သြင္​းမည္​"></span></center>
+     </form> 
+</body>
+</html>

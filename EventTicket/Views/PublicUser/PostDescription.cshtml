@@ -1,0 +1,38 @@
+﻿@using System.Data;
+@using EventTicket.App_Code;
+@{
+    int ID = ViewBag.ID;
+    Base b = new Base();
+    ViewBag.Title = "PostDescription";
+    Layout = "~/Views/Shared/PublicUser.cshtml";
+}
+<title>@b.getStringByQuery("select * from Post where ID=" + ID, "Name")</title>
+<script>
+    function Share() {
+        var facebookWindow = window.open('https://www.facebook.com/sharer/sharer.php?u=' + document.URL, 'facebook-popup', 'height=350,width=600');
+        if (facebookWindow.focus) { facebookWindow.focus(); }
+        return false;
+    }
+</script>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="contentBodyBox">
+            <div class="box-body">
+                <a href="~/Image/Cover/@b.getStringByQuery("select * from Post where ID="+ID,"ImageName")"><img src="~/Image/Cover/@b.getStringByQuery("select * from Post where ID="+ID,"ImageName")" style="width:100%;height:auto;"></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="contentBodyBox">
+            <div class="box-body">
+                <div class="col-sm-12">
+                    <center><b>@b.getStringByQuery("select * from Post where ID=" + ID, "Name")</b></center>
+                    <br /><textarea class="form-control" style="min-height:400px;" name="Description" placeholder="" disabled>@b.getStringByQuery("select * from Post where ID=" + ID, "Description")</textarea>
+                    <br /><img src="~/Image/Icon/time.png" width="32px" />@b.getStringByQuery("select * from Post where ID=" + ID, "Date")
+                    <br />Reference : <a href="@b.getStringByQuery("select * from Post where ID=" + ID, "Reference")">@b.getStringByQuery("select * from Post where ID=" + ID, "Reference")</a>
+                    <br /><a href="" onclick="Share()"><span class="btn btn-primary">Facebook&nbsp;<i class="fa fa-share"></i></span></a>
+                 </div>
+            </div>
+        </div>
+    </div>
+</div>

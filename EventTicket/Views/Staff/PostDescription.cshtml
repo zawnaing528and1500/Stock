@@ -1,0 +1,31 @@
+﻿@using System.Data;
+@using EventTicket.App_Code;
+@{
+    int ID = ViewBag.ID;
+    Base b = new Base();
+    ViewBag.Title = "PostDescription";
+    Layout = "~/Views/Shared/Staff.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="contentFormBox">
+            <div class="box-body">
+                <a href="~/Image/Cover/@b.getStringByQuery("select * from Post where ID="+ID,"ImageName")"><img src="~/Image/Cover/@b.getStringByQuery("select * from Post where ID="+ID,"ImageName")" style="width:100%;height:auto;"></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="contentBodyBox">
+            <div class="box-body">
+                <div class="col-sm-12">
+                    <center><p class="zg"><b>@b.getStringByQuery("select * from Post where ID=" + ID, "Name")</b></p></center>
+                    <br /><p class="zg"><textarea class="form-control" style="min-height:400px;" name="Description" placeholder="" disabled>@b.getStringByQuery("select * from Post where ID=" + ID, "Description")</textarea></p>
+                    <br /><img src="~/Image/Icon/time.png" width="32px" />@b.getStringByQuery("select * from Post where ID="+ID,"Date")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

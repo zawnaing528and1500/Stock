@@ -1,0 +1,57 @@
+﻿@using System.Data;
+@using EventTicket.App_Code;
+@{
+    Base b = new Base(); DataTable Post = null;
+    if (ViewBag.SearchText != null)
+    {
+        Post = b.getAllByQuery("select * from Post where Description like N'"+ ViewBag.SearchText + "%' or Description like N'%"+ ViewBag.SearchText + "%' or Description like N'%"+ ViewBag.SearchText + "'");
+    }
+    if (ViewBag.SearchText == "")
+    {
+        Post = b.getAllByQuery("select top 20 * from Post order by PostView desc");
+    }
+
+    ViewBag.Title = "AllPost";
+    Layout = "~/Views/Shared/PublicUser.cshtml";
+}
+@foreach (DataRow rows in Post.Rows)
+{
+    string Name = rows["Name"].ToString();
+    string ImageName = rows["ImageName"].ToString();
+    string Date = rows["Date"].ToString();
+    int StaffID = Convert.ToInt32(Request.Form["StaffID"]);
+
+    <div class="col-md-6" style="margin:3px;">
+        <div class="widget-user-header bg-yellow" style="border:1px solid lightgray;">
+            <div class="widget-user-image">
+                <a href="~/PublicUser/PostDescription?ID=@rows["ID"]"><img src="~/Image/Cover/@ImageName" style="width:100%;height:auto;"></a>
+            </div>
+        </div>
+        <div class="box-footer no-padding" style="border:1px solid lightgray;">
+            <ul class="nav nav-stacked">
+                <li class="zg" style="background-color:#FDFCDC;border:1px solid #F5F5DC"><a href="#">@Name</a></li>
+                <li style="background-color:#FEFFEF;color:dimgray;"><a href=""><img src="~/Image/Icon/Time.png" width="32px" height="32px" />@Date</a></li>
+                <li style="background-color:#FEFFEF;color:dimgray;">
+                    <div class="box box-default collapsed-box">
+                        <div class="box-header with-border">
+                            @rows["PostView"] <i class="fa fa-eye"></i> More Details
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                            <!-- /.box-tools -->
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            @rows["Description"]
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+}
+
+

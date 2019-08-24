@@ -4,14 +4,20 @@
 @using EventTicket.App_Code;
 @{
     Base b = new Base();
-    DataTable dt = b.getAllByQuery("select top 5 * from RequestActive");
 }
 <!DOCTYPE html>
 <html>
 <head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-8062516577151590",
+    enable_page_level_ads: true
+  });
+    </script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>DM Group - Onine Home Jobs Program</title>
+    <title>Myanmar IT Star Company Limited</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="~/Content/bootstrap.min.css">
     <link rel="stylesheet" href="~/Content/font-awesome.min.css">
@@ -23,6 +29,7 @@
     <link rel="stylesheet" href="~/Content/Site.css">
     <link rel="stylesheet" href='https://mmwebfonts.comquas.com/fonts/?font=zawgyi' />
     <link rel="stylesheet" href="~/Content/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/bootstrap3-wysihtml5.min.css">
     <script src="~/Scripts/jquery.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/admin-lte/js/adminlte.min.js"></script>
@@ -30,15 +37,26 @@
     <script src="~/Scripts/select2.full.min.js"></script>
     <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
     <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/ckeditor.js"></script>
     <script src="~/Scripts/Site.js"></script>
+    <script src="~/Scripts/bootstrap3-wysihtml5.all.min.js"></script>
+    <script>
+  $(function () {
+    // Replace the <textarea id="editor1"> with a CKEditor
+    // instance, using default configuration.
+    CKEDITOR.replace('editor1')
+    //bootstrap WYSIHTML5 - text editor
+    $('.textarea').wysihtml5()
+  })
+    </script>
 </head>
 <body class="hold-transition skin-purple-light sidebar-mini">
     <div class="loader"></div>
     <div class="wrapper">
         <header class="main-header">
             <a href="#" class="logo">
-                <span class="logo-mini"><b>M</b>Star</span>
-                <span class="logo-lg"><b>Myanmar IT Star</b></span>
+                <span class="logo-mini"><b>N</b></span>
+                <span class="logo-lg"><b>Naing.org</b></span>
             </a>
             <nav class="navbar navbar-static-top" role="navigation">
                 <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
@@ -63,16 +81,14 @@
                 <!-- Sidebar Menu -->
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="header"><b><span class="zg">ျမန္​မာအိုင္​တီစတား ကုမၸဏီ လီမိတက္</span>​</b></li>
-                    <li><a href="~/Staff/Dashboard"><i class="fa fa-dashboard" aria-hidden="true"></i><span class="zg">Dashboard</span></a></li>
-                    <li><a href="~/Staff/ViewAllMembers"><i class="fa fa-user" aria-hidden="true"></i><span class="zg">View All Members</span></a></li>
+                    <li><a href="~/Staff/AllPost"><i class="fa fa-picture-o" aria-hidden="true"></i><span class="zg">All Posts</span></a></li>
+                    <li><a href="~/Staff/AddPost"><i class="fa fa-plus-circle" aria-hidden="true"></i><span class="zg">Add Post</span></a></li>
                     @*<li><a href="~/MyanmarITStar/Notification"><i class="fa fa-cog" aria-hidden="true"></i><span class="zg">Notification</span></a></li>*@
-                    <li><a href="~/Account/Logout"><i class="fa fa-power-off" aria-hidden="true"></i><span>Log Out</span></a></li>
-                </ul>
+                  </ul>
                 <!-- /.sidebar-menu -->
             </section>
             <!-- /.sidebar -->
         </aside>
-
         <div class="content-wrapper">
             <section class="content container-fluid">
                 @RenderBody()
@@ -81,7 +97,6 @@
         <footer class="main-footer">
             <!-- To the right -->
             <div class="pull-right hidden-xs">
-
             </div>
             <!-- Default to the left -->
             <strong>Copyright &copy; 2019 <a href="#">MyanmarITStar Co.Ltd</a>.</strong>

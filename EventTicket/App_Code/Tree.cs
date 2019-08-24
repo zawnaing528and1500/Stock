@@ -145,13 +145,13 @@ namespace EventTicket.App_Code
                 //dmgrouponlinehomejobsprogram@gmail.com, *Dmgroup* 
                 MailMessage mail = new MailMessage();
                 mail.To.Add(To);
-                mail.From = new MailAddress("dmgrouponlinehomejobsprogram@gmail.com");
+                mail.From = new MailAddress("myanmaritstar.homejob@gmail.com");
                 mail.Subject = Subject;
                 mail.Body = Body;
                 mail.IsBodyHtml = true;
                 SmtpClient smtp = new SmtpClient();
                 smtp.Host = "smtp.gmail.com";
-                smtp.Credentials = new System.Net.NetworkCredential("dmgrouponlinehomejobprogram@gmail.com", "Myanmaritstar123"); // ***use valid credentials***
+                smtp.Credentials = new System.Net.NetworkCredential("myanmaritstar.com@gmail.com", "Zawnaing12"); // ***use valid credentials***
                 smtp.Port = 587;
                 smtp.EnableSsl = true;
                 smtp.Send(mail);
@@ -159,6 +159,42 @@ namespace EventTicket.App_Code
             catch (Exception ex)
             {
                 Debug.WriteLine("Error in Sending Mail");
+            }
+        }
+        #endregion
+
+        #region Inactive Count
+        public void InactiveCount()
+        {
+            DataTable Member = db.getAllByQuery("select * from Member where Active='False' and ID!=80 and ID!=1");
+            foreach(DataRow row in Member.Rows)
+            {
+                int MemberID = Convert.ToInt32(row["ID"]);
+
+                int InActiveCount = db.getCountByQuery("select * from InactiveCount where MemberID=" + MemberID);
+                if(InActiveCount == 2)
+                {
+                    int Parent = db.getIntByQuery("select * from Tree where Child=" + MemberID, "Parent");
+                    if (Parent == 0) { Parent = 80; }
+                    db.ChangeByQuery("update Tree set Parent= " + Parent + " where Parent=" + MemberID);
+
+                    db.ChangeByQuery("delete from Tree where Parent=" + MemberID);
+                    db.ChangeByQuery("delete from Tree where Child=" + MemberID);
+
+                    db.ChangeByQuery("delete from InactiveCount where MemberID="+MemberID);
+                    db.ChangeByQuery("delete from TransferHistory where SenderID=" + MemberID+" or ReceiverID="+MemberID);
+                    db.ChangeByQuery("delete from RequestActiveDepositHistory where MemberID=" + MemberID);
+                    db.ChangeByQuery("delete from RequestActive where MemberID=" + MemberID);
+                    db.ChangeByQuery("delete from Payment where MemberID=" + MemberID);
+                    db.ChangeByQuery("delete from MemberCaptchaEmail where MemberID=" + MemberID);
+                    db.ChangeByQuery("delete from MemberBank where MemberID=" + MemberID);
+                    db.ChangeByQuery("delete from Login where AllID=" + MemberID + " and AccessLevel = 2");
+                    db.ChangeByQuery("delete from Member where ID=" + MemberID);
+                }
+                else
+                {
+                    db.ChangeByQuery("insert into InactiveCount values("+MemberID+")");
+                }
             }
         }
         #endregion

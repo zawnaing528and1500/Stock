@@ -4,22 +4,53 @@
     int i = 1;
     Base b = new Base();
     Node n = new Node();
-    DataTable Member = b.getAllByQuery("select * from Member");
+    DataTable Member = b.getAllByQuery("select * from Member ORDER BY ID ASC OFFSET " + ViewBag.From + " ROWS FETCH NEXT " + ViewBag.To + " ROWS ONLY");
     ViewBag.Title = "DM Group - Onine Home Jobs Program";
     Layout = "~/Views/Shared/MyanmarITStar.cshtml";
 }
-@ViewBag.From
-@ViewBag.To
+
+@using (Html.BeginForm("ProcessViewAllMembers", "MyanmarITStar"))
+{
+    <div class="contentFormBox">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <i class="fa fa-database"></i>
+                    </div>
+                    <input type="text" name="From" class="form-control" value="@ViewBag.From" required>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-database"></i>
+                        </div>
+                        <input type="text" name="To" class="form-control" value="@ViewBag.To" required>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div class="input-group">
+                        <center> <span class="zg"><input type="submit" class="btn btn-primary" value="SEE" /></span></center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
 <div class="contentBodyBox">
     @*<font color="#8B7D6B" class="zg">The following are all registered members.</font><br /><br />*@
     <table id="displayTable" class="table table-bordered">
-        <thead><tr><th><span class="zg">No</span></th><th><span class="zg">Name</span>​</th><th><span class="zg">Phone</span></th><th><span class="zg">Address</span></th><th><span class="zg">Email</span></th><th>Level 1,2,3</th><th>FB</th></tr></thead>
+        <thead><tr><th><span class="zg">No</span></th><th>MemberID</th><th><span class="zg">Name</span>​</th><th><span class="zg">Phone</span></th><th><span class="zg">Address</span></th><th><span class="zg">Email</span></th><th>Level 1,2,3</th><th>FB</th></tr></thead>
         <tbody>
             @{
                 foreach (DataRow rows in Member.Rows)
                 {
                     int MemberID = Convert.ToInt32(rows["ID"]);
-                    <tr><td><span class="zg">@i</span></td><td><font class="normalText"><span class="zg">@rows["Name"]</span></font></td><td><font class="normalText"><span class="zg">@rows["Phone"]</span></font></td><td><span class="zg">@rows["Address"]</span></td><td><span class="zg">@rows["Email"]</span></td><td>@n.GetTotalNode(MemberID,123) | @n.GetTotalNode(MemberID, 1) , @n.GetTotalNode(MemberID, 2) , @n.GetTotalNode(MemberID, 3)</td><td><a href="@rows["FBLink"]">Click</a></td></tr>
+                    <tr><td><span class="zg">@i</span></td><td>@MemberID</td><td><font class="normalText"><span class="zg">@rows["Name"]</span></font></td><td><font class="normalText"><span class="zg">@rows["Phone"]</span></font></td><td><span class="zg">@rows["Address"]</span></td><td><span class="zg">@rows["Email"]</span></td><td>@n.GetTotalNode(MemberID,0) | @n.GetTotalNode(MemberID, 1) , @n.GetTotalNode(MemberID, 2) , @n.GetTotalNode(MemberID, 3)</td><td><a href="@rows["FBLink"]">Click</a></td></tr>
                     i++;
                 }
             }

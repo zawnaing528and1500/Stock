@@ -24,6 +24,13 @@ namespace EventTicket.Controllers
         }
         #endregion
 
+        #region Team 
+        public ActionResult Team()
+        {
+            return View();
+        }
+        #endregion
+
         #region Login Section
         public ActionResult LoginForm()
         {
@@ -57,6 +64,9 @@ namespace EventTicket.Controllers
                     if(DateTime.Now.Day == 14 || DateTime.Now.Day == 29)
                     {
                         db.ChangeByQuery("delete from RequestActive");
+                        //In-Active Count
+                        Tree t = new Tree();
+                        t.InactiveCount();
                         db.ChangeByQuery("update Member set Active='False'");
                     }
                     return RedirectToAction("Dashboard", "MyanmarITStar");//Changes_second parioty
@@ -88,15 +98,27 @@ namespace EventTicket.Controllers
         #region Register Section
         public ActionResult RegisterForm()
         {
-            //Get Referral Code
+            if (DateTime.Now.Day == 30)
+            {
+                return RedirectToAction("BlockRegistration");
+            }
+                //Get Referral Code
             int ReferredCode=0;
             if (Request.QueryString["ReferredCode"] != null)
             {
                 ReferredCode = Convert.ToInt32(Request.QueryString["ReferredCode"]);
                 Debug.WriteLine(ReferredCode);
             }
+            else
+            {
+                ViewBag.ReferredCode = 1111;
+            }
             ViewBag.ReferredCode = ReferredCode;
             return View();
+        }
+        public string BlockRegistration()
+        {
+            return "<font color='red'>DM Account Registraion is not allowed at 14 th and 29 th of a month</font>";
         }
         public ActionResult RegisterCodeForm()
         {
@@ -110,13 +132,14 @@ namespace EventTicket.Controllers
             int ReferredCode = Convert.ToInt32(Request.Form["ReferredCode"]);
             string FBLink = Request.Form["FBLink"];
             int TownshipID = Convert.ToInt32(Request.Form["TownshipID"]);
+            int JobID = Convert.ToInt32(Request.Form["JobID"]);
             #endregion
 
             #region Sending Confirmation Code
             int RegisterCode = GetRandomNumber(1000, 9999);
             Session["RegisterCode"] = RegisterCode;
             Tree t = new Tree();
-            t.SendEmail("DM Group-Online Home Jobs Program", "Comfirmation Code:" + RegisterCode, Email);
+            t.SendEmail("Myanmar IT Star Company Limited", "Comfirmation Code:" + RegisterCode, Email);
             #endregion
 
             #region Assign Data to viewbag
@@ -129,6 +152,7 @@ namespace EventTicket.Controllers
             ViewBag.ReferredCode = ReferredCode;
             ViewBag.FBLink = FBLink;
             ViewBag.TownshipID = TownshipID;
+            ViewBag.JobID = JobID;
             #endregion
 
             return View();
@@ -155,6 +179,8 @@ namespace EventTicket.Controllers
             int ReferredCode = Convert.ToInt32(Request.Form["ReferredCode"]);
             string FBLink = Request.Form["FBLink"];
             int TownshipID = Convert.ToInt32(Request.Form["TownshipID"]);
+            int JobID = Convert.ToInt32(Request.Form["JobID"]);
+
             #endregion
 
 
@@ -177,7 +203,7 @@ namespace EventTicket.Controllers
             }
             else
             {
-                db.ChangeByQuery("insert into Member values(N'" + Name + "',N'" + Phone + "',N'" + Address + "','" + Email + "'," + RefferalCode + ",'" + DateTime.Now.ToString("MM.dd.yyyy") + "','"+FBLink+"','False',"+TownshipID+")");
+                db.ChangeByQuery("insert into Member values(N'" + Name + "',N'" + Phone + "',N'" + Address + "','" + Email + "'," + RefferalCode + ",'" + DateTime.Now.ToString("MM.dd.yyyy") + "','"+FBLink+"','False',"+TownshipID+","+JobID+")");
                 int LastMemberID = db.getIntByQuery("select * from Member where Phone=N'"+Phone+"' and Email='"+Email+"'","ID");
                 db.ChangeByQuery("insert into Login values("+LastMemberID+",N'"+Username+"',N'"+Password+"',2,'True','"+ DateTime.Now.ToString("MM.dd.yyyy")+ "')");
                

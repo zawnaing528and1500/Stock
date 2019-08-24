@@ -1,0 +1,32 @@
+﻿@using System.Data;
+@using EventTicket.App_Code;
+@{
+    Base b = new Base();
+    DataTable Post = b.getAllByQuery("select * from Post");
+    ViewBag.Title = "AllPost";
+    Layout = "~/Views/Shared/Staff.cshtml";
+}
+@foreach (DataRow rows in Post.Rows)
+{
+    string Name = rows["Name"].ToString();
+    string ImageName = rows["ImageName"].ToString();
+    string Date = rows["Date"].ToString();
+    int StaffID = Convert.ToInt32(Request.Form["StaffID"]);
+
+    <div class="col-md-4" style="margin:px;">
+        <div class="widget-user-header bg-yellow">
+            <div class="widget-user-image">
+                <a href="~/Staff/PostDescription?ID=@rows["ID"]"><img src="~/Image/Cover/@ImageName" style="width:100%;height:auto;"></a>
+            </div>
+        </div>
+        <div class="box-footer no-padding">
+            <ul class="nav nav-stacked">
+                <li class="zg" style="background-color:#FDFCDC;border:1px solid #F5F5DC"><a href="#" class="zg">@Name</a></li>
+                <li style="background-color:#FEFFEF;color:dimgray;"><a href=""><img src="~/Image/Icon/Time.png" width="32px" height="32px" />@Date</a></li>
+                <li style="background-color:#FEFFEF;color:dimgray;"><center><a href="~/Staff/DeletePost?ID=@rows["ID"]"><img src="~/Image/Icon/delete.png" /></a></center></li>
+            </ul>
+        </div>
+    </div>
+}
+
+

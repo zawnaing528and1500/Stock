@@ -5,9 +5,11 @@
     Layout = "~/Views/Shared/Account.cshtml";
     Base b = new Base();
     DataTable township = b.getAllByQuery("select * From Township order by Name asc");
+    DataTable Job = b.getAllByQuery("select * From Job");
 }
 <script src="~/Scripts/jquery.min.js"></script>
 <script src="~/Scripts/bootstrap.min.js"></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script>
               $(document).ready(function () {
                   var passedError = document.getElementById("serverMessage").textContent;
@@ -32,9 +34,9 @@
     {
         <p id="serverMessage" hidden>@Session["RegisterSession"]</p>
         <div class="limiter">
-            <div class="container-login100" style="background-image: url('../Image/bg2.jpg');background-attachment:fixed">
+            <div class="container-login100" style="background-image: url('../Image/bg1.jpg');background-attachment:fixed">
                 <div class="wrap-login100 p-t-190 p-b-30">
-                    <center><img src="~/Image/Logo/logo.png" width="200px" height="200px" /></center>
+                    <center><img src="~/Image/Logo/nainglogo.png"/></center>
                     <form class="login100-form validate-form">
                         <div class="wrap-input100 validate-input m-b-10" data-validate="">
                             <p id="Message" style="background-color:lightgray;text-align:center;"></p>
@@ -65,6 +67,21 @@
                                 <option value="">Please Select Township</option>
                                 @{ 
                                     foreach(DataRow row in township.Rows)
+                                    {
+                                        <option value="@row["ID"]">@row["Name"]</option>
+                                    }
+                                }
+                            </select>
+                            <span class="focus-input100"></span>
+                            <span class="symbol-input100">
+                                <i class="fa fa-home"></i>
+                            </span>
+                        </div><br>
+                        <div class="wrap-input100 validate-input m-b-10" data-validate="Job Title is required">
+                            <select class="input100" name="JobID">
+                                <option value="">Please Select Job Title</option>
+                                @{
+                                    foreach (DataRow row in Job.Rows)
                                     {
                                         <option value="@row["ID"]">@row["Name"]</option>
                                     }

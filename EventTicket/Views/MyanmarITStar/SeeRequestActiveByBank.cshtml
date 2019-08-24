@@ -18,7 +18,7 @@
                     int BankID = b.getIntByQuery("select * from MemberBank where ID=" + MemberBankID, "BankID");
                     int MemberID = Convert.ToInt32(row["MemberID"]);
                     string AccountNumber = b.getStringByQuery("select * from MemberBank where ID=" + MemberBankID, "AccountNumber") +"("+b.getStringByQuery("select * from Bank where ID="+BankID,"Name")+")";
-                    <tr><td>@i</td><td><font class="normalText"><span class="zg">@b.getStringByQuery("select * from Member where ID=" + MemberID, "Name")</span></font></td><td>@AccountNumber</td><td><font class="normalText"><span class="zg">7500</span></font></td><td><a href="~/MyanmarITStar/AcceptRequest?ID=@row["ID"]&MemberID=@MemberID"><span class="label label-success">Accept</span></a>&nbsp;&nbsp;<a href="~/MyanmarITStar/RejectRequest?ID=@row["ID"]&MemberID=@MemberID"><span class="label label-danger">Reject</span></a></td></tr>
+                    <tr><td>@i</td><td><font class="normalText"><span class="zg">@b.getStringByQuery("select * from Member where ID=" + MemberID, "Name")</span></font></td><td>@AccountNumber</td><td><font class="normalText"><span class="zg">7500</span></font></td><td><a href="~/MyanmarITStar/AcceptRequestByBank?ID=@row["ID"]&MemberID=@MemberID"><span class="label label-success">Accept</span></a>&nbsp;&nbsp;<a href="~/MyanmarITStar/RejectRequestByBank?ID=@row["ID"]&MemberID=@MemberID"><span class="label label-danger">Reject</span></a></td></tr>
                     i++;
                 }
             }
